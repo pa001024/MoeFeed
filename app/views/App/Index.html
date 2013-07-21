@@ -1,0 +1,28 @@
+{{set . "title" "萌更新 - 你的多点同步平台"}}
+{{template "header.html" .}}
+{{if .user}}{{else}}
+    <header class="jumbotron subhead">
+      <div class="container">
+        <h1>萌更新</h1>
+        <p class="lead">你的多点同步平台</p>
+      </div>
+    </header>
+{{end}}
+    <div class="container">
+{{if .user}}
+      <div class="row">
+        <ul class="dashboard-tabs span10 offset1 navbar-inner">
+          <li><a href="/">更新状态</a></li>
+          <li><a href="/dashboard/issues">故障</a></li>
+          <li><a href="/follows">关注</a></li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="span12">
+          {{template "flash.html" .}}
+        </div>
+{{template "news.html" .}}
+      </div>
+{{end}}
+    </div>
+{{template "footer.html" .}}

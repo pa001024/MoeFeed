@@ -1,0 +1,47 @@
+{{if .mUser.DisplayName}}{{printf "%s(%s) - 萌更新" .mUser.Username .mUser.DisplayName | set . "title"}}{{else}}{{printf "%s - 萌更新" .mUser.Username | set . "title"}}{{end}}{{template "header.html" .}}
+    <div class="container main">
+      <div class="row">
+        <div class="span3 offset1" itemscope="" itemtype="http://schema.org/Organization">
+          <div class="user-profile">
+            <span class="tooltipped downwards" original-title="在 gravatar.com 更改你的头像">
+              <a href="http://gravatar.com/emails/"><img class="avatar" src="{{.mUser.GetAvatarUrl "420"}}"></a>
+            </span>
+            <h1>{{if .mUser.DisplayName}}
+              <span itemprop="name">{{.mUser.DisplayName}}</span>
+              <em itemprop="additionalName">{{.mUser.Username}}</em>{{else}}
+              <span itemprop="additionalName">{{.mUser.Username}}</span>{{end}}
+            </h1>
+            <div class="details">
+              <b>注册时间</b>
+              <time>{{.mUser.Joined}}</time>
+            </div>
+          </div>
+          <ul class="stats">
+          </ul>
+        </div>
+        <div class="span7">
+          <div class="row-fluid">
+            <nav class="span12 tabnav">
+              <ul class="tabnav-tabs">
+                <li data-tab="contributions">
+                  <a href="/pa001024" class="tabnav-tab selected">项目</a>
+                </li>
+                <li data-tab="repo">
+                  <a href="/pa001024?tab=repositories" class="tabnav-tab">动态</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <section class="m-projects">{{range .mProjects}}
+            <article class="m-range-project">
+              <h3><a href="/{{.Owner.Username}}/{{.Name}}">{{.Name}}</a></h3>
+              <p class="description"></p>
+              <p class="updated-at">最后更新
+                <time class="js-relative-date" datetime="{{.Updated}}" title="2013-07-20 20:31:37">{{.UpdateTime}}</time>
+              </p>
+            </article>{{end}}
+          </section>
+        </div>
+      </div>
+    </div>
+{{template "footer.html" .}}

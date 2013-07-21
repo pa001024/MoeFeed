@@ -1,0 +1,38 @@
+{{set . "title" "创建项目 - 萌更新"}}
+{{template "header.html" .}}
+    <div class="container">
+      <div class="row">
+        <div class="span8 offset2">
+          <form class="form-horizontal" method="POST">
+            <fieldset>
+              <input type="hidden" name="return_to" value="{{.return_to}}">
+              <div id="legend" class="">
+                <legend class="">创建项目</legend>
+              </div>
+              {{template "flash.html" .}}
+              <div class="control-group">
+                <label class="control-label" for="project-Name">项目名称</label>
+                <div class="controls">
+                  <input type="text" name="project.Name" id="project-Name" placeholder="myproject" class="input-xlarge">
+                  <p class="help-block">项目名称将作为URL</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="project-DisplayName">项目中文名称</label>
+                <div class="controls">
+                  <input type="text" name="project.DisplayName" id="project-DisplayName" placeholder="我的项目" class="input-xlarge">
+                  <p class="help-block">项目中文名称被显示在屏幕上</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                  <button class="btn btn-success">创建项目</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+{{template "footer.html" .}}

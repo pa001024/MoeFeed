@@ -1,0 +1,14 @@
+{{if .mProject}}
+{{.mProject.Name | printf "%s - 萌更新" | set . "title"}}
+{{else}}
+{{set . "title" "项目不存在 - 萌更新"}}
+{{end}}
+{{template "header.html" .}}
+<div class="container">
+{{if .mProject}}
+  <p>{{.Name}}</p>
+{{else}}
+  <p>404 项目不存在</p>
+{{end}}
+</div>
+{{template "footer.html" .}}

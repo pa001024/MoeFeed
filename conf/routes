@@ -1,0 +1,46 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# 测试
+module:testrunner
+
+
+# 静态文件 
+GET     /public/*filepath                       Static.Serve("public")
+GET     /favicon.ico                            Static.Serve("public/images","favicon.ico")
+
+# 主页
+GET     /                                       App.Index
+
+# 验证(前端)
+GET     /register                               App.Register
+POST    /register                               App.PostRegister
+GET     /reauth                                 App.Reauth
+GET     /login                                  App.Login
+POST    /login                                  App.PostLogin
+GET     /logout                                 App.Logout
+GET     /help                                   App.Help
+
+# 用户设置
+GET     /settings                               Users.ProfileLink
+GET     /settings/profile                       Users.Profile
+GET     /settings/security                      Users.Security
+
+GET     /projects/help                          Projects.Help
+GET     /projects/new                           Projects.CreateLink
+GET     /new                                    Projects.Create
+POST    /new                                    Projects.PostCreate
+GET     /projects                               Projects.ListLink
+GET     /organizations/profile                  Organizations.Profile
+GET     /organizations/:user                    Organizations.Show
+GET     /:user                                  Users.Show
+GET     /:user/:project                         Projects.Show
+GET     /:user/:project/delete                  Projects.Delete
+POST    /:user/:project/delete                  Projects.Delete
+GET     /:user/:project/settings                Projects.Setting
+
+
+# 后期功能 
+# *       /api/:action                            API.:action
+# GET     /explore                                Projects.Explore

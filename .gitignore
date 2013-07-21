@@ -21,3 +21,12 @@ _testmain.go
 
 /config.json
 /bin
+
+# revel
+test-results/
+tmp/
+routes/
+
+# 忽略本地设置文件
+*_hidden.go
+
