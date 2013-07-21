@@ -1,4 +1,4 @@
-package controllers
+package repository
 
 import (
 	"github.com/coocood/qbs"
@@ -25,4 +25,5 @@ func RegisterDb() {
 	m.CreateTableIfNotExists(new(models.UserCode))
 	m.CreateTableIfNotExists(new(models.UserStatus))
 	m.CreateTableIfNotExists(new(models.OAuth))
+	m.CreateTableIfNotExists(new(models.Worker))
 }

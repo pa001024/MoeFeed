@@ -32,26 +32,26 @@ func (c App) CheckUser() *models.User {
 }
 
 // [动] 登录
-func (c App) PostLogin(nameOrEmail, password, return_to string) r.Result {
-	c.Validation.Required(nameOrEmail).Message("请填写用户名")
+func (c App) PostLogin(username, password, return_to string) r.Result {
+	c.Validation.Required(username).Message("请填写用户名")
 	c.Validation.Required(password).Message("请填写密码")
 
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Login(return_to)
+		return c.Redirect("/login?return_to=%s", return_to)
 	}
-	user := repo.UserRepo.GetByNameOrEmail(nameOrEmail)
+	user := repo.UserRepo.GetByNameOrEmail(username)
 	if user == nil {
 		c.Flash.Error("用户不存在")
-		return c.Login(return_to)
+		return c.Redirect("/login?return_to=%s", return_to)
 	}
 	// 验证密码
 	user.ValidatePassword(c.Validation, password)
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Login(return_to)
+		return c.Redirect("/login?return_to=%s", return_to)
 	}
 	// 登陆成功写入session
 	c.Session[USER] = util.ToString(user.Id)
@@ -84,7 +84,7 @@ func (c App) PostRegister(user *models.User, return_to, password, password2 stri
 	repo.UserCodeRepo.Put(code)
 	// 发送邮件
 	log.Println("Send mail to", user.Email)
-	aurl := "http://localhost:9000/reauth?" + (url.Values{"id": {user.Username}, "code": {code.Code}}).Encode()
+	aurl := "http://feed.qaq.ca:9000/reauth?" + (url.Values{"id": {user.Username}, "code": {code.Code}}).Encode()
 	service.Mail.SendMailAsync(user.Email, "完成你的注册", `
 		<p>如果你需要使用全部功能 请点击下列链接完成验证</p>
 		<p><a href="`+aurl+`">`+aurl+`</a></p>

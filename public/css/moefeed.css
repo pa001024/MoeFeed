@@ -1,3 +1,18 @@
+/* 项目单页 */
+.project .subject h3 {
+  font-size: 16pt;
+}
+
+.project .itemsholder{
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+
+
+
+
 .main.container{
   margin-top: 20px;
 }

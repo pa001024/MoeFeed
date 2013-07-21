@@ -1,20 +1,65 @@
 {{or .mProject.DisplayName .mProject.Name | printf "%s - 萌更新" | set . "title"}}{{template "header.html" .}}
-<div class="container main">
-  <div class="pagehead repohead instapaper_ignore readability-menu row">
-    <div class="container span10 offset1">
-      <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
-        <span class="repo-label">公开</span>
-        <span class="mega-octicon octicon-repo"></span>
-        <span class="author">
-          <a href="/{{urlquery .mProject.Owner.Username}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Username}}</span></a>
-        </span>
-        <span class="repohead-name-divider">/</span>
-        <strong>
-          <a href="/{{urlquery .mProject.Owner.Username}}/{{urlquery .mProject.Name}}" class="js-current-repository js-repo-home-link">{{or .mProject.DisplayName .mProject.Name}}</a>
-        </strong>
-      </h1>
+    <div class="container main row-fluid">
+      <div class="pagehead repohead instapaper_ignore readability-menu row">
+        <div class="container span8 offset2">
+          <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
+            <span class="repo-label">公开</span>
+            <span class="mega-octicon octicon-repo"></span>
+            <span class="author">
+              <a href="/{{urlquery .mProject.Owner.Username}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Username}}</span></a>
+            </span>
+            <span class="repohead-name-divider">/</span>
+            <strong>{{printf "/%s/%s" .mProject.Owner.Username .mProject.Name | set . "pageurl"}}
+              <a href="{{.pageurl}}">{{or .mProject.DisplayName .mProject.Name}}</a>
+            </strong>
+          </h1>
+        </div>
+      </div>
+      <div class="project container row span10 offset1">
+        <div class="subject source">
+          <h3>来源点</h3>{{if eq .mUser.Id .mProject.OwnerId}}
+          <nav>
+            <form class="form-inline" action="{{.pageurl}}/add/source" method="POST">
+              <input type="text" class="input-small span4" placeholder="名称">
+              <input type="submit" class="btn btn-success span1" value="添加">
+            </form>
+          </nav>{{end}}
+          <div class="itemsholder">
+            <div class="items source">
+              <div class="item">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="subject filter">
+          <h3>过滤器</h3>{{if eq .mUser.Id .mProject.OwnerId}}
+          <nav>
+            <form class="form-inline" action="{{.pageurl}}/add/source" method="POST">
+              <input type="text" class="input-small span4" placeholder="名称">
+              <input type="submit" class="btn btn-success span1" value="添加">
+            </form>
+          </nav>{{end}}
+          <div class="itemsholder">
+            <div class="items filter">
+              <div class="item"></div>
+            </div>
+          </div>
+        </div>
+        <div class="subject target">
+          <h3>目标点</h3>{{if eq .mUser.Id .mProject.OwnerId}}
+          <nav>
+            <form class="form-inline" action="{{.pageurl}}/add/source" method="POST">
+              <input type="text" class="input-small span4" placeholder="名称">
+              <input type="submit" class="btn btn-success span1" value="添加">
+            </form>
+          </nav>{{end}}
+          <div class="itemsholder">
+            <div class="items target">
+              <div class="item"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- /.container -->
-  </div>
-</div>
 {{template "footer.html" .}}

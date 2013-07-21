@@ -9,7 +9,7 @@ import (
 
 var (
 	auth = smtp.PlainAuth("", _MAIL_FROM, _MAIL_PASS, _MAIL_HOST)
-	Mail = new(MailService)
+	Mail = &MailService{C: make(chan MailInfo)}
 )
 
 type MailInfo struct {
