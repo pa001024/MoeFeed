@@ -1,14 +1,20 @@
-{{if .mProject}}
-{{.mProject.Name | printf "%s - 萌更新" | set . "title"}}
-{{else}}
-{{set . "title" "项目不存在 - 萌更新"}}
-{{end}}
-{{template "header.html" .}}
-<div class="container">
-{{if .mProject}}
-  <p>{{.Name}}</p>
-{{else}}
-  <p>404 项目不存在</p>
-{{end}}
+{{or .mProject.DisplayName .mProject.Name | printf "%s - 萌更新" | set . "title"}}{{template "header.html" .}}
+<div class="container main">
+  <div class="pagehead repohead instapaper_ignore readability-menu row">
+    <div class="container span10 offset1">
+      <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
+        <span class="repo-label">公开</span>
+        <span class="mega-octicon octicon-repo"></span>
+        <span class="author">
+          <a href="/{{urlquery .mProject.Owner.Username}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Username}}</span></a>
+        </span>
+        <span class="repohead-name-divider">/</span>
+        <strong>
+          <a href="/{{urlquery .mProject.Owner.Username}}/{{urlquery .mProject.Name}}" class="js-current-repository js-repo-home-link">{{or .mProject.DisplayName .mProject.Name}}</a>
+        </strong>
+      </h1>
+    </div>
+    <!-- /.container -->
+  </div>
 </div>
 {{template "footer.html" .}}

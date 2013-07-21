@@ -79,28 +79,12 @@ func (c Projects) Setting() r.Result {
 	return c.Render()
 }
 
-/////////////////////////
-// [单]单向 单项详细页 //
-/////////////////////////
-
-// [单]显示项目独立页
+// [静]显示项目独立页
 func (c Projects) Show(user, project string) r.Result {
 	c.CheckUser()
 	mProject := repo.ProjectRepo.GetByName(user, project)
-	return c.Render(mProject)
-}
-
-////////////////////////////
-// [列]列表 实现分页,筛选 //
-////////////////////////////
-
-// [列]列出用户拥有项目
-func (c Projects) List(user string) r.Result {
-	c.CheckUser()
-	mUser := repo.UserRepo.GetByName(user)
-	if mUser == nil {
-		return c.Redirect("/")
+	if mProject == nil {
+		return c.NotFound("404 项目不存在")
 	}
-	mProjects := repo.ProjectRepo.FindByOwner(mUser.Id)
-	return c.Render(mUser, mProjects)
+	return c.Render(mProject)
 }
