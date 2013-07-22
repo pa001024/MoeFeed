@@ -3,7 +3,7 @@
       <div class="pagehead repohead instapaper_ignore readability-menu row">
         <div class="container span8 offset2">
           <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
-            <span class="repo-label">公开</span>
+            <span class="repo-label hidden-phone">公开</span>
             <span class="mega-octicon octicon-repo"></span>
             <span class="author">
               <a href="/{{urlquery .mProject.Owner.Username}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Username}}</span></a>
@@ -16,49 +16,295 @@
         </div>
       </div>
       <div class="project container row span10 offset1">
-        <div class="subject source">
-          <h3>来源点</h3>{{if eq .mUser.Id .mProject.OwnerId}}
-          <nav>
-            <form class="form-inline" action="{{.pageurl}}/add/source" method="POST">
-              <input type="text" class="input-small span4" placeholder="名称">
-              <input type="submit" class="btn btn-success span1" value="添加">
-            </form>
-          </nav>{{end}}
-          <div class="itemsholder">
-            <div class="items source">
-              <div class="item">
-                
+        <div class="span3 sidebar">
+          <ul class="nav nav-list sidenav" data-spy="affix" data-offset-top="200">
+            <li><a href="#overview"><i class="icon-chevron-right"></i>概览</a></li>
+            <li><a href="#source"><i class="icon-chevron-right"></i>来源点</a></li>
+            <li><a href="#filter"><i class="icon-chevron-right"></i>过滤器</a></li>
+            <li><a href="#target"><i class="icon-chevron-right"></i>目标点</a></li>
+            <li><a href="#resource"><i class="icon-chevron-right"></i>资源</a></li>
+            <li><a href="#listen"><i class="icon-chevron-right"></i>观察者</a></li>
+          </ul>
+        </div>
+        <div class="span9">
+          <section id="overview">
+            <div class="page-header">
+              <h1>概览</h1>
+              <p class="muted">显示项目运行状态</p>
+            </div>
+            <div class="dlist">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>路线</th>
+                    <th>来源抓取</th>
+                    <th>过滤运行</th>
+                    <th>目标发送</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>萌娘百科->新浪微博</td>
+                    <td>233</td>
+                    <td>233</td>
+                    <td>233</td>
+                  </tr>
+                  <tr>
+                    <td>总计</td>
+                    <td>233</td>
+                    <td>233</td>
+                    <td>233</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="span12"></div>
+          </section>
+          <section id="source">
+            <div class="page-header">
+              <h1>来源点</h1>
+              <p class="muted">项目资讯来源</p>
+            </div>
+            <article>
+              <h2>萌娘百科</h2>
+              <div class="dlist">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>键</th>
+                      <th>值</th>
+                      <th>编辑</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-pencil icon-white"></i> 编辑</a>
+                          <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" placeholder="新键...">
+                      </td>
+                      <td>
+                        <input type="text" placeholder="新值...">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+            </article>
+          </section>
+          <section id="filter">
+            <div class="page-header">
+              <h1>过滤器</h1>
+              <p class="muted">项目资讯处理方式</p>
             </div>
-          </div>
-        </div>
-        <div class="subject filter">
-          <h3>过滤器</h3>{{if eq .mUser.Id .mProject.OwnerId}}
-          <nav>
-            <form class="form-inline" action="{{.pageurl}}/add/source" method="POST">
-              <input type="text" class="input-small span4" placeholder="名称">
-              <input type="submit" class="btn btn-success span1" value="添加">
-            </form>
-          </nav>{{end}}
-          <div class="itemsholder">
-            <div class="items filter">
-              <div class="item"></div>
+            <article>
+              <h2>维基文本</h2>
+              <div class="dlist">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>键</th>
+                      <th>值</th>
+                      <th>编辑</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-pencil icon-white"></i> 编辑</a>
+                          <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" placeholder="新键...">
+                      </td>
+                      <td>
+                        <input type="text" placeholder="新值...">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+          <section id="target">
+            <div class="page-header">
+              <h1>目标点</h1>
+              <p class="muted">项目最终目标</p>
             </div>
-          </div>
-        </div>
-        <div class="subject target">
-          <h3>目标点</h3>{{if eq .mUser.Id .mProject.OwnerId}}
-          <nav>
-            <form class="form-inline" action="{{.pageurl}}/add/source" method="POST">
-              <input type="text" class="input-small span4" placeholder="名称">
-              <input type="submit" class="btn btn-success span1" value="添加">
-            </form>
-          </nav>{{end}}
-          <div class="itemsholder">
-            <div class="items target">
-              <div class="item"></div>
+            <article>
+              <h2>新浪微博</h2>
+              <div class="dlist">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>键</th>
+                      <th>值</th>
+                      <th>编辑</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-pencil icon-white"></i> 编辑</a>
+                          <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" placeholder="新键...">
+                      </td>
+                      <td>
+                        <input type="text" placeholder="新值...">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+          <section id="resource">
+            <div class="page-header">
+              <h1>资源</h1>
+              <p class="muted">资源文件 如过滤器文本 图片等 </p>
             </div>
-          </div>
+            <article>
+              <h2>文件</h2>
+              <div class="dlist">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>文件名</th>
+                      <th>上传</th>
+                      <th>编辑</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <input type="file" value="">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-pencil icon-white"></i> 编辑</a>
+                          <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" placeholder="新文件名...">
+                      </td>
+                      <td>
+                        <input type="file" placeholder="新上传...">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+          <section id="listen">
+            <div class="page-header">
+              <h1>观察者</h1>
+              <p class="muted">监听特定url 实现外部hook回调(如weibo OAuth回调等)</p>
+            </div>
+            <article>
+              <h2>微信</h2>
+              <div class="dlist">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>地址</th>
+                      <th>数据类型</th>
+                      <th>编辑</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <input type="text" value="">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-pencil icon-white"></i> 编辑</a>
+                          <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" placeholder="新地址...">
+                      </td>
+                      <td>
+                        <input type="text" placeholder="新数据类型...">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
         </div>
       </div>
     </div>

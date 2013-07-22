@@ -87,7 +87,11 @@ func (c Projects) Show(user, project string) r.Result {
 		return c.NotFound("404 项目不存在")
 	}
 	if mUser != nil {
-		return c.Render(mUser, mProject)
+		mEditable := false
+		if mUser.Id == mProject.OwnerId {
+			mEditable = true
+		}
+		return c.Render(mEditable, mUser, mProject)
 	}
 	return c.Render(mProject)
 }
