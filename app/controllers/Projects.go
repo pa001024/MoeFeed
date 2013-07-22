@@ -81,10 +81,13 @@ func (c Projects) Setting() r.Result {
 
 // [静]显示项目独立页
 func (c Projects) Show(user, project string) r.Result {
-	c.CheckUser()
+	mUser := c.CheckUser()
 	mProject := repo.ProjectRepo.GetByName(user, project)
 	if mProject == nil {
 		return c.NotFound("404 项目不存在")
+	}
+	if mUser != nil {
+		return c.Render(mUser, mProject)
 	}
 	return c.Render(mProject)
 }

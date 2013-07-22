@@ -84,7 +84,7 @@ func (c App) PostRegister(user *models.User, return_to, password, password2 stri
 	repo.UserCodeRepo.Put(code)
 	// 发送邮件
 	log.Println("Send mail to", user.Email)
-	aurl := "http://feed.qaq.ca:9000/reauth?" + (url.Values{"id": {user.Username}, "code": {code.Code}}).Encode()
+	aurl := "http://feed.qaq.ca/reauth?" + (url.Values{"id": {user.Username}, "code": {code.Code}}).Encode()
 	service.Mail.SendMailAsync(user.Email, "完成你的注册", `
 		<p>如果你需要使用全部功能 请点击下列链接完成验证</p>
 		<p><a href="`+aurl+`">`+aurl+`</a></p>
