@@ -25,5 +25,12 @@ func RegisterDb() {
 	m.CreateTableIfNotExists(new(models.UserCode))
 	m.CreateTableIfNotExists(new(models.UserStatus))
 	m.CreateTableIfNotExists(new(models.OAuth))
-	m.CreateTableIfNotExists(new(models.Worker))
+	m.CreateTableIfNotExists(new(models.Source))
+	m.CreateTableIfNotExists(new(models.Target))
+	m.CreateTableIfNotExists(new(models.Filter))
+	m.CreateTableIfNotExists(new(models.Resource))
+	m.CreateTableIfNotExists(new(models.Channel))
+	m.CreateTableIfNotExists(new(models.Callback))
+
+	// TODO: 日志表需要NOSQL
 }

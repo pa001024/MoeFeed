@@ -23,24 +23,42 @@ GET     /logout                                 App.Logout
 GET     /help                                   App.Help
 
 # 用户设置
-GET     /settings                               Users.ProfileLink
-GET     /settings/profile                       Users.Profile
-GET     /settings/security                      Users.Security
+GET     /settings                               User.ProfileLink
+GET     /settings/profile                       User.Profile
+GET     /settings/security                      User.Security
 
-GET     /projects/help                          Projects.Help
-GET     /projects/new                           Projects.CreateLink
-GET     /new                                    Projects.Create
-POST    /new                                    Projects.PostCreate
-GET     /projects                               Projects.ListLink
-GET     /organizations/profile                  Organizations.Profile
-GET     /organizations/:user                    Organizations.Show
-GET     /:user                                  Users.Show
-GET     /:user/:project                         Projects.Show
-GET     /:user/:project/delete                  Projects.Delete
-POST    /:user/:project/delete                  Projects.Delete
-GET     /:user/:project/settings                Projects.Setting
+GET     /projects/help                          Project.Help
+GET     /projects/new                           Project.CreateLink
+GET     /new                                    Project.Create
+POST    /new                                    Project.PostCreate
+GET     /projects                               Project.ListLink
+GET     /organizations/profile                  Organization.Profile
+GET     /organizations/:user                    Organization.Show
 
+*       /api                                    Api.Index
+*       /api/:controller/:action                :controller.:action
+
+GET     /:user                                  User.Show
+GET     /:user/:project                         Project.Show
+GET     /:user/:project/delete                  Project.Delete
+POST    /:user/:project/delete                  Project.Delete
+GET     /:user/:project/settings                Project.Setting
+
+GET     /:user/:project/source                  Source.Show
+GET     /:user/:project/source/new              Source.Create
+POST    /:user/:project/source/new              Source.PostCreate
+GET     /:user/:project/filter                  Filter.Show
+GET     /:user/:project/filter/new              Filter.Create
+POST    /:user/:project/filter/new              Filter.PostCreate
+GET     /:user/:project/target                  Target.Show
+GET     /:user/:project/target/new              Target.Create
+POST    /:user/:project/target/new              Target.PostCreate
+GET     /:user/:project/resource                Resource.Show
+GET     /:user/:project/resource/new            Resource.Create
+POST    /:user/:project/resource/new            Resource.PostCreate
+GET     /:user/:project/callback                Callback.Show
+GET     /:user/:project/callback/new            Callback.Create
+POST    /:user/:project/callback/new            Callback.PostCreate
 
 # 后期功能 
-# *       /api/:action                            API.:action
-# GET     /explore                                Projects.Explore
+# GET     /explore                                Project.Explore

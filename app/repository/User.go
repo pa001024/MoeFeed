@@ -7,9 +7,7 @@ import (
 	"strings"
 )
 
-var (
-	UserRepo *User
-)
+var UserRepo *User
 
 type User struct{}
 

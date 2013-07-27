@@ -23,9 +23,7 @@ var (
 
 func (this *Project) Validate(v *r.Validation) {
 	v.Check(this.Name, r.Required{}, r.MinSize{2}, r.MaxSize{64}, r.Match{projRegex})
-	if this.DisplayName == "" {
-		this.DisplayName = this.Name
-	}
+
 	v.Required(this.OwnerId)
 }
 

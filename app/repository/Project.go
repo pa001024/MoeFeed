@@ -5,9 +5,7 @@ import (
 	"github.com/pa001024/MoeFeed/app/models"
 )
 
-var (
-	ProjectRepo *Project
-)
+var ProjectRepo *Project
 
 type Project struct{}
 
@@ -20,7 +18,7 @@ func (this *Project) Put(project *models.Project) {
 	q.Save(project)
 }
 
-// 因为Project没有聚集索引 所以直接使用这个
+// 主键
 func (this *Project) GetById(id int64) *models.Project {
 	//////////////////
 	q, err := qbs.GetQbs()

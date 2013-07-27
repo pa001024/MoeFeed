@@ -5,9 +5,7 @@ import (
 	"github.com/pa001024/MoeFeed/app/models"
 )
 
-var (
-	UserCodeRepo *UserCode
-)
+var UserCodeRepo *UserCode
 
 type UserCode struct{}
 

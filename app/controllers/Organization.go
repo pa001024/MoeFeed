@@ -4,15 +4,15 @@ import (
 	r "github.com/robfig/revel"
 )
 
-type Organizations struct {
+type Organization struct {
 	*r.Controller
 }
 
 // 显示组织独立页
-func (c Organizations) Profile() r.Result {
+func (c Organization) Profile() r.Result {
 	return c.Render()
 }
 
-func (c Organizations) Show(user string) r.Result {
+func (c Organization) Show(user string) r.Result {
 	return c.Render()
 }
