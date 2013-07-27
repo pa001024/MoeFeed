@@ -12,15 +12,15 @@ GET     /favicon.ico                            Static.Serve("public/img","favic
 
 # 主页
 GET     /                                       App.Index
+GET     /help                                   App.Help
 
 # 验证(前端)
-GET     /register                               App.Register
-POST    /register                               App.PostRegister
-GET     /reauth                                 App.Reauth
-GET     /login                                  App.Login
-POST    /login                                  App.PostLogin
-GET     /logout                                 App.Logout
-GET     /help                                   App.Help
+GET     /register                               User.Register
+POST    /register                               User.PostRegister
+GET     /reauth                                 User.Reauth
+GET     /login                                  User.Login
+POST    /login                                  User.PostLogin
+GET     /logout                                 User.Logout
 
 # 用户设置
 GET     /settings                               User.ProfileLink

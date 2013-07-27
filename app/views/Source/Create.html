@@ -1,40 +1,40 @@
 {{or .mProject.DisplayName .mProject.Name | printf "创建来源点 %s - 萌更新" | set . "title"}}
 {{template "header.html" .}}
-    <div class="container">
+    <div class="container main">
       <div class="row">
         <div class="span8 offset2">
           <form class="form-horizontal" method="POST">
             <fieldset>
               <input type="hidden" name="return_to" value="{{.return_to}}">
               <div id="legend" class="">
-                <legend class="">添加用户</legend>
+                <legend class="">创建来源点</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="user-Email">邮箱</label>
+                <label class="control-label" for="source-Name">名称</label>
                 <div class="controls">
-                  <input type="email" required name="user.Email" id="user-Email" placeholder="@exmaple.com" class="input-xlarge">
-                  <p class="help-block">账户验证信息将发送到你的邮箱</p>
+                  <input type="email" required name="source.Name" id="source-Name" class="input-xlarge">
+                  <p class="help-block">名称是一个来源点的唯一标示符</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="user-Username">用户名</label>
+                <label class="control-label" for="source-Type">类型</label>
                 <div class="controls">
-                  <input type="text" required name="user.Username" id="user-Username" class="input-xlarge">
-                  <p class="help-block">用户名将被用来登录并作为项目url地址的一部分</p>
+                  <input type="text" required name="source.Type" id="source-Type" placeholder="rss" class="input-xlarge">
+                  <p class="help-block">类型是来源点工作的基础</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="password">密码</label>
+                <label class="control-label" for="source-Data">初始数据</label>
                 <div class="controls">
-                  <input type="password" required name="password" id="password" class="input-xlarge">
-                  <p class="help-block">建议使用高强度密码</p>
+                  <textarea name="source.Data" id="source-Data" cols="30" rows="10" class="input-xlarge" placeholder='{ "key":"value" }'></textarea>
+                  <p class="help-block">数据是一组键值对 使用JSON格式 可选</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">注册</button>
+                  <button class="btn btn-success">创建</button>
                 </div>
               </div>
             </fieldset>

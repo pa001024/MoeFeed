@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	// "github.com/pa001024/MoeFeed/app/models"
-	// repo "github.com/pa001024/MoeFeed/app/repository"
+	"github.com/pa001024/MoeFeed/app/models"
+	repo "github.com/pa001024/MoeFeed/app/repository"
 	r "github.com/robfig/revel"
 
 	// "fmt"
@@ -12,8 +12,18 @@ import (
 type Source struct{ Project }
 
 // [动][写]
-func (c Source) PostCreate() r.Result {
-	return c.Render()
+func (c Source) PostCreate(user, project string, source *models.Source) r.Result {
+	u := c.CheckUser()
+	p := c.CheckProject(user, project)
+	if p == nil {
+		return c.NotFound("找不到该项目")
+	}
+	if u == nil {
+		c.Flash.Error("请先登录")
+		return c.Redirect("/%s/%s", user, project)
+	}
+	repo.SourceRepo.Put(source)
+	return c.Redirect("/%s/%s", user, project)
 }
 
 // [静]显示单个来源点
