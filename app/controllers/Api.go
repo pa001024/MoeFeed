@@ -5,14 +5,9 @@ import (
 	r "github.com/robfig/revel"
 )
 
-type Api struct {
-	App
-}
+// 外部API
+type Api struct{ App }
 
 func (c Api) Index() r.Result {
 	return c.Render()
-}
-
-func (c Api) Test() r.Result {
-	return c.NotFound("恩")
 }

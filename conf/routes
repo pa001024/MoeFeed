@@ -8,7 +8,7 @@ module:testrunner
 
 # 静态文件 
 GET     /public/*filepath                       Static.Serve("public")
-GET     /favicon.ico                            Static.Serve("public/images","favicon.ico")
+GET     /favicon.ico                            Static.Serve("public/img","favicon.ico")
 
 # 主页
 GET     /                                       App.Index
@@ -35,6 +35,7 @@ GET     /projects                               Project.ListLink
 GET     /organizations/profile                  Organization.Profile
 GET     /organizations/:user                    Organization.Show
 
+GET     /sysboard                               Admin.Index
 *       /api                                    Api.Index
 *       /api/:controller/:action                :controller.:action
 

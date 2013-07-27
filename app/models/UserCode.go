@@ -8,7 +8,7 @@ import (
 type UserCode struct {
 	Id     int64
 	Code   string `qbs:"size:16,index,notnull"`
-	UserId int64
+	UserId int64  `qbs:"notnull"`
 	User   *User
 }
 

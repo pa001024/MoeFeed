@@ -2,36 +2,37 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/coocood/qbs"
+	"log"
+	"net/url"
+
 	"github.com/pa001024/MoeFeed/app/models"
 	repo "github.com/pa001024/MoeFeed/app/repository"
 	"github.com/pa001024/MoeFeed/app/service"
 	"github.com/pa001024/MoeWorker/util"
 	r "github.com/robfig/revel"
-	"log"
-	"net/url"
 )
 
 const (
 	USER = "user"
 )
 
+// 基础应用
 type App struct{ *r.Controller }
 
 // 用户状态持久化
 func (c App) CheckUser() *models.User {
-	if vu := c.RenderArgs[USER]; vu != nil {
+	if vu := c.RenderArgs["mUser"]; vu != nil {
 		return vu.(*models.User)
 	}
 	if userId, ok := c.Session[USER]; ok {
 		u := repo.UserRepo.GetById(userId)
-		c.RenderArgs[USER] = u
+		c.RenderArgs["mUser"] = u
 		return u
 	}
 	return nil
 }
 
-// [动] 登录
+// [动][边] 登录
 func (c App) PostLogin(username, password, return_to string) r.Result {
 	c.Validation.Required(username).Message("请填写用户名")
 	c.Validation.Required(password).Message("请填写密码")
@@ -63,7 +64,7 @@ func (c App) PostLogin(username, password, return_to string) r.Result {
 	return c.Redirect(return_to)
 }
 
-// [动] 用户注册
+// [动][写] 用户注册
 func (c App) PostRegister(user *models.User, return_to, password, password2 string) r.Result {
 	c.Validation.Required(password == password2).
 		Message("两次密码不匹配")
@@ -97,24 +98,25 @@ func (c App) PostRegister(user *models.User, return_to, password, password2 stri
 	return c.Redirect(return_to)
 }
 
-// [动] 验证
-func (c App) Reauth(id, code string) r.Result {
-	//////////////
-	q, err := qbs.GetQbs()
-	assetsError(err)
-	defer q.Close()
-	//////////////
+// [动][写] 验证
+func (c App) Reauth(code string, id int64) r.Result {
 	msg := "验证失败"
-	usercode := new(models.UserCode)
-	err = q.WhereEqual("username", id).WhereEqual("code", code).Find(usercode)
-
-	if usercode.User != nil {
-		usercode.User.Status = 1
-		q.Save(usercode.User)
-		q.Delete(usercode)
-		msg = "你已通过验证"
+	usercode := repo.UserCodeRepo.GetByOwnerAndCode(code, id)
+	if usercode != nil && usercode.User != nil {
+		if usercode.User.Status == models.UnauthedUser {
+			usercode.User.Status = models.AuthedUser
+			repo.UserRepo.Put(usercode.User)
+			repo.UserCodeRepo.Delete(usercode)
+			msg = "您的账户已通过验证"
+		} else if usercode.User.Status == models.UnauthedTeam {
+			usercode.User.Status = models.AuthedTeam
+			repo.UserRepo.Put(usercode.User)
+			repo.UserCodeRepo.Delete(usercode)
+			msg = "您的组织账户已通过验证"
+		} else {
+			msg = "您无需进行验证"
+		}
 	}
-
 	return c.Render(msg)
 }
 

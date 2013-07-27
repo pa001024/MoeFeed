@@ -43,8 +43,8 @@ func (this *User) GetBy(key string, value interface{}) *models.User {
 	return nil
 }
 
-// 聚集索引
-func (this *User) GetById(id string) *models.User {
+// 聚集索引 interface{}是为了兼容int64和string
+func (this *User) GetById(id interface{}) *models.User {
 	return this.GetBy("id", id)
 }
 

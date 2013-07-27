@@ -32,6 +32,7 @@ const (
 	UnauthedTeam
 	AuthedUser
 	AuthedTeam
+	SysAdmin
 )
 
 var (

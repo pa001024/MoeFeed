@@ -1,0 +1,45 @@
+{{set . "title" "添加用户 - 萌更新"}}
+{{template "header.html" .}}
+    <div class="container">
+      <div class="row">
+        <div class="span8 offset2">
+          <form class="form-horizontal" method="POST">
+            <fieldset>
+              <input type="hidden" name="return_to" value="{{.return_to}}">
+              <div id="legend" class="">
+                <legend class="">添加用户</legend>
+              </div>
+              {{template "flash.html" .}}
+              <div class="control-group">
+                <label class="control-label" for="user-Email">邮箱</label>
+                <div class="controls">
+                  <input type="email" required name="user.Email" id="user-Email" placeholder="@exmaple.com" class="input-xlarge">
+                  <p class="help-block">账户验证信息将发送到你的邮箱</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="user-Username">用户名</label>
+                <div class="controls">
+                  <input type="text" required name="user.Username" id="user-Username" class="input-xlarge">
+                  <p class="help-block">用户名将被用来登录并作为项目url地址的一部分</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="password">密码</label>
+                <div class="controls">
+                  <input type="password" required name="password" id="password" class="input-xlarge">
+                  <p class="help-block">建议使用高强度密码</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                  <button class="btn btn-success">注册</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+{{template "footer.html" .}}

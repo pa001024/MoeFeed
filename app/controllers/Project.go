@@ -81,7 +81,7 @@ func (c Project) Setting() r.Result {
 
 // [静]显示项目独立页
 func (c Project) Show(user, project string) r.Result {
-	mUser := c.CheckUser()
+	u := c.CheckUser()
 	mProject := repo.ProjectRepo.GetByName(user, project)
 	if mProject == nil {
 		return c.NotFound("项目不存在")
@@ -92,10 +92,10 @@ func (c Project) Show(user, project string) r.Result {
 	mTarget := repo.TargetRepo.FindByProject(mProject.Id)
 	mResource := repo.ResourceRepo.FindByProject(mProject.Id)
 	mCallback := repo.CallbackRepo.FindByProject(mProject.Id)
-	if mUser != nil {
-		mEditable := mUser.Id == mProject.OwnerId
+	if u != nil {
+		mEditable := u.Id == mProject.OwnerId
 
-		return c.Render(mEditable, mUser, mProject, mSource, mFilter, mTarget, mResource, mCallback)
+		return c.Render(mEditable, mProject, mSource, mFilter, mTarget, mResource, mCallback)
 	}
 	return c.Render(mProject)
 }
