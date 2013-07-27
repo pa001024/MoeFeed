@@ -1,4 +1,4 @@
-{{set . "title" "添加用户 - 萌更新"}}
+{{or .mProject.DisplayName .mProject.Name | printf "创建来源点 %s - 萌更新" | set . "title"}}
 {{template "header.html" .}}
     <div class="container">
       <div class="row">

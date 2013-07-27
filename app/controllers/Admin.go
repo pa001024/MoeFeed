@@ -7,7 +7,7 @@ import (
 )
 
 // 后台管理
-type Admin struct{ App }
+type Admin struct{ *r.Controller }
 
 // 用户状态持久化+管理员身份验证
 func (c Admin) CheckUser() *models.User {

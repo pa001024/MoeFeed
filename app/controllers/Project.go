@@ -11,6 +11,19 @@ import (
 // 项目控制器
 type Project struct{ App }
 
+// 统一参数解析
+func (c Project) CheckProject(user, project string) *models.Project {
+	if vp := c.RenderArgs["mProject"]; vp != nil {
+		return vp.(*models.Project)
+	}
+	mProject := repo.ProjectRepo.GetByName(user, project)
+	if mProject != nil {
+		c.RenderArgs["mProject"] = mProject
+		return mProject
+	}
+	return nil
+}
+
 ///////////////////////////
 // [动]具体动作 如增删改 //
 ///////////////////////////
@@ -82,20 +95,16 @@ func (c Project) Setting() r.Result {
 // [静]显示项目独立页
 func (c Project) Show(user, project string) r.Result {
 	u := c.CheckUser()
-	mProject := repo.ProjectRepo.GetByName(user, project)
-	if mProject == nil {
-		return c.NotFound("项目不存在")
-	}
-	// mChannel := repo.ChannelRepo.FindByProject(mProject.Id)
-	mSource := repo.SourceRepo.FindByProject(mProject.Id)
-	mFilter := repo.FilterRepo.FindByProject(mProject.Id)
-	mTarget := repo.TargetRepo.FindByProject(mProject.Id)
-	mResource := repo.ResourceRepo.FindByProject(mProject.Id)
-	mCallback := repo.CallbackRepo.FindByProject(mProject.Id)
+	p := c.CheckProject(user, project)
+	mSource := repo.SourceRepo.FindByProject(p.Id)
+	mFilter := repo.FilterRepo.FindByProject(p.Id)
+	mTarget := repo.TargetRepo.FindByProject(p.Id)
+	mResource := repo.ResourceRepo.FindByProject(p.Id)
+	mCallback := repo.CallbackRepo.FindByProject(p.Id)
+	// mChannel := repo.ChannelRepo.FindByProject(p.Id)
+	mEditable := false
 	if u != nil {
-		mEditable := u.Id == mProject.OwnerId
-
-		return c.Render(mEditable, mProject, mSource, mFilter, mTarget, mResource, mCallback)
+		mEditable = u.Id == p.OwnerId
 	}
-	return c.Render(mProject)
+	return c.Render(mEditable, mSource, mFilter, mTarget, mResource, mCallback)
 }
