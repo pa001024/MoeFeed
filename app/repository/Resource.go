@@ -18,6 +18,15 @@ func (this *Resource) Put(model *models.Resource) {
 	q.Save(model)
 }
 
+func (this *Resource) Delete(model *models.Resource) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
+}
+
 // 主键
 func (this *Resource) GetById(id int64) *models.Resource {
 	//////////////////

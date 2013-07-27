@@ -18,6 +18,15 @@ func (this *Project) Put(project *models.Project) {
 	q.Save(project)
 }
 
+func (this *Project) Delete(model *models.Project) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
+}
+
 // 主键
 func (this *Project) GetById(id int64) *models.Project {
 	//////////////////

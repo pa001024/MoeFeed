@@ -18,6 +18,15 @@ func (this *JobLog) Put(model *models.JobLog) {
 	q.Save(model)
 }
 
+func (this *JobLog) Delete(model *models.JobLog) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
+}
+
 // 主键
 func (this *JobLog) GetById(id int64) *models.JobLog {
 	//////////////////

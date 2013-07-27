@@ -18,6 +18,15 @@ func (this *Channel) Put(model *models.Channel) {
 	q.Save(model)
 }
 
+func (this *Channel) Delete(model *models.Channel) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
+}
+
 // 主键
 func (this *Channel) GetById(id int64) *models.Channel {
 	//////////////////

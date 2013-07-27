@@ -9,13 +9,23 @@ var UserCodeRepo *UserCode
 
 type UserCode struct{}
 
-func (this *UserCode) Put(project *models.UserCode) {
+func (this *UserCode) Put(model *models.UserCode) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
 	defer q.Close()
 	//////////////////
-	q.Save(project)
+	q.Save(model)
+}
+
+// 删除
+func (this *UserCode) Delete(model *models.UserCode) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
 }
 
 func (this *UserCode) GetById(id int64) *models.UserCode {

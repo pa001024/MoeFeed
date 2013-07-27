@@ -20,6 +20,15 @@ func (this *User) Put(user *models.User) {
 	q.Save(user)
 }
 
+func (this *User) Delete(model *models.User) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
+}
+
 func (this *User) GetBy(key string, value interface{}) *models.User {
 	//////////////////
 	q, err := qbs.GetQbs()

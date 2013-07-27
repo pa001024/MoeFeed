@@ -18,6 +18,15 @@ func (this *UserStatus) Put(model *models.UserStatus) {
 	q.Save(model)
 }
 
+func (this *UserStatus) Delete(model *models.UserStatus) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
+}
+
 // 主键
 func (this *UserStatus) GetById(id int64) *models.UserStatus {
 	//////////////////

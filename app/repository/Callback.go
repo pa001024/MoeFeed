@@ -18,6 +18,15 @@ func (this *Callback) Put(model *models.Callback) {
 	q.Save(model)
 }
 
+func (this *Callback) Delete(model *models.Callback) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	q.Delete(model)
+}
+
 // 主键
 func (this *Callback) GetById(id int64) *models.Callback {
 	//////////////////
