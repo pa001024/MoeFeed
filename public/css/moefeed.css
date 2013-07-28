@@ -5,6 +5,9 @@
 .project section h1 .btn{
   margin: -4px 12px 4px;
 }
+.project section {
+  padding-top: 30px;
+}
 .project section article {
   position: relative;
   margin: 15px 0;
@@ -14,15 +17,14 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-}
-section {
-  padding-top: 30px;
-}
-.dlist input {
+}.dlist input {
   margin-bottom: 0;
   width: 100%;
   box-sizing: border-box;
   height: 30px;
+}
+.dlist table tr td{
+  line-height: 28px;
 }
 .dlist table tr td:last-child {
   width:68px;

@@ -112,12 +112,14 @@ func (c Project) Setting() r.Result {
 func (c Project) Show(user, project string) r.Result {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
+	if p == nil {
+		return c.NotFound("没有此项目")
+	}
 	mSource := repo.SourceRepo.FindByProject(p.Id)
 	mFilter := repo.FilterRepo.FindByProject(p.Id)
 	mTarget := repo.TargetRepo.FindByProject(p.Id)
 	mResource := repo.ResourceRepo.FindByProject(p.Id)
 	mCallback := repo.CallbackRepo.FindByProject(p.Id)
-	// mChannel := repo.ChannelRepo.FindByProject(p.Id)
 	mEditable := false
 	if u != nil {
 		mEditable = u.Id == p.OwnerId

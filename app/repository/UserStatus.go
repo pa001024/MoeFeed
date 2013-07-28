@@ -71,7 +71,7 @@ func (this *UserStatus) FindByProject(projectId int64) (obj []*models.UserStatus
 }
 
 // 列出用户项目所有UserStatus
-func (this *UserStatus) FindByUserProject(userId, projectId int64) (obj []*models.UserStatus) {
+func (this *UserStatus) FindByUserAndProject(userId, projectId int64) (obj []*models.UserStatus) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
