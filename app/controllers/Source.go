@@ -4,11 +4,9 @@ import (
 	"github.com/pa001024/MoeFeed/app/models"
 	repo "github.com/pa001024/MoeFeed/app/repository"
 	r "github.com/robfig/revel"
-
-	// "fmt"
 )
 
-// 项目控制器
+// 来源点控制器
 type Source struct{ Project }
 
 // [动][写]

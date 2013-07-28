@@ -10,25 +10,24 @@ import (
 	r "github.com/robfig/revel"
 )
 
-type User struct {
-	App
-}
+// 用户控制器
+type User struct{ App }
 
 // 跳转
-func (c User) ProfileLink() r.Result {
-	return c.Redirect("/")
+func (c User) ProfileLink(user string) r.Result {
+	return c.Redirect("/%s", user)
 }
 
 // 用户基本信息
-func (c User) Profile() r.Result {
-	c.CheckUser()
-	return c.Render()
+func (c User) Profile(user string) r.Result {
+	// c.CheckUser()
+	return c.Todo()
 }
 
 // 用户安全信息
-func (c User) Security() r.Result {
-	c.CheckUser()
-	return c.Render()
+func (c User) Security(user string) r.Result {
+	// c.CheckUser()
+	return c.Todo()
 }
 
 // [静]用户展示页
