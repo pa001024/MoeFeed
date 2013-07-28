@@ -35,6 +35,10 @@ func (c Resource) PostCreate(user, project string, resource *models.Resource) r.
 		c.Flash.Error("请上传文件: %v", err)
 		return c.Redirect("/%s/%s/resource/new", user, project)
 	}
+	if repo.ResourceRepo.GetByProjectAndName(resource.Name, resource.ProjectId) != nil {
+		c.Flash.Error("该资源名称已存在")
+		return c.Redirect("/%s/%s/resource/new", user, project)
+	}
 	repo.ResourceRepo.PutAndStone(resource, fo)
 	return c.Redirect("/%s/%s", user, project)
 }

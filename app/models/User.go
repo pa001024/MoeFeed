@@ -72,7 +72,7 @@ func (this *User) ValidatePassword(v *r.Validation, password string) {
 
 func (this *User) GeneratePassword(password string) string {
 	bin := []byte(_APPSECRET + password + this.Username)
-	b, err := bcrypt.GenerateFromPassword(bin, bcrypt.DefaultCost)
+	b, _ := bcrypt.GenerateFromPassword(bin, bcrypt.DefaultCost)
 	s := base64.StdEncoding.EncodeToString(b) // len = 80 = 64 hash 16 salt
 	return s
 }

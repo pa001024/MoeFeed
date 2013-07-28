@@ -5,11 +5,11 @@ import (
 	"github.com/pa001024/MoeFeed/app/models"
 )
 
-var CallbackRepo *Callback
+var SourceRepo *Source
 
-type Callback struct{}
+type Source struct{}
 
-func (this *Callback) Put(model *models.Callback) {
+func (this *Source) Put(model *models.Source) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
@@ -18,7 +18,7 @@ func (this *Callback) Put(model *models.Callback) {
 	q.Save(model)
 }
 
-func (this *Callback) Delete(model *models.Callback) {
+func (this *Source) Delete(model *models.Source) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
@@ -28,37 +28,37 @@ func (this *Callback) Delete(model *models.Callback) {
 }
 
 // 主键
-func (this *Callback) GetById(id int64) *models.Callback {
+func (this *Source) GetById(id int64) *models.Source {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
 	defer q.Close()
 	//////////////////
-	obj := &models.Callback{Id: id}
+	obj := &models.Source{Id: id}
 	q.Find(obj)
-	if obj.ProjectId == 0 {
+	if obj.Name == "" {
 		return nil
 	}
 	return obj
 }
 
 // 联合聚集索引
-func (this *Callback) GetByProjectAndUrl(url string, projectId int64) *models.Callback {
+func (this *Source) GetByProjectAndName(name string, projectId int64) *models.Source {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
 	defer q.Close()
 	//////////////////
-	obj := &models.Callback{}
-	q.Where("url = ? and project_id = ?", url, projectId).Find(obj)
+	obj := &models.Source{}
+	q.Where("name = ? and project_id = ?", name, projectId).Find(obj)
 	if obj.ProjectId == 0 {
 		return nil
 	}
 	return obj
 }
 
-// 列出项目所有Callback
-func (this *Callback) FindByProject(projectId int64) (obj []*models.Callback) {
+// 列出项目所有Source
+func (this *Source) FindByProject(projectId int64) (obj []*models.Source) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)

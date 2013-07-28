@@ -32,7 +32,6 @@ func (this *Resource) PutAndStone(resource *models.Resource, r multipart.File) {
 	defer q.Close()
 	//////////////////
 	defer r.Close()
-	// 联合聚集索引约束
 	// 计算Hash
 	m := md5.New()
 	r.Seek(0, 0)
@@ -79,6 +78,21 @@ func (this *Resource) GetById(id int64) *models.Resource {
 	obj := &models.Resource{Id: id}
 	q.Find(obj)
 	if obj.Name == "" {
+		return nil
+	}
+	return obj
+}
+
+// 联合聚集索引
+func (this *Resource) GetByProjectAndName(name string, projectId int64) *models.Resource {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	obj := &models.Resource{}
+	q.Where("name = ? and project_id = ?", name, projectId).Find(obj)
+	if obj.ProjectId == 0 {
 		return nil
 	}
 	return obj

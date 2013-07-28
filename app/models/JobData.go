@@ -11,7 +11,7 @@ type KeyPair struct {
 }
 type JobData struct {
 	Id        int64
-	Name      string `qbs:"size:32,notnull"`
+	Name      string `qbs:"index,size:32,notnull"`
 	Type      int32  `qbs:"notnull"`
 	ProjectId int64  `qbs:"index,notnull"`
 	Project   *Project
