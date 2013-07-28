@@ -62,34 +62,212 @@
               <div class="span12"></div>
             </section>
             <section id="source">
-              <div class="page-header">
-                <h1>来源点<a href="{{.pageurl}}/source/new" title="创建一个来源点" class="btn"><i class="icon-plus-sign"></i></a></h1>
+              <div class="page-header">{{$mEditable := .mEditable}}
+                <h1>来源点
+                  {{if $mEditable}}<a href="{{.pageurl}}/source/new" title="创建一个来源点" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                </h1>
                 <p class="muted">项目资讯来源</p>
-              </div>{{template "dlist.html" .mSource}}
+              </div>{{range .mSource}}
+              <article>
+                <h2>{{.Name}}</h2>
+                <div class="dlist">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>键</th>
+                        <th>值</th>
+                        <th>编辑</th>
+                      </tr>
+                    </thead>
+                    <tbody>{{range .ViewData}}
+                      <tr>
+                        <td>
+                          <input type="text" value="{{.Key}}">
+                        </td>
+                        <td>
+                          <input type="text" value="{{.Value}}">
+                        </td>{{if $mEditable}}
+                        <td>
+                          <a class="btn btn-danger btn-block pull-right" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </td>{{end}}
+                      </tr>{{end}}
+                      <tr>
+                        <td>
+                          <input type="text" placeholder="新键...">
+                        </td>
+                        <td>
+                          <input type="text" placeholder="新值...">
+                        </td>{{if $mEditable}}
+                        <td>
+                          <a class="btn btn-success btn-block pull-right" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </td>{{end}}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>{{end}}
             </section>
             <section id="filter">
               <div class="page-header">
-                <h1>过滤器<a href="{{.pageurl}}/filter/new" title="创建一个过滤器" class="btn"><i class="icon-plus-sign"></i></a></h1>
+                <h1>过滤器
+                  {{if $mEditable}}<a href="{{.pageurl}}/filter/new" title="创建一个过滤器" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                </h1>
                 <p class="muted">项目资讯处理方式</p>
-              </div>{{template "dlist.html" .mFilter}}
+              </div>{{range .mFilter}}
+              <article>
+                <h2>{{.Name}}</h2>
+                <div class="dlist">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>键</th>
+                        <th>值</th>
+                        <th>编辑</th>
+                      </tr>
+                    </thead>
+                    <tbody>{{range .ViewData}}
+                      <tr>
+                        <td>
+                          <input type="text" value="{{.Key}}">
+                        </td>
+                        <td>
+                          <input type="text" value="{{.Value}}">
+                        </td>{{if $mEditable}}
+                        <td>
+                          <a class="btn btn-danger btn-block pull-right" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </td>{{end}}
+                      </tr>{{end}}
+                      <tr>
+                        <td>
+                          <input type="text" placeholder="新键...">
+                        </td>
+                        <td>
+                          <input type="text" placeholder="新值...">
+                        </td>{{if $mEditable}}
+                        <td>
+                          <a class="btn btn-success btn-block pull-right" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </td>{{end}}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>{{end}}
             </section>
             <section id="target">
               <div class="page-header">
-                <h1>目标点<a href="{{.pageurl}}/target/new" title="创建一个目标点" class="btn"><i class="icon-plus-sign"></i></a></h1>
+                <h1>目标点
+                  {{if $mEditable}}<a href="{{.pageurl}}/target/new" title="创建一个目标点" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                </h1>
                 <p class="muted">项目最终目标</p>
-              </div>{{template "dlist.html" .mTarget}}
+              </div>{{range .mTarget}}
+              <article>
+                <h2>{{.Name}}</h2>
+                <div class="dlist">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>键</th>
+                        <th>值</th>
+                        <th>编辑</th>
+                      </tr>
+                    </thead>
+                    <tbody>{{range .ViewData}}
+                      <tr>
+                        <td>
+                          <input type="text" value="{{.Key}}">
+                        </td>
+                        <td>
+                          <input type="text" value="{{.Value}}">
+                        </td>{{if $mEditable}}
+                        <td>
+                          <a class="btn btn-danger btn-block pull-right" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </td>{{end}}
+                      </tr>{{end}}
+                      <tr>
+                        <td>
+                          <input type="text" placeholder="新键...">
+                        </td>
+                        <td>
+                          <input type="text" placeholder="新值...">
+                        </td>{{if $mEditable}}
+                        <td>
+                          <a class="btn btn-success btn-block pull-right" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                        </td>{{end}}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>{{end}}
             </section>
             <section id="resource">
               <div class="page-header">
-                <h1>资源<a href="{{.pageurl}}/resource/new" title="创建一个资源" class="btn"><i class="icon-plus-sign"></i></a></h1>
+                <h1>资源
+                  {{if $mEditable}}<a href="{{.pageurl}}/resource/new" title="创建一个资源" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                </h1>
                 <p class="muted">资源文件 如过滤器文本 图片等 </p>
-              </div>{{template "flist.html" .mResource}}
+              </div>
+              <article>
+                <h2>资源列表</h2>
+                <div class="dlist">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>名称</th>
+                        <th>大小</th>
+                        <th>MD5</th>
+                        <th>文件</th>{{if .mEditable}}
+                        <th>编辑</th>{{end}}
+                      </tr>
+                    </thead>
+                    <tbody>{{range .mResource}}
+                      <tr>
+                        <td>{{.Name}}</td>
+                        <td>{{.Size}}</td>
+                        <td>{{.Hash}}</td>
+                        <td>
+                          <input type="file">
+                        </td>
+                        <td>{{if $mEditable}}
+                          <a class="btn btn-danger btn-block pull-right" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </td>{{end}}
+                      </tr>{{end}}
+                    </tbody>
+                  </table>
+                </div>
+              </article>
             </section>
             <section id="callback">
               <div class="page-header">
-                <h1>回调<a href="{{.pageurl}}/callback/new" title="创建一个回调" class="btn"><i class="icon-plus-sign"></i></a></h1>
+                <h1>回调
+                  {{if $mEditable}}<a href="{{.pageurl}}/callback/new" title="创建一个回调" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                </h1>
                 <p class="muted">监听特定url 实现外部hook回调(如weibo OAuth回调等)</p>
-              </div>{{template "clist.html" .mCallback}}
+              </div>
+              <article>
+                <h2>回调列表</h2>
+                <div class="dlist">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>名称</th>
+                        <th>URL</th>
+                        <th>类型</th>{{if $mEditable}}
+                        <th>编辑</th>{{end}}
+                      </tr>
+                    </thead>
+                    <tbody>{{range .mCallback}}
+                      <tr>
+                        <td>{{.Name}}</td>
+                        <td>{{.Url}}</td>
+                        <td>{{.Type}}</td>{{if $mEditable}}
+                        <td>
+                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                        </td>{{end}}
+                      </tr>{{end}}
+                    </tbody>
+                  </table>
+                </div>
+              </article>
             </section>
           </div>
         </div>

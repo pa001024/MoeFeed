@@ -24,11 +24,17 @@ func (c Callback) PostCreate(user, project string, callback *models.Callback) r.
 	return c.Redirect("/%s/%s", user, project)
 }
 
-func (c Callback) Show(user, project, callback string) r.Result {
+func (c Callback) Call(user, project, callback string) r.Result {
 	// c.CheckUser()
 	p := c.CheckProject(user, project)
 	repo.CallbackRepo.GetByProjectAndUrl(callback, p.Id)
 	return c.Render()
+}
+
+func (c Callback) Show(user, project string) r.Result {
+	// c.CheckUser()
+	// c.CheckProject(user, project)
+	return c.Redirect("/%s/%s", user, project)
 }
 
 func (c Callback) Create(user, project string) r.Result {

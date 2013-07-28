@@ -26,8 +26,8 @@ const (
 	FilterExecJavascript               // [转换系]执行js代码
 )
 const (
-	FilterImageRender = 300 + iota // [渲染系]按模板合成图片与文字
-	FilterImageMerger              // [渲染系]按程序合并图片
+	FilterTextRender  = 300 + iota // [渲染系]格式化文本
+	FilterImageRender              // [渲染系]按模板合成图片与文字
 )
 
 func (this *Filter) ViewData() (rst []KeyPair) {

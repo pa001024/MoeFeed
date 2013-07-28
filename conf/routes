@@ -32,6 +32,7 @@ GET     /projects/new                           Project.CreateLink
 GET     /new                                    Project.Create
 POST    /new                                    Project.PostCreate
 GET     /projects                               Project.ListLink
+GET     /explore                                Project.Explore
 GET     /organizations/profile                  Organization.Profile
 GET     /organizations/:user                    Organization.Show
 
@@ -60,6 +61,4 @@ POST    /:user/:project/resource/new            Resource.PostCreate
 GET     /:user/:project/callback                Callback.Show
 GET     /:user/:project/callback/new            Callback.Create
 POST    /:user/:project/callback/new            Callback.PostCreate
-
-# 后期功能 
-# GET     /explore                                Project.Explore
+*       /:user/:project/callback/:url           Callback.Call

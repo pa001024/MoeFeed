@@ -24,6 +24,16 @@ func (c Project) CheckProject(user, project string) *models.Project {
 	return nil
 }
 
+// 检查编辑权限
+func (c Project) CheckUserAndProject(user, project string) (*models.User, *models.Project) {
+	u := c.CheckUser()
+	p := c.CheckProject(user, project)
+	if u.Id == p.OwnerId {
+		return u, p
+	}
+	return nil, nil
+}
+
 ///////////////////////////
 // [动]具体动作 如增删改 //
 ///////////////////////////
@@ -76,6 +86,12 @@ func (c Project) ListLink() r.Result {
 
 // [静]创建项目前端
 func (c Project) Create() r.Result {
+	c.CheckUser()
+	return c.Render()
+}
+
+// [静]浏览页面
+func (c Project) Explore() r.Result {
 	c.CheckUser()
 	return c.Render()
 }
