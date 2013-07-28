@@ -1,34 +1,33 @@
 package models
 
-import (
-	"bytes"
-	"io"
-	"os"
-
-	"github.com/pa001024/MoeWorker/util"
+// enum Resource.Type
+const (
+	ResourceImage  = iota // 图片文件
+	ResourceText          // 文本文件
+	ResourceScript        // 脚本文件
+	ResourceOther         // 其他文件
 )
 
 // 资源
 type Resource struct {
 	Id        int64
 	Name      string `qbs:"size:32,notnull"`
-	Size      int32  `qbs:"notnull"`
+	Type      int32  `qbs:"notnull"`
+	Size      int64  `qbs:"notnull"`
 	Hash      string `qbs:"size:32,notnull"` // 文件储存方式 /hash[:2]/hash
 	ProjectId int64  `qbs:"index,notnull"`
 	Project   *Project
 }
 
 func (this *Resource) FileName() string {
-	return "data/" + this.Hash[:2] + "/" + this.Hash // TODO: 移动到配置文件
+	return "./data/" + this.Hash[:2] + "/" + this.Hash // TODO:可配置化
 }
 
-func (this *Resource) File() []byte {
-	// TODO: 缓存?
-	f, err := os.Open(this.FileName())
-	if err != nil {
-		util.DebugLog(err)
+func (this *Resource) ViewData() (rst []KeyPair) {
+	rst = []KeyPair{
+		{"文件名", this.Name},
+		{"大小", this.Size},
+		{"MD5", this.Hash},
 	}
-	buf := &bytes.Buffer{}
-	io.Copy(buf, f)
-	return buf.Bytes()
+	return
 }

@@ -1,8 +1,15 @@
 package repository
 
 import (
+	"crypto/md5"
+	"fmt"
+	"io"
+	"mime/multipart"
+	"os"
+
 	"github.com/coocood/qbs"
 	"github.com/pa001024/MoeFeed/app/models"
+	"github.com/pa001024/MoeWorker/util"
 )
 
 var ResourceRepo *Resource
@@ -18,6 +25,41 @@ func (this *Resource) Put(model *models.Resource) {
 	q.Save(model)
 }
 
+func (this *Resource) PutAndStone(resource *models.Resource, r multipart.File) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	defer r.Close()
+	// 联合聚集索引约束
+	// 计算Hash
+	m := md5.New()
+	r.Seek(0, 0)
+	io.Copy(m, r)
+	resource.Hash = fmt.Sprintf("%x", m.Sum(nil))
+	fn := resource.FileName()
+	os.MkdirAll(fn[:len(fn)-32], 0644)
+	f, err := os.Create(fn)
+	if err != nil {
+		util.Log(err)
+		return
+	}
+	defer f.Close()
+	r.Seek(0, 0)
+	size, _ := io.Copy(f, r)
+	resource.Size = size
+	q.Save(resource)
+}
+
+func (this *Resource) GetFile(resource *models.Resource) io.ReadCloser {
+	// TODO: 缓存?
+	f, err := os.Open(resource.FileName())
+	if err != nil {
+		util.Log(err)
+	}
+	return f
+}
 func (this *Resource) Delete(model *models.Resource) {
 	//////////////////
 	q, err := qbs.GetQbs()

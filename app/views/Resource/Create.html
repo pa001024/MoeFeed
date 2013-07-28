@@ -3,7 +3,7 @@
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
-          <form class="form-horizontal" method="POST">
+          <form class="form-horizontal" enctype="multipart/form-data" method="POST">
             <fieldset>
               <div id="legend" class="">
                 <legend class="">创建资源</legend>
@@ -20,19 +20,20 @@
                 <label class="control-label" for="resource-Type">类型</label>
                 <div class="controls">
                   <select name="resource.Type" id="resource-Type" class="input-xlarge">
+                    <option value="-1">自动判断</option>
                     <option value="0">图片</option>
                     <option value="1">文本</option>
-                    <option value="2">其他</option>
-                    <option value="3">脚本</option>
+                    <option value="2">脚本</option>
+                    <option value="3">其他</option>
                   </select>
-                  <p class="help-block">类型是资源工作的基础</p>
+                  <p class="help-block">类型标记</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="resource-Data">初始数据</label>
+                <label class="control-label" for="file">文件</label>
                 <div class="controls">
-                  <textarea name="resource.Data" id="resource-Data" cols="30" rows="10" class="input-xlarge" placeholder='{ "key":"value" }'></textarea>
-                  <p class="help-block">数据是一组键值对 使用JSON格式 可选</p>
+                  <input type="file" id="file" name="file">
+                  <p class="help-block">上传文件</p>
                 </div>
               </div>
               <div class="control-group">

@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"fmt"
+	"path"
+
 	"github.com/pa001024/MoeFeed/app/models"
 	repo "github.com/pa001024/MoeFeed/app/repository"
 	r "github.com/robfig/revel"
@@ -10,7 +13,7 @@ import (
 type Resource struct{ Project }
 
 // [动][写]
-func (c Resource) PostCreate(user, project string, source *models.Resource) r.Result {
+func (c Resource) PostCreate(user, project string, resource *models.Resource) r.Result {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
 	if p == nil {
@@ -18,9 +21,21 @@ func (c Resource) PostCreate(user, project string, source *models.Resource) r.Re
 	}
 	if u == nil {
 		c.Flash.Error("请先登录")
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/%s/%s/resource/new", user, project)
 	}
-	repo.ResourceRepo.Put(source)
+	resource.ProjectId = p.Id
+	fo, fh, err := c.Request.FormFile("file")
+	if err == nil && fh.Filename != "" {
+		if resource.Type == -1 {
+			mime := fh.Header.Get("Content-Type")
+			ext := path.Ext(fh.Filename)
+			fmt.Println(mime, ext)
+		}
+	} else {
+		c.Flash.Error("请上传文件: %v", err)
+		return c.Redirect("/%s/%s/resource/new", user, project)
+	}
+	repo.ResourceRepo.PutAndStone(resource, fo)
 	return c.Redirect("/%s/%s", user, project)
 }
 

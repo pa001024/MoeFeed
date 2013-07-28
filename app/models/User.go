@@ -73,15 +73,12 @@ func (this *User) ValidatePassword(v *r.Validation, password string) {
 func (this *User) GeneratePassword(password string) string {
 	bin := []byte(_APPSECRET + password + this.Username)
 	b, err := bcrypt.GenerateFromPassword(bin, bcrypt.DefaultCost)
-	s := base64.StdEncoding.EncodeToString(b) // len = 80
-	if err != nil {
-		panic(err)
-	}
+	s := base64.StdEncoding.EncodeToString(b) // len = 80 = 64 hash 16 salt
 	return s
 }
 
 func (this *User) GetAvatarUrl(size string) string {
-	return fmt.Sprintf("https://secure.gravatar.com/avatar/%v?%v",
+	return fmt.Sprintf("https://secure.gravatar.com/avatar/%s?%s",
 		util.Md5String(strings.ToLower(this.AvatarEmail)),
 		(url.Values{
 			"s": {size},
