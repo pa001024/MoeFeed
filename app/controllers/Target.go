@@ -10,7 +10,7 @@ import (
 type Target struct{ Project }
 
 // [动][写]
-func (c Target) PostCreate(user, project string, source *models.Target) r.Result {
+func (c Target) PostCreate(user, project string, target *models.Target) r.Result {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
 	if p == nil {
@@ -20,7 +20,8 @@ func (c Target) PostCreate(user, project string, source *models.Target) r.Result
 		c.Flash.Error("请先登录")
 		return c.Redirect("/%s/%s", user, project)
 	}
-	repo.TargetRepo.Put(source)
+	target.ProjectId = p.Id
+	repo.TargetRepo.Put(target)
 	return c.Redirect("/%s/%s", user, project)
 }
 

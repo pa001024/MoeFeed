@@ -12,14 +12,14 @@
               <div class="control-group">
                 <label class="control-label" for="target-Name">名称</label>
                 <div class="controls">
-                  <input type="email" required name="target.Name" id="target-Name" class="input-xlarge">
-                  <p class="help-block">名称是一个目标点的唯一标示符</p>
+                  <input type="text" required name="target.Name" id="target-Name" class="input-xlarge">
+                  <p class="help-block">名称是一个目标点的唯一标示符 必填 不能与其他重复</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="target-Type">类型</label>
                 <div class="controls">
-                  <select name="target.Type" id="target-Type">
+                  <select name="target.Type" id="target-Type" class="input-xlarge">
                     <option value="0">新浪微博</option>
                     <option value="1">腾讯微博</option>
                   </select>

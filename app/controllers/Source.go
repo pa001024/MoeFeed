@@ -20,6 +20,7 @@ func (c Source) PostCreate(user, project string, source *models.Source) r.Result
 		c.Flash.Error("请先登录")
 		return c.Redirect("/%s/%s", user, project)
 	}
+	source.ProjectId = p.Id
 	repo.SourceRepo.Put(source)
 	return c.Redirect("/%s/%s", user, project)
 }

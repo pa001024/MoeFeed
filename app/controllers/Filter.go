@@ -10,7 +10,7 @@ import (
 type Filter struct{ Project }
 
 // [动][写]
-func (c Filter) PostCreate(user, project string, source *models.Filter) r.Result {
+func (c Filter) PostCreate(user, project string, filter *models.Filter) r.Result {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
 	if p == nil {
@@ -20,7 +20,8 @@ func (c Filter) PostCreate(user, project string, source *models.Filter) r.Result
 		c.Flash.Error("请先登录")
 		return c.Redirect("/%s/%s", user, project)
 	}
-	repo.FilterRepo.Put(source)
+	filter.ProjectId = p.Id
+	repo.FilterRepo.Put(filter)
 	return c.Redirect("/%s/%s", user, project)
 }
 
