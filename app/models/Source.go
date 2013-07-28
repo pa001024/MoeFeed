@@ -15,15 +15,16 @@ const (
 )
 const (
 	SourceSinaWeibo    = 100 + iota // [时间线系]新浪微博
-	SourceTencentWeibo              // [时间线系]疼迅微博
+	SourceTencentWeibo              // [时间线系]腾讯微博
 	Source163Weibo                  // [时间线系]网易微博
 	SourceSohoWeibo                 // [时间线系]搜狐微博
-	SourceFacebook                  // [时间线系]脸书
-	SourceTwitter                   // [时间线系]推特
 	SourceRenren                    // [时间线系]人人
 	SourceKaixin                    // [时间线系]开心网
 	SourceDouban                    // [时间线系]豆瓣
 	SourceWeimoe                    // [时间线系]微萌
+	SourceGPlus                     // [时间线系]G+
+	SourceFacebook                  // [时间线系]脸书
+	SourceTwitter                   // [时间线系]推特
 )
 const (
 	SourceListenHttp = 200 + iota // [被动系]Http订阅

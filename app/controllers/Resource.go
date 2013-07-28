@@ -26,6 +26,8 @@ func (c Resource) PostCreate(user, project string, source *models.Resource) r.Re
 
 // [静]显示单个资源
 func (c Resource) Show(user, project string) r.Result {
+	c.CheckUser()
+	c.CheckProject(user, project)
 	return c.Render()
 }
 

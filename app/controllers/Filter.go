@@ -27,6 +27,8 @@ func (c Filter) PostCreate(user, project string, filter *models.Filter) r.Result
 
 // [静]显示单个过滤器
 func (c Filter) Show(user, project string) r.Result {
+	c.CheckUser()
+	c.CheckProject(user, project)
 	return c.Render()
 }
 

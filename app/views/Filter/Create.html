@@ -1,4 +1,4 @@
-{{or .mProject.DisplayName .mProject.Name | printf "创建来源点 %s - 萌更新" | set . "title"}}
+{{or .mProject.DisplayName .mProject.Name | printf "创建过滤器 %s - 萌更新" | set . "title"}}
 {{template "header.html" .}}
     <div class="container main">
       <div class="row">
@@ -6,31 +6,32 @@
           <form class="form-horizontal" method="POST">
             <fieldset>
               <div id="legend" class="">
-                <legend class="">创建来源点</legend>
+                <legend class="">创建过滤器</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="source-Name">名称</label>
+                <label class="control-label" for="filter-Name">名称</label>
                 <div class="controls">
-                  <input type="text" required name="source.Name" id="source-Name" class="input-xlarge">
-                  <p class="help-block">名称是一个来源点的唯一标示符 必填</p>
+                  <input type="text" required name="filter.Name" id="filter-Name" class="input-xlarge">
+                  <p class="help-block">名称是一个过滤器的唯一标示符 必填</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="source-Type">类型</label>
+                <label class="control-label" for="filter-Type">类型</label>
                 <div class="controls">
-                  <select name="source.Type" id="source-Type" class="input-xlarge">
-                    <option value="0">RSS订阅</option>
-                    <option value="1">Atom订阅</option>
-                    <option value="2">Html订阅</option><!-- <option value="100">新浪微博</option> -->
+                  <select name="filter.Type" id="filter-Type" class="input-xlarge">
+                    <option value="0">文本过滤</option>
+                    <option value="1">正则过滤</option>
+                    <option value="100">获取WikiText</option>
+                    <option value="200">简繁转换</option>
                   </select>
-                  <p class="help-block">类型是来源点工作的基础</p>
+                  <p class="help-block">类型是过滤器工作的基础</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="source-Data">初始数据</label>
+                <label class="control-label" for="filter-Data">初始数据</label>
                 <div class="controls">
-                  <textarea name="source.Data" id="source-Data" cols="30" rows="10" class="input-xlarge" placeholder='{ "key":"value" }'></textarea>
+                  <textarea name="filter.Data" id="filter-Data" cols="30" rows="10" class="input-xlarge" placeholder='{ "key":"value" }'></textarea>
                   <p class="help-block">数据是一组键值对 使用JSON格式 可选</p>
                 </div>
               </div>

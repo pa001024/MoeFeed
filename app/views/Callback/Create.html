@@ -1,0 +1,47 @@
+{{or .mProject.DisplayName .mProject.Name | printf "创建回调 %s - 萌更新" | set . "title"}}
+{{template "header.html" .}}
+    <div class="container main">
+      <div class="row">
+        <div class="span8 offset2">
+          <form class="form-horizontal" method="POST">
+            <fieldset>
+              <div id="legend" class="">
+                <legend class="">创建回调</legend>
+              </div>
+              {{template "flash.html" .}}
+              <div class="control-group">
+                <label class="control-label" for="callback-Name">名称</label>
+                <div class="controls">
+                  <input type="text" required name="callback.Name" id="callback-Name" class="input-xlarge">
+                  <p class="help-block">名称是一个回调的唯一标示符 必填</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="callback-Type">类型</label>
+                <div class="controls">
+                  <select name="callback.Type" id="callback-Type" class="input-xlarge">
+                    <option value="0">新浪微博OAuth2.0</option>
+                    <option value="1">腾讯微博OAuth2.0</option>
+                  </select>
+                  <p class="help-block">类型是回调工作的基础</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="callback-Data">URL地址</label>
+                <div class="controls">
+                  <input type="text" required name="callback.Data" id="callback-Data" placeholder="sinacb" class="input-xlarge">
+                  <p class="help-block">URL地址是全局唯一的 如/user/project/callback/sinacb</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                  <button class="btn btn-success">创建</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+{{template "footer.html" .}}

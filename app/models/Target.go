@@ -10,7 +10,7 @@ type Target JobData
 
 const (
 	TargetSinaWeibo    = iota // [时间线系]新浪微博
-	TargetTencentWeibo        // [时间线系]疼迅微博
+	TargetTencentWeibo        // [时间线系]腾讯微博
 	Target163Weibo            // [时间线系]网易微博
 	TargetSohoWeibo           // [时间线系]搜狐微博
 	TargetFacebook            // [时间线系]脸书

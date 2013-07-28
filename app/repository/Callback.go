@@ -42,6 +42,21 @@ func (this *Callback) GetById(id int64) *models.Callback {
 	return obj
 }
 
+// 主键
+func (this *Callback) GetByProjectAndUrl(url string, projectId int64) *models.Callback {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	obj := &models.Callback{}
+	q.Where("url = ? and project_id = ?", url, projectId).Find(obj)
+	if obj.ProjectId == 0 {
+		return nil
+	}
+	return obj
+}
+
 // 列出项目所有Callback
 func (this *Callback) FindByProject(projectId int64) (obj []*models.Callback) {
 	//////////////////

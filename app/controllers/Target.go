@@ -27,6 +27,8 @@ func (c Target) PostCreate(user, project string, target *models.Target) r.Result
 
 // [静]显示单个目标点
 func (c Target) Show(user, project string) r.Result {
+	c.CheckUser()
+	c.CheckProject(user, project)
 	return c.Render()
 }
 

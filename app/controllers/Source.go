@@ -27,6 +27,8 @@ func (c Source) PostCreate(user, project string, source *models.Source) r.Result
 
 // [静]显示单个来源点
 func (c Source) Show(user, project string) r.Result {
+	c.CheckUser()
+	c.CheckProject(user, project)
 	return c.Render()
 }
 

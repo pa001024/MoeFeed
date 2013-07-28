@@ -10,15 +10,15 @@ type Filter JobData
 
 const (
 	FilterText   = iota // [检测系]文本过滤
-	FilterRegexp        // [检测系]文本
+	FilterRegexp        // [检测系]正则过滤
 )
 const (
-	FilterWikiApi = 100 + iota // [抓取系]获取WikiText
+	FilterMediawikiApi = 100 + iota // [抓取系]获取WikiText
 )
 const (
-	FilterMachineTranlate = 200 + iota // [转换系]机器翻译
+	FilterZhconv          = 200 + iota // [转换系]简繁转换
+	FilterMachineTranlate              // [转换系]机器翻译
 	FilterHumanTranlate                // [转换系]人工翻译
-	FilterZhconv                       // [转换系]简繁转换
 	FilterWikitext                     // [转换系]WIKI文本过滤
 	FilterHtmltext                     // [转换系]HTML文本过滤
 	FilterExecText                     // [转换系]文本替换
