@@ -9,6 +9,7 @@ var UserCodeRepo *UserCode
 
 type UserCode struct{}
 
+// 置入
 func (this *UserCode) Put(model *models.UserCode) {
 	//////////////////
 	q, err := qbs.GetQbs()

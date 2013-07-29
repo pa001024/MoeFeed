@@ -32,12 +32,6 @@ func (c App) Index() r.Result {
 	return c.Render()
 }
 
-// [静] 帮助
-func (c App) Help() r.Result {
-	c.CheckUser()
-	return c.Render()
-}
-
 func assetsError(err error) {
 	if err != nil {
 		panic(err)

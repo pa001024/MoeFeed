@@ -9,6 +9,7 @@ var UserStatusRepo *UserStatus
 
 type UserStatus struct{}
 
+// 置入
 func (this *UserStatus) Put(model *models.UserStatus) {
 	//////////////////
 	q, err := qbs.GetQbs()
@@ -18,6 +19,7 @@ func (this *UserStatus) Put(model *models.UserStatus) {
 	q.Save(model)
 }
 
+// 删除
 func (this *UserStatus) Delete(model *models.UserStatus) {
 	//////////////////
 	q, err := qbs.GetQbs()

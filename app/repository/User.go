@@ -11,6 +11,7 @@ var UserRepo *User
 
 type User struct{}
 
+// 置入
 func (this *User) Put(user *models.User) {
 	//////////////////
 	q, err := qbs.GetQbs()
@@ -20,6 +21,7 @@ func (this *User) Put(user *models.User) {
 	q.Save(user)
 }
 
+// 删除
 func (this *User) Delete(model *models.User) {
 	//////////////////
 	q, err := qbs.GetQbs()
@@ -29,6 +31,7 @@ func (this *User) Delete(model *models.User) {
 	q.Delete(model)
 }
 
+// 通用
 func (this *User) GetBy(key string, value interface{}) *models.User {
 	//////////////////
 	q, err := qbs.GetQbs()

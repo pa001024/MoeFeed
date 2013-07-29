@@ -12,22 +12,24 @@ var (
 	Mail = &MailService{C: make(chan MailInfo)}
 )
 
+// 邮件信息
 type MailInfo struct {
 	Revi    string
 	Title   string
 	Context string
 }
 
+// 邮件发送服务
 type MailService struct {
 	C chan MailInfo
 }
 
-func (this *MailService) SendMailAsync(rcpt, title, context string) {
-	go func() {
-		this.SendMailSync(rcpt, title, context, 5)
-	}()
+// 异步发送 默认尝试5次
+func (this *MailService) SendMail(rcpt, title, context string) {
+	go this.SendMailSync(rcpt, title, context, 5)
 }
 
+// 同步发送
 func (this *MailService) SendMailSync(rcpt, title, context string, maxtries int) error {
 	i := 0
 	for {

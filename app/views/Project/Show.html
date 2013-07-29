@@ -82,10 +82,10 @@
                     <tbody>{{range .ViewData}}
                       <tr>
                         <td>
-                          <input type="text" value="{{.Key}}">
+                          {{if $mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
                         </td>
                         <td>
-                          <input type="text" value="{{.Value}}">
+                          {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
                         </td>{{if $mEditable}}
                         <td>
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
@@ -128,10 +128,10 @@
                     <tbody>{{range .ViewData}}
                       <tr>
                         <td>
-                          <input type="text" value="{{.Key}}">
+                          {{if $mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
                         </td>
                         <td>
-                          <input type="text" value="{{.Value}}">
+                          {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
                         </td>{{if $mEditable}}
                         <td>
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
@@ -174,10 +174,10 @@
                     <tbody>{{range .ViewData}}
                       <tr>
                         <td>
-                          <input type="text" value="{{.Key}}">
+                          {{if $mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
                         </td>
                         <td>
-                          <input type="text" value="{{.Value}}">
+                          {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
                         </td>{{if $mEditable}}
                         <td>
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>

@@ -12,14 +12,14 @@ GET     /favicon.ico                            Static.Serve("public/img","favic
 
 # 主页
 GET     /                                       App.Index
-GET     /help                                   App.Help
+GET     /help                                   Help.Index
 
 # 验证(前端)
 GET     /register                               User.Register
-POST    /register                               User.PostRegister
+POST    /register                               User.DoRegister
 GET     /reauth                                 User.Reauth
 GET     /login                                  User.Login
-POST    /login                                  User.PostLogin
+POST    /login                                  User.DoLogin
 GET     /logout                                 User.Logout
 
 # 用户设置
@@ -30,7 +30,7 @@ GET     /settings/security                      User.Security
 GET     /projects/help                          Project.Help
 GET     /projects/new                           Project.CreateLink
 GET     /new                                    Project.Create
-POST    /new                                    Project.PostCreate
+POST    /new                                    Project.DoCreate
 GET     /projects                               Project.ListLink
 GET     /explore                                Project.Explore
 GET     /organizations/profile                  Organization.Profile
@@ -43,22 +43,24 @@ GET     /sysboard                               Admin.Index
 GET     /:user                                  User.Show
 GET     /:user/:project                         Project.Show
 GET     /:user/:project/delete                  Project.Delete
-POST    /:user/:project/delete                  Project.Delete
+DELETE  /:user/:project                         Project.DoDelete
 GET     /:user/:project/settings                Project.Setting
 
 GET     /:user/:project/source                  Source.Show
 GET     /:user/:project/source/new              Source.Create
-POST    /:user/:project/source/new              Source.PostCreate
+POST    /:user/:project/source/new              Source.DoCreate
 GET     /:user/:project/filter                  Filter.Show
 GET     /:user/:project/filter/new              Filter.Create
-POST    /:user/:project/filter/new              Filter.PostCreate
+POST    /:user/:project/filter/new              Filter.DoCreate
 GET     /:user/:project/target                  Target.Show
 GET     /:user/:project/target/new              Target.Create
-POST    /:user/:project/target/new              Target.PostCreate
+POST    /:user/:project/target/new              Target.DoCreate
 GET     /:user/:project/resource                Resource.Show
 GET     /:user/:project/resource/new            Resource.Create
-POST    /:user/:project/resource/new            Resource.PostCreate
+POST    /:user/:project/resource/new            Resource.DoCreate
 GET     /:user/:project/callback                Callback.Show
 GET     /:user/:project/callback/new            Callback.Create
-POST    /:user/:project/callback/new            Callback.PostCreate
+POST    /:user/:project/callback/new            Callback.DoCreate
 *       /:user/:project/callback/:url           Callback.Call
+
+

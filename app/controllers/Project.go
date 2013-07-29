@@ -39,7 +39,7 @@ func (c Project) CheckUserAndProject(user, project string) (*models.User, *model
 ///////////////////////////
 
 // [动]创建项目
-func (c Project) PostCreate(project *models.Project) r.Result {
+func (c Project) DoCreate(project *models.Project) r.Result {
 	u := c.CheckUser()
 	if u.Id == 0 {
 		c.Redirect("/login?return_to=/new")
@@ -58,13 +58,13 @@ func (c Project) PostCreate(project *models.Project) r.Result {
 }
 
 // [动]重命名项目
-func (c Project) Rename() r.Result {
+func (c Project) Rename(user, project string) r.Result {
 	c.CheckUser()
 	return c.Render()
 }
 
 // [动]删除项目
-func (c Project) Delete() r.Result {
+func (c Project) DoDelete(user, project string) r.Result {
 	c.CheckUser()
 	return c.Render()
 }
@@ -90,20 +90,21 @@ func (c Project) Create() r.Result {
 	return c.Render()
 }
 
+// [静]删除项目
+func (c Project) Delete(user, project string) r.Result {
+	c.CheckUser()
+	c.CheckProject(user, project)
+	return c.Render()
+}
+
 // [静]浏览页面
 func (c Project) Explore() r.Result {
 	c.CheckUser()
 	return c.Render()
 }
 
-// [静]帮助页面
-func (c Project) Help() r.Result {
-	c.CheckUser()
-	return c.Render()
-}
-
 // [静]设置页面前端
-func (c Project) Setting() r.Result {
+func (c Project) Setting(user, project string) r.Result {
 	c.CheckUser()
 	return c.Render()
 }

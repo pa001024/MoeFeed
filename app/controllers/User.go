@@ -42,7 +42,7 @@ func (c User) Show(user string) r.Result {
 }
 
 // [动][边] 登录
-func (c User) PostLogin(username, password, return_to string) r.Result {
+func (c User) DoLogin(username, password, return_to string) r.Result {
 	c.Validation.Required(username).Message("请填写用户名")
 	c.Validation.Required(password).Message("请填写密码")
 
@@ -74,7 +74,7 @@ func (c User) PostLogin(username, password, return_to string) r.Result {
 }
 
 // [动][写] 用户注册
-func (c User) PostRegister(user *models.User, return_to, password, password2 string) r.Result {
+func (c User) DoRegister(user *models.User, return_to, password, password2 string) r.Result {
 	c.Validation.Required(password == password2).
 		Message("两次密码不匹配")
 	user.Validate(c.Validation, password)
@@ -95,7 +95,7 @@ func (c User) PostRegister(user *models.User, return_to, password, password2 str
 	// 发送邮件
 	util.Log("Send mail to", user.Email)
 	aurl := "http://feed.qaq.ca/reauth?" + (url.Values{"id": {user.Username}, "code": {code.Code}}).Encode()
-	service.Mail.SendMailAsync(user.Email, "完成你的注册", `
+	service.Mail.SendMail(user.Email, "完成你的注册", `
 		<p>如果你需要使用全部功能 请点击下列链接完成验证</p>
 		<p><a href="`+aurl+`">`+aurl+`</a></p>
 		`)

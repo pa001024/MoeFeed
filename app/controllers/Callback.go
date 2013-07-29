@@ -24,11 +24,22 @@ func (c Callback) PostCreate(user, project string, callback *models.Callback) r.
 	return c.Redirect("/%s/%s", user, project)
 }
 
-func (c Callback) Call(user, project, callback string) r.Result {
+// 错误信息
+type CallbackError struct {
+	Url  string `json:"url"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+func (c Callback) Call(user, project, url string) r.Result {
 	// c.CheckUser()
 	p := c.CheckProject(user, project)
-	repo.CallbackRepo.GetByProjectAndUrl(callback, p.Id)
-	return c.Render()
+	b := repo.CallbackRepo.GetByProjectAndUrl(url, p.Id)
+	if b == nil {
+		return c.RenderJson(CallbackError{"/" + user + "/" + project + "/callback/" + url, 404, "找不到此回调"})
+	}
+	// TODO: 添加实际调用
+	return c.RenderJson(CallbackError{"/" + user + "/" + project + "/callback/" + url, 200, "成功"})
 }
 
 func (c Callback) Show(user, project string) r.Result {

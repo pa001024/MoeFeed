@@ -21,18 +21,18 @@ type User struct {
 	Email       string `qbs:"size:100,unique,notnull"`
 	AvatarEmail string `qbs:"size:100"`
 	Url         string `qbs:"size:100"`
-	Status      int8   // 0: 未验证 1: 用户 2: 组织
+	Status      int8
 	Created     time.Time
 	Updated     time.Time
 }
 
 // enum User.Status
 const (
-	UnauthedUser = iota
-	UnauthedTeam
-	AuthedUser
-	AuthedTeam
-	SysAdmin
+	UnauthedUser = iota // 0: 未验证用户
+	UnauthedTeam        // 1: 未验证组织
+	AuthedUser          // 2: 用户
+	AuthedTeam          // 3: 组织
+	SysAdmin            // 4: 鹳狸猿
 )
 
 var (
@@ -40,6 +40,7 @@ var (
 	emailRegex = regexp.MustCompile(`\w+(?:[-+.]\w+)*@\w+(?:[-.]\w+)*\.\w+(?:[-.]\w+)*`)
 )
 
+// 传递式验证
 func (this *User) Validate(v *r.Validation, password string) {
 	const (
 		EMAIL         = "电子邮件地址"
@@ -61,6 +62,7 @@ func (this *User) Validate(v *r.Validation, password string) {
 
 }
 
+// 验证密码
 func (this *User) ValidatePassword(v *r.Validation, password string) {
 	bin := []byte(_APPSECRET + password + this.Username)
 	hbin, _ := base64.StdEncoding.DecodeString(this.Password)
@@ -70,6 +72,7 @@ func (this *User) ValidatePassword(v *r.Validation, password string) {
 	}
 }
 
+// 生成密码
 func (this *User) GeneratePassword(password string) string {
 	bin := []byte(_APPSECRET + password + this.Username)
 	b, _ := bcrypt.GenerateFromPassword(bin, bcrypt.DefaultCost)
@@ -77,6 +80,7 @@ func (this *User) GeneratePassword(password string) string {
 	return s
 }
 
+// 获取头像地址
 func (this *User) GetAvatarUrl(size string) string {
 	return fmt.Sprintf("https://secure.gravatar.com/avatar/%s?%s",
 		util.Md5String(strings.ToLower(this.AvatarEmail)),
@@ -86,13 +90,17 @@ func (this *User) GetAvatarUrl(size string) string {
 		}).Encode())
 }
 
+// 返回字符串
 func (this *User) String() string {
 	return fmt.Sprintf("User(%s)", this.Username)
 }
 
+// 返回登录时间
 func (this *User) Logined() string {
 	return this.Updated.Format("2006年1月2日")
 }
+
+// 返回加入时间
 func (this *User) Joined() string {
 	return this.Created.Format("2006年1月2日")
 }
