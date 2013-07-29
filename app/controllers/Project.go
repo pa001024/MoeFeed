@@ -25,13 +25,13 @@ func (c Project) CheckProject(user, project string) *models.Project {
 }
 
 // 检查编辑权限
-func (c Project) CheckUserAndProject(user, project string) (*models.User, *models.Project) {
+func (c Project) CheckOwnerProject(user, project string) (*models.User, *models.Project) {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
 	if u.Id == p.OwnerId {
 		return u, p
 	}
-	return nil, nil
+	return nil, p
 }
 
 ///////////////////////////
@@ -92,8 +92,11 @@ func (c Project) Create() r.Result {
 
 // [静]删除项目
 func (c Project) Delete(user, project string) r.Result {
-	c.CheckUser()
-	c.CheckProject(user, project)
+	u, _ := c.CheckOwnerProject(user, project)
+	if u == nil {
+		c.Flash.Error("你没有权限编辑该项目")
+		return c.Redirect("/%s/%s", user, project)
+	}
 	return c.Render()
 }
 
@@ -116,14 +119,14 @@ func (c Project) Show(user, project string) r.Result {
 	if p == nil {
 		return c.NotFound("没有此项目")
 	}
-	mSource := repo.SourceRepo.FindByProject(p.Id)
-	mFilter := repo.FilterRepo.FindByProject(p.Id)
-	mTarget := repo.TargetRepo.FindByProject(p.Id)
-	mResource := repo.ResourceRepo.FindByProject(p.Id)
-	mCallback := repo.CallbackRepo.FindByProject(p.Id)
+	mSources := repo.SourceRepo.FindByProject(p.Id)
+	mFilters := repo.FilterRepo.FindByProject(p.Id)
+	mTargets := repo.TargetRepo.FindByProject(p.Id)
+	mResources := repo.ResourceRepo.FindByProject(p.Id)
+	mCallbacks := repo.CallbackRepo.FindByProject(p.Id)
 	mEditable := false
 	if u != nil {
 		mEditable = u.Id == p.OwnerId
 	}
-	return c.Render(mEditable, mSource, mFilter, mTarget, mResource, mCallback)
+	return c.Render(mEditable, mSources, mFilters, mTargets, mResources, mCallbacks)
 }

@@ -1,4 +1,4 @@
-{{set . "title" "登录 - 萌更新"}}{{template "header.html" .}}
+{{printf "%s - %s" (msg . "login") (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
@@ -6,24 +6,24 @@
             <fieldset>
               <input type="hidden" name="return_to" value="{{.return_to}}">
               <div id="legend" class="">
-                <legend class="">用户登录</legend>
+                <legend class="">{{msg . "login"}}</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="username">用户名/邮箱</label>
+                <label class="control-label" for="username">{{msg . "usernameoremail"}}</label>
                 <div class="controls">
                   <input type="text" required name="username" id="username" class="input-xlarge">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="password">密码</label>
+                <label class="control-label" for="password">{{msg . "password"}}</label>
                 <div class="controls">
                   <input type="password" required name="password" id="password" class="input-xlarge">
                 </div>
               </div>
               <div class="control-group">
                 <div class="controls">
-                  <button class="btn btn-primary">登录</button>
+                  <button class="btn btn-primary">{{msg . "login.action"}}</button>
                 </div>
               </div>
             </fieldset>

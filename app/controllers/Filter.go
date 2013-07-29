@@ -10,7 +10,7 @@ import (
 type Filter struct{ Project }
 
 // [动][写]
-func (c Filter) PostCreate(user, project string, filter *models.Filter) r.Result {
+func (c Filter) DoCreate(user, project string, filter *models.Filter) r.Result {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
 	if p == nil {

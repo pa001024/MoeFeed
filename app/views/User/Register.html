@@ -1,5 +1,4 @@
-{{set . "title" "用户注册 - 萌更新"}}
-{{template "header.html" .}}
+{{printf "%s - %s" (msg . "register") (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
@@ -7,41 +6,41 @@
             <fieldset>
               <input type="hidden" name="return_to" value="{{.return_to}}">
               <div id="legend" class="">
-                <legend class="">用户注册</legend>
+                <legend class="">{{msg . "register"}}</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="user-Email">邮箱</label>
+                <label class="control-label" for="user-Email">{{msg . "email"}}</label>
                 <div class="controls">
                   <input type="email" required name="user.Email" id="user-Email" placeholder="@exmaple.com" class="input-xlarge">
-                  <p class="help-block">账户验证信息将发送到你的邮箱</p>
+                  <p class="help-block">{{msg . "email.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="user-Username">用户名</label>
+                <label class="control-label" for="user-Username">{{msg . "username"}}</label>
                 <div class="controls">
                   <input type="text" required name="user.Username" id="user-Username" class="input-xlarge">
-                  <p class="help-block">用户名将被用来登录并作为项目url地址的一部分</p>
+                  <p class="help-block">{{msg . "username.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="password">密码</label>
+                <label class="control-label" for="password">{{msg . "password"}}</label>
                 <div class="controls">
                   <input type="password" required name="password" id="password" class="input-xlarge">
-                  <p class="help-block">建议使用高强度密码</p>
+                  <p class="help-block">{{msg . "password.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="password2">重复密码</label>
+                <label class="control-label" for="password2">{{msg . "password2"}}</label>
                 <div class="controls">
                   <input type="password" required name="password2" id="password2" class="input-xlarge">
-                  <p class="help-block"></p>
+                  <p class="help-block">{{msg . "password2.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">注册</button>
+                  <button class="btn btn-success">{{msg . "register.action"}}</button>
                 </div>
               </div>
             </fieldset>

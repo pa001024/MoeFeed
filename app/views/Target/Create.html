@@ -1,42 +1,41 @@
-{{or .mProject.DisplayName .mProject.Name | printf "创建目标点 %s - 萌更新" | set . "title"}}
-{{template "header.html" .}}
+{{printf "%s %s - %s" (msg . "target.create") (or .mProject.DisplayName .mProject.Name) (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
           <form class="form-horizontal" method="POST">
             <fieldset>
               <div id="legend" class="">
-                <legend class="">创建目标点</legend>
+                <legend class="">{{msg . "target.create"}}</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="target-Name">名称</label>
+                <label class="control-label" for="target-Name">{{msg . "target.name"}}</label>
                 <div class="controls">
                   <input type="text" required name="target.Name" id="target-Name" class="input-xlarge">
-                  <p class="help-block">名称是一个目标点的唯一标示符 必填 不能与其他重复</p>
+                  <p class="help-block">{{msg . "target.name.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="target-Type">类型</label>
+                <label class="control-label" for="target-Type">{{msg . "target.type"}}</label>
                 <div class="controls">
                   <select name="target.Type" id="target-Type" class="input-xlarge">
                     <option value="0">新浪微博</option>
                     <option value="1">腾讯微博</option>
                   </select>
-                  <p class="help-block">类型是目标点工作的基础</p>
+                  <p class="help-block">{{msg . "target.type.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="target-Data">初始数据</label>
+                <label class="control-label" for="target-Data">{{msg . "target.data"}}</label>
                 <div class="controls">
                   <textarea name="target.Data" id="target-Data" cols="30" rows="10" class="input-xlarge" placeholder='{ "key":"value" }'></textarea>
-                  <p class="help-block">数据是一组键值对 使用JSON格式 可选</p>
+                  <p class="help-block">{{msg . "target.data.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">创建</button>
+                  <button class="btn btn-success">{{msg . "target.create.action"}}</button>
                 </div>
               </div>
             </fieldset>

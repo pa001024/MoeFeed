@@ -1,9 +1,9 @@
-{{or .mProject.DisplayName .mProject.Name | printf "%s - 萌更新" | set . "title"}}{{template "header.html" .}}
+{{printf "%s - %s" (or .mProject.DisplayName .mProject.Name) (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="pagehead repohead instapaper_ignore readability-menu row">
         <div class="container span8 offset2">
           <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
-            <span class="repo-label hidden-phone">公开</span>
+            <span class="repo-label hidden-phone">{{msg . "public"}}</span>
             <span class="mega-octicon octicon-repo"></span>
             <span class="author">
               <a href="/{{urlquery .mProject.Owner.Username}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Username}}</span></a>
@@ -19,28 +19,28 @@
         <div class="project row">
           <div id="sidenav" class="span3 sidebar hidden-phone">
             <ul class="nav nav-list sidenav" data-spy="affix" data-offset-top="200">
-              <li><a href="#overview"><i class="icon-chevron-right"></i> 概览</a></li>
-              <li><a href="#source"><i class="icon-chevron-right"></i> 来源点</a></li>
-              <li><a href="#filter"><i class="icon-chevron-right"></i> 过滤器</a></li>
-              <li><a href="#target"><i class="icon-chevron-right"></i> 目标点</a></li>
-              <li><a href="#resource"><i class="icon-chevron-right"></i> 资源</a></li>
-              <li><a href="#callback"><i class="icon-chevron-right"></i> 回调</a></li>
+              <li><a href="#overview"><i class="icon-chevron-right"></i> {{msg . "overview"}}</a></li>
+              <li><a href="#source"><i class="icon-chevron-right"></i> {{msg . "source"}}</a></li>
+              <li><a href="#filter"><i class="icon-chevron-right"></i> {{msg . "filter"}}</a></li>
+              <li><a href="#target"><i class="icon-chevron-right"></i> {{msg . "target"}}</a></li>
+              <li><a href="#resource"><i class="icon-chevron-right"></i> {{msg . "resource"}}</a></li>
+              <li><a href="#callback"><i class="icon-chevron-right"></i> {{msg . "callback"}}</a></li>
             </ul>
           </div>
-          <div class="span9">
+          <div class="span9">{{$ := .}}{{$mEditable := .mEditable}}
             <section id="overview">
               <div class="page-header">
-                <h1>概览</h1>
-                <p class="muted">显示项目运行状态</p>
+                <h1>{{msg . "overview"}}</h1>
+                <p class="muted">{{msg . "overview.desc"}}</p>
               </div>
               <div class="dlist">
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>路线</th>
-                      <th>来源抓取</th>
-                      <th>过滤运行</th>
-                      <th>目标发送</th>
+                      <th>{{msg . "channel"}}</th>
+                      <th>{{msg . "run.source"}}</th>
+                      <th>{{msg . "run.filter"}}</th>
+                      <th>{{msg . "run.target"}}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -51,7 +51,7 @@
                       <td>233</td>
                     </tr>
                     <tr>
-                      <td>总计</td>
+                      <td>{{msg . "run.all"}}</td>
                       <td>233</td>
                       <td>233</td>
                       <td>233</td>
@@ -62,21 +62,21 @@
               <div class="span12"></div>
             </section>
             <section id="source">
-              <div class="page-header">{{$mEditable := .mEditable}}
-                <h1>来源点
-                  {{if $mEditable}}<a href="{{.pageurl}}/source/new" title="创建一个来源点" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+              <div class="page-header">
+                <h1>{{msg . "source"}}
+                  {{if .mEditable}}<a href="{{.pageurl}}/source/new" title="{{msg . "source.create.desc"}}" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
                 </h1>
-                <p class="muted">项目资讯来源</p>
-              </div>{{range .mSource}}
+                <p class="muted">{{msg . "source.desc"}}</p>
+              </div>{{range .mSources}}
               <article>
                 <h2>{{.Name}}</h2>
                 <div class="dlist">
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>键</th>
-                        <th>值</th>
-                        <th>编辑</th>
+                        <th>{{msg $ "viewdata.key"}}</th>
+                        <th>{{msg $ "viewdata.value"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "viewdata.edit"}}</th>{{end}}
                       </tr>
                     </thead>
                     <tbody>{{range .ViewData}}
@@ -88,18 +88,18 @@
                           {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
                         </td>{{if $mEditable}}
                         <td>
-                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
                       </tr>{{end}}
                       <tr>
                         <td>
-                          <input type="text" placeholder="新键...">
+                          <input type="text" placeholder="{{msg $ "viewdata.key.new"}}">
                         </td>
                         <td>
-                          <input type="text" placeholder="新值...">
+                          <input type="text" placeholder="{{msg $ "viewdata.value.new"}}">
                         </td>{{if $mEditable}}
                         <td>
-                          <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                          <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> {{msg $ "viewdata.add"}}</a>
                         </td>{{end}}
                       </tr>
                     </tbody>
@@ -109,10 +109,10 @@
             </section>
             <section id="filter">
               <div class="page-header">
-                <h1>过滤器
-                  {{if $mEditable}}<a href="{{.pageurl}}/filter/new" title="创建一个过滤器" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                <h1>{{msg . "filter"}}
+                  {{if .mEditable}}<a href="{{.pageurl}}/filter/new" title="{{msg . "filter.create.desc"}}" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
                 </h1>
-                <p class="muted">项目资讯处理方式</p>
+                <p class="muted">{{msg . "filter.desc"}}</p>
               </div>{{range .mFilter}}
               <article>
                 <h2>{{.Name}}</h2>
@@ -120,9 +120,9 @@
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>键</th>
-                        <th>值</th>
-                        <th>编辑</th>
+                        <th>{{msg $ "viewdata.key"}}</th>
+                        <th>{{msg $ "viewdata.value"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "viewdata.edit"}}</th>{{end}}
                       </tr>
                     </thead>
                     <tbody>{{range .ViewData}}
@@ -134,18 +134,18 @@
                           {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
                         </td>{{if $mEditable}}
                         <td>
-                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
                       </tr>{{end}}
                       <tr>
                         <td>
-                          <input type="text" placeholder="新键...">
+                          <input type="text" placeholder="{{msg $ "viewdata.key.new"}}">
                         </td>
                         <td>
-                          <input type="text" placeholder="新值...">
+                          <input type="text" placeholder="{{msg $ "viewdata.value.new"}}">
                         </td>{{if $mEditable}}
                         <td>
-                          <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                          <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> {{msg $ "viewdata.add"}}</a>
                         </td>{{end}}
                       </tr>
                     </tbody>
@@ -155,10 +155,10 @@
             </section>
             <section id="target">
               <div class="page-header">
-                <h1>目标点
-                  {{if $mEditable}}<a href="{{.pageurl}}/target/new" title="创建一个目标点" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                <h1>{{msg . "target"}}
+                  {{if .mEditable}}<a href="{{.pageurl}}/target/new" title="{{msg . "target.create.desc"}}" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
                 </h1>
-                <p class="muted">项目最终目标</p>
+                <p class="muted">{{msg . "target.desc"}}</p>
               </div>{{range .mTarget}}
               <article>
                 <h2>{{.Name}}</h2>
@@ -166,9 +166,9 @@
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>键</th>
-                        <th>值</th>
-                        <th>编辑</th>
+                        <th>{{msg $ "viewdata.key"}}</th>
+                        <th>{{msg $ "viewdata.value"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "viewdata.edit"}}</th>{{end}}
                       </tr>
                     </thead>
                     <tbody>{{range .ViewData}}
@@ -180,18 +180,18 @@
                           {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
                         </td>{{if $mEditable}}
                         <td>
-                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
                       </tr>{{end}}
                       <tr>
                         <td>
-                          <input type="text" placeholder="新键...">
+                          <input type="text" placeholder="{{msg $ "viewdata.key.new"}}">
                         </td>
                         <td>
-                          <input type="text" placeholder="新值...">
+                          <input type="text" placeholder="{{msg $ "viewdata.value.new"}}">
                         </td>{{if $mEditable}}
                         <td>
-                          <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> 添加</a>
+                          <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> {{msg $ "viewdata.add"}}</a>
                         </td>{{end}}
                       </tr>
                     </tbody>
@@ -201,25 +201,25 @@
             </section>
             <section id="resource">
               <div class="page-header">
-                <h1>资源
-                  {{if $mEditable}}<a href="{{.pageurl}}/resource/new" title="创建一个资源" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                <h1>{{msg . "resource"}}
+                  {{if .mEditable}}<a href="{{.pageurl}}/resource/new" title="{{msg . "resource.create.desc"}}" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
                 </h1>
-                <p class="muted">资源文件 如过滤器文本 图片等 </p>
+                <p class="muted">{{msg $ "resource.desc"}}</p>
               </div>
               <article>
-                <h2>资源列表</h2>
+                <h2>{{msg . "resource.list"}}</h2>
                 <div class="dlist">
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>名称</th>
-                        <th>大小</th>
-                        <th>MD5</th>
-                        <th>文件</th>{{if .mEditable}}
-                        <th>编辑</th>{{end}}
+                        <th>{{msg $ "resource.name.short"}}</th>
+                        <th>{{msg $ "resource.size.short"}}</th>
+                        <th>{{msg $ "resource.md5.short"}}</th>
+                        <th>{{msg $ "resource.file.short"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "resource.edit.short"}}</th>{{end}}
                       </tr>
                     </thead>
-                    <tbody>{{range .mResource}}
+                    <tbody>{{range .mResources}}
                       <tr>
                         <td>{{.Name}}</td>
                         <td>{{.Size}}</td>
@@ -228,7 +228,7 @@
                           <input type="file">
                         </td>
                         <td>{{if $mEditable}}
-                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
                       </tr>{{end}}
                     </tbody>
@@ -238,30 +238,30 @@
             </section>
             <section id="callback">
               <div class="page-header">
-                <h1>回调
-                  {{if $mEditable}}<a href="{{.pageurl}}/callback/new" title="创建一个回调" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                <h1>{{msg . "callback"}}
+                  {{if $mEditable}}<a href="{{.pageurl}}/callback/new" title="{{msg . "callback.create.desc"}}" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
                 </h1>
-                <p class="muted">监听特定url 实现外部hook回调(如weibo OAuth回调等)</p>
+                <p class="muted">{{msg . "callback.desc"}}</p>
               </div>
               <article>
-                <h2>回调列表</h2>
+                <h2>{{msg . "callback.list"}}</h2>
                 <div class="dlist">
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>名称</th>
-                        <th>URL</th>
-                        <th>类型</th>{{if $mEditable}}
-                        <th>编辑</th>{{end}}
+                        <th>{{msg $ "callback.name.short"}}</th>
+                        <th>{{msg $ "callback.url.short"}}</th>
+                        <th>{{msg $ "callback.type.short"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "callback.edit.short"}}</th>{{end}}
                       </tr>
                     </thead>
-                    <tbody>{{range .mCallback}}
+                    <tbody>{{range .mCallbacks}}
                       <tr>
                         <td>{{.Name}}</td>
                         <td>{{.Url}}</td>
                         <td>{{.Type}}</td>{{if $mEditable}}
                         <td>
-                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> 删除</a>
+                          <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
                       </tr>{{end}}
                     </tbody>

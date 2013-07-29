@@ -1,42 +1,41 @@
-{{or .mProject.DisplayName .mProject.Name | printf "创建回调 %s - 萌更新" | set . "title"}}
-{{template "header.html" .}}
+{{printf "%s %s - %s" (msg . "callback.create") (or .mProject.DisplayName .mProject.Name) (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
           <form class="form-horizontal" method="POST">
             <fieldset>
               <div id="legend" class="">
-                <legend class="">创建回调</legend>
+                <legend class="">{{msg . "callback.create"}}</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="callback-Name">名称</label>
+                <label class="control-label" for="callback-Name">{{msg . "callback.name"}}</label>
                 <div class="controls">
                   <input type="text" required name="callback.Name" id="callback-Name" class="input-xlarge">
-                  <p class="help-block">名称是一个回调的唯一标示符 必填</p>
+                  <p class="help-block">{{msg . "callback.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="callback-Type">类型</label>
+                <label class="control-label" for="callback-Type">{{msg . "callback.type"}}</label>
                 <div class="controls">
                   <select name="callback.Type" id="callback-Type" class="input-xlarge">
                     <option value="0">新浪微博OAuth2.0</option>
                     <option value="1">腾讯微博OAuth2.0</option>
                   </select>
-                  <p class="help-block">类型是回调工作的基础</p>
+                  <p class="help-block">{{msg . "callback.type.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="callback-Url">URL地址</label>
+                <label class="control-label" for="callback-Url">{{msg . "callback.url"}}</label>
                 <div class="controls">
-                  <input type="text" required name="callback.Url" id="callback-Url" placeholder="sinacb" class="input-xlarge">
-                  <p class="help-block">URL地址是全局唯一的 如/user/project/callback/sinacb</p>
+                  <input type="text" required name="callback.Url" id="callback-Url" placeholder="{{msg . "callback.url.example"}}" class="input-xlarge">
+                  <p class="help-block">{{msg . "callback.url.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">创建</button>
+                  <button class="btn btn-success">{{msg . "callback.create.action"}}</button>
                 </div>
               </div>
             </fieldset>

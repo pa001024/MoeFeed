@@ -9,7 +9,7 @@ import (
 // 回调控制器
 type Callback struct{ Project }
 
-func (c Callback) PostCreate(user, project string, callback *models.Callback) r.Result {
+func (c Callback) DoCreate(user, project string, callback *models.Callback) r.Result {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
 	if p == nil {

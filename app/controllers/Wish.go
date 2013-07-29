@@ -14,3 +14,11 @@ type Wish struct{ App }
 func (c Wish) Show() r.Result {
 	return c.Todo()
 }
+
+func (c Wish) Create() r.Result {
+	return c.Todo()
+}
+
+func (c Wish) DoCreate() r.Result {
+	return c.Todo()
+}

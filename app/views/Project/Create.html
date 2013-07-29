@@ -1,5 +1,4 @@
-{{set . "title" "创建项目 - 萌更新"}}
-{{template "header.html" .}}
+{{printf "%s - %s" (msg . "project.create") (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
@@ -7,27 +6,27 @@
             <fieldset>
               <input type="hidden" name="return_to" value="{{.return_to}}">
               <div id="legend" class="">
-                <legend class="">创建项目</legend>
+                <legend class="">{{msg . "project.create"}}</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="project-Name">项目名称</label>
+                <label class="control-label" for="project-Name">{{msg . "project.name"}}</label>
                 <div class="controls">
-                  <input type="text" name="project.Name" id="project-Name" placeholder="myproject" class="input-xlarge">
-                  <p class="help-block">项目名称将作为URL</p>
+                  <input type="text" name="project.Name" id="project-Name" placeholder="{{msg . "project.name.example"}}" class="input-xlarge">
+                  <p class="help-block">{{msg . "project.name.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="project-DisplayName">项目中文名称</label>
+                <label class="control-label" for="project-DisplayName">{{msg . "project.displayname"}}</label>
                 <div class="controls">
-                  <input type="text" name="project.DisplayName" id="project-DisplayName" placeholder="我的项目" class="input-xlarge">
-                  <p class="help-block">项目中文名称被显示在屏幕上</p>
+                  <input type="text" name="project.DisplayName" id="project-DisplayName" placeholder="{{msg . "project.displayname.example"}}" class="input-xlarge">
+                  <p class="help-block">{{msg . "project.displayname.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">创建项目</button>
+                  <button class="btn btn-success">{{msg . "project.create.action"}}</button>
                 </div>
               </div>
             </fieldset>

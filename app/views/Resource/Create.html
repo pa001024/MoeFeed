@@ -1,23 +1,22 @@
-{{or .mProject.DisplayName .mProject.Name | printf "创建资源 %s - 萌更新" | set . "title"}}
-{{template "header.html" .}}
+{{printf "%s %s - %s" (msg . "resource.create") (or .mProject.DisplayName .mProject.Name) (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
           <form class="form-horizontal" enctype="multipart/form-data" method="POST">
             <fieldset>
               <div id="legend" class="">
-                <legend class="">创建资源</legend>
+                <legend class="">{{msg . "resource.create"}}</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="resource-Name">名称</label>
+                <label class="control-label" for="resource-Name">{{msg . "resource.name"}}</label>
                 <div class="controls">
                   <input type="text" required name="resource.Name" id="resource-Name" class="input-xlarge">
-                  <p class="help-block">名称是一个资源的唯一标示符 必填</p>
+                  <p class="help-block">{{msg . "resource.name.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="resource-Type">类型</label>
+                <label class="control-label" for="resource-Type">{{msg . "resource.type"}}</label>
                 <div class="controls">
                   <select name="resource.Type" id="resource-Type" class="input-xlarge">
                     <option value="-1">自动判断</option>
@@ -26,20 +25,20 @@
                     <option value="2">脚本</option>
                     <option value="3">其他</option>
                   </select>
-                  <p class="help-block">类型标记</p>
+                  <p class="help-block">{{msg . "resource.type.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="file">文件</label>
+                <label class="control-label" for="file">{{msg . "resource.file"}}</label>
                 <div class="controls">
                   <input type="file" id="file" name="file">
-                  <p class="help-block">上传文件</p>
+                  <p class="help-block">{{msg . "resource.file.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">创建</button>
+                  <button class="btn btn-success">{{msg . "resource.create.action"}}</button>
                 </div>
               </div>
             </fieldset>

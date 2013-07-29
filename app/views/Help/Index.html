@@ -1,11 +1,15 @@
-{{set . "title" "萌更新 - 你的多点同步平台"}}
-{{template "header.html" .}}
+{{printf "%s %s" (msg . "about") (msg . "moefeed.long") | set . "title"}}{{template "header.html" .}}
     <header class="jumbotron subhead">
       <div class="container">
-        <h1>萌更新</h1>
-        <p class="lead">你的多点同步平台</p>
+        <h1>{{msg . "moefeed"}}</h1>
+        <p class="lead">{{msg . "moefeed.desc"}}</p>
       </div>
     </header>
     <div class="container">
+    	<div class="row">
+    		<div class="span8 offset2">
+    			这里是帮助内容
+    		</div>
+    	</div>
     </div>
 {{template "footer.html" .}}

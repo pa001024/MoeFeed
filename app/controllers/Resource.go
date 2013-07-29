@@ -13,15 +13,14 @@ import (
 type Resource struct{ Project }
 
 // [动][写]
-func (c Resource) PostCreate(user, project string, resource *models.Resource) r.Result {
-	u := c.CheckUser()
-	p := c.CheckProject(user, project)
+func (c Resource) DoCreate(user, project string, resource *models.Resource) r.Result {
+	u, p := c.CheckOwnerProject(user, project)
+	if u == nil {
+		c.Flash.Error("你没有权限编辑该项目")
+		return c.Redirect("/%s/%s", user, project)
+	}
 	if p == nil {
 		return c.NotFound("找不到该项目")
-	}
-	if u == nil {
-		c.Flash.Error("请先登录")
-		return c.Redirect("/%s/%s/resource/new", user, project)
 	}
 	resource.ProjectId = p.Id
 	fo, fh, err := c.Request.FormFile("file")

@@ -10,15 +10,15 @@ import (
 type Source struct{ Project }
 
 // [动][写]
-func (c Source) PostCreate(user, project string, source *models.Source) r.Result {
+func (c Source) DoCreate(user, project string, source *models.Source) r.Result {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
-	if p == nil {
-		return c.NotFound("找不到该项目")
-	}
 	if u == nil {
 		c.Flash.Error("请先登录")
 		return c.Redirect("/%s/%s", user, project)
+	}
+	if p == nil {
+		return c.NotFound("找不到该项目")
 	}
 	source.ProjectId = p.Id
 	repo.SourceRepo.Put(source)

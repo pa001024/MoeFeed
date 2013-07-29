@@ -1,23 +1,22 @@
-{{or .mProject.DisplayName .mProject.Name | printf "创建过滤器 %s - 萌更新" | set . "title"}}
-{{template "header.html" .}}
+{{printf "%s %s - %s" (msg . "filter.create") (or .mProject.DisplayName .mProject.Name) (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span8 offset2">
           <form class="form-horizontal" method="POST">
             <fieldset>
               <div id="legend" class="">
-                <legend class="">创建过滤器</legend>
+                <legend class="">{{msg . "filter.create"}}</legend>
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="filter-Name">名称</label>
+                <label class="control-label" for="filter-Name">{{msg . "filter.name"}}</label>
                 <div class="controls">
                   <input type="text" required name="filter.Name" id="filter-Name" class="input-xlarge">
-                  <p class="help-block">名称是一个过滤器的唯一标示符 必填</p>
+                  <p class="help-block">{{msg . "filter.name.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="filter-Type">类型</label>
+                <label class="control-label" for="filter-Type">{{msg . "filter.type"}}</label>
                 <div class="controls">
                   <select name="filter.Type" id="filter-Type" class="input-xlarge">
                     <option value="0">文本过滤</option>
@@ -26,20 +25,20 @@
                     <option value="200">简繁转换</option>
                     <option value="300">文字格式化</option>
                   </select>
-                  <p class="help-block">类型是过滤器工作的基础</p>
+                  <p class="help-block">{{msg . "filter.type.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="filter-Data">初始数据</label>
+                <label class="control-label" for="filter-Data">{{msg . "filter.data"}}</label>
                 <div class="controls">
                   <textarea name="filter.Data" id="filter-Data" cols="30" rows="10" class="input-xlarge" placeholder='{ "key":"value" }'></textarea>
-                  <p class="help-block">数据是一组键值对 使用JSON格式 可选</p>
+                  <p class="help-block">{{msg . "filter.data.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">创建</button>
+                  <button class="btn btn-success">{{msg . "filter.create.action"}}</button>
                 </div>
               </div>
             </fieldset>

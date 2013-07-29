@@ -27,7 +27,6 @@ GET     /settings                               User.ProfileLink
 GET     /settings/profile                       User.Profile
 GET     /settings/security                      User.Security
 
-GET     /projects/help                          Project.Help
 GET     /projects/new                           Project.CreateLink
 GET     /new                                    Project.Create
 POST    /new                                    Project.DoCreate
