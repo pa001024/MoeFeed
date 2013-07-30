@@ -11,27 +11,61 @@ import (
 // 项目控制器
 type Project struct{ App }
 
-// 统一参数解析
+// 统一参数解析 mProject setter
 func (c *Project) CheckProject(user, project string) *models.Project {
 	if vp := c.RenderArgs["mProject"]; vp != nil {
 		return vp.(*models.Project)
 	}
 	mProject := repo.ProjectRepo.GetByName(user, project)
-	if mProject != nil {
-		c.RenderArgs["mProject"] = mProject
-		return mProject
-	}
-	return nil
+	c.RenderArgs["mProject"] = mProject
+	return mProject
 }
 
-// 检查编辑权限
-func (c *Project) CheckOwnerProject(user, project string) (*models.User, *models.Project) {
-	u := c.CheckUser()
-	p := c.CheckProject(user, project)
-	if u.Id == p.OwnerId {
-		return u, p
+// 检查权限
+func (c *Project) CheckAccessProject(user, project string, access int16) (*models.User, *models.Project, int16) {
+	u, p := c.CheckUser(), c.CheckProject(user, project)
+	if p == nil {
+		return nil, nil, models.AccessDeny
 	}
-	return nil, p
+	if u != nil {
+		if u.Id == p.OwnerId {
+			return u, p, models.AccessOwner
+		}
+		access = repo.ProjectRepo.GetAccess(u.Id, p.Id).Access()
+	}
+	if access < models.AccessRead && p.Type == models.ProjectPublic {
+		access = models.AccessRead
+	}
+	return u, p, access
+}
+
+// 权限渲染
+func (c *Project) CheckAccessRenderArgs(access int16) {
+	c.RenderArgs["mReadable"] = access >= models.AccessRead
+	c.RenderArgs["mEditable"] = access >= models.AccessReadWrite
+	c.RenderArgs["mAdminable"] = access >= models.AccessAdmin
+	c.RenderArgs["mOwnerable"] = access >= models.AccessOwner
+}
+
+// 检查编辑权限 mReadable setter
+func (c *Project) CheckReadableProject(user, project string) (*models.User, *models.Project) {
+	u, p, a := c.CheckAccessProject(user, project, models.AccessRead)
+	c.CheckAccessRenderArgs(a)
+	return u, p
+}
+
+// 检查编辑权限 mEditable setter
+func (c *Project) CheckEditableProject(user, project string) (*models.User, *models.Project) {
+	u, p, a := c.CheckAccessProject(user, project, models.AccessReadWrite)
+	c.CheckAccessRenderArgs(a)
+	return u, p
+}
+
+// 检查管理权限 mAdminable setter
+func (c *Project) CheckAdminableProject(user, project string) (*models.User, *models.Project) {
+	u, p, a := c.CheckAccessProject(user, project, models.AccessAdmin)
+	c.CheckAccessRenderArgs(a)
+	return u, p
 }
 
 ///////////////////////////
@@ -41,7 +75,7 @@ func (c *Project) CheckOwnerProject(user, project string) (*models.User, *models
 // [动]创建项目
 func (c Project) DoCreate(project *models.Project) r.Result {
 	u := c.CheckUser()
-	if u.Id == 0 {
+	if u == nil {
 		c.Redirect("/login?return_to=/new")
 	}
 	project.OwnerId = u.Id
@@ -86,16 +120,18 @@ func (c Project) ListLink() r.Result {
 
 // [静]创建项目前端
 func (c Project) Create() r.Result {
-	c.CheckUser()
+	u := c.CheckUser()
+	if u == nil {
+		c.Redirect("/login?return_to=/new")
+	}
 	return c.Render()
 }
 
 // [静]删除项目
 func (c Project) Delete(user, project string) r.Result {
-	u, _ := c.CheckOwnerProject(user, project)
+	u, _ := c.CheckAdminableProject(user, project)
 	if u == nil {
-		c.Flash.Error("你没有权限编辑该项目")
-		return c.Redirect("/%s/%s", user, project)
+		return c.Forbidden("你没有权限编辑该项目")
 	}
 	return c.Render()
 }
@@ -108,25 +144,26 @@ func (c Project) Explore() r.Result {
 
 // [静]设置页面前端
 func (c Project) Setting(user, project string) r.Result {
-	c.CheckUser()
+	u, _ := c.CheckAdminableProject(user, project)
+	if u == nil {
+		return c.Forbidden("你没有权限编辑该项目")
+	}
 	return c.Render()
 }
 
 // [静]显示项目独立页
 func (c Project) Show(user, project string) r.Result {
-	u := c.CheckUser()
-	p := c.CheckProject(user, project)
+	u, p := c.CheckReadableProject(user, project)
 	if p == nil {
 		return c.NotFound("没有此项目")
+	}
+	if u == nil && p.Type != models.ProjectPublic {
+		return c.Forbidden("你没有权限查看该项目")
 	}
 	mSources := repo.SourceRepo.FindByProject(p.Id)
 	mFilters := repo.FilterRepo.FindByProject(p.Id)
 	mTargets := repo.TargetRepo.FindByProject(p.Id)
 	mResources := repo.ResourceRepo.FindByProject(p.Id)
 	mCallbacks := repo.CallbackRepo.FindByProject(p.Id)
-	mEditable := false
-	if u != nil {
-		mEditable = u.Id == p.OwnerId
-	}
-	return c.Render(mEditable, mSources, mFilters, mTargets, mResources, mCallbacks)
+	return c.Render(mSources, mFilters, mTargets, mResources, mCallbacks)
 }

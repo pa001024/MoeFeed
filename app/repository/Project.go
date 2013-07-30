@@ -74,3 +74,14 @@ func (this *Project) FindByOwner(ownerId int64) (obj []*models.Project) {
 	}
 	return
 }
+
+func (this *Project) GetAccess(userId int64, projectId int64) *models.ProjectAccess {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	obj := &models.ProjectAccess{}
+	q.OmitJoin().Where("user_id = ? and project = ?", userId).Find(obj)
+	return obj
+}

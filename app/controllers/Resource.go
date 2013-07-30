@@ -14,7 +14,7 @@ type Resource struct{ Project }
 
 // [动][写]
 func (c Resource) DoCreate(user, project string, resource *models.Resource) r.Result {
-	u, p := c.CheckOwnerProject(user, project)
+	u, p := c.CheckEditableProject(user, project)
 	if u == nil {
 		c.Flash.Error("你没有权限编辑该项目")
 		return c.Redirect("/%s/%s", user, project)

@@ -9,6 +9,7 @@ import (
 // 项目
 type Project struct {
 	Id          int64
+	Type        int16  `qbs:"notnull"`
 	Name        string `qbs:"size:64,index,notnull"`
 	DisplayName string `qbs:"size:64,index,notnull"`
 	Desc        string `qbs:"size:140"`
@@ -17,6 +18,12 @@ type Project struct {
 	Created     time.Time
 	Updated     time.Time
 }
+
+// enum Project.Type
+const (
+	ProjectPublic = iota
+	ProjectPrivate
+)
 
 var (
 	projRegex = userRegex
@@ -39,10 +46,10 @@ func (this *Project) UpdateTime() string {
 	return this.Updated.Format("1月2日 15:04")
 }
 
-// 是否可以被用户编辑
-func (this *Project) CanEdit(user *User) bool {
-	if user != nil && this.OwnerId == user.Id {
-		return true
+func (this *Project) TypeName() string {
+	if this.Type == ProjectPublic {
+		return "public"
+	} else {
+		return "private"
 	}
-	return false
 }

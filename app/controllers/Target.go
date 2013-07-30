@@ -11,7 +11,7 @@ type Target struct{ Project }
 
 // [动][写]
 func (c Target) DoCreate(user, project string, target *models.Target) r.Result {
-	u, p := c.CheckOwnerProject(user, project)
+	u, p := c.CheckEditableProject(user, project)
 	if u == nil {
 		c.Flash.Error("你没有权限编辑该项目")
 		return c.Redirect("/%s/%s", user, project)
@@ -34,7 +34,10 @@ func (c Target) Show(user, project string) r.Result {
 
 // [静]创建前端
 func (c Target) Create(user, project string) r.Result {
-	c.CheckUser()
-	c.CheckProject(user, project)
+	u, _ := c.CheckEditableProject(user, project)
+	if u == nil {
+		c.Flash.Error("你没有权限编辑该项目")
+		return c.Redirect("/%s/%s", user, project)
+	}
 	return c.Render()
 }

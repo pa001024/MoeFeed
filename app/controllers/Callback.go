@@ -10,7 +10,7 @@ import (
 type Callback struct{ Project }
 
 func (c Callback) DoCreate(user, project string, callback *models.Callback) r.Result {
-	u, p := c.CheckOwnerProject(user, project)
+	u, p := c.CheckEditableProject(user, project)
 	if u == nil {
 		c.Flash.Error("你没有权限编辑该项目")
 		return c.Redirect("/%s/%s", user, project)
@@ -49,7 +49,10 @@ func (c Callback) Show(user, project string) r.Result {
 }
 
 func (c Callback) Create(user, project string) r.Result {
-	c.CheckUser()
-	c.CheckProject(user, project)
+	u, _ := c.CheckEditableProject(user, project)
+	if u == nil {
+		c.Flash.Error("你没有权限编辑该项目")
+		return c.Redirect("/%s/%s", user, project)
+	}
 	return c.Render()
 }

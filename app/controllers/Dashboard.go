@@ -9,6 +9,9 @@ type Dashboard struct{ App }
 
 func (c Dashboard) Index() r.Result {
 	u := c.CheckUser()
+	if u == nil {
+		return c.Render()
+	}
 	mProjects := repo.ProjectRepo.FindByOwner(u.Id)
 	return c.Render(mProjects)
 }

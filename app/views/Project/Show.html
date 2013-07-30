@@ -3,7 +3,7 @@
       <div class="pagehead repohead instapaper_ignore readability-menu row">
         <div class="container span8 offset2">
           <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
-            <span class="repo-label hidden-phone">{{msg . "public"}}</span>
+            <span class="repo-label hidden-phone">{{msg . (.mProject.TypeName)}}</span>
             <span class="mega-octicon octicon-repo"></span>
             <span class="author">
               <a href="/{{urlquery .mProject.Owner.Username}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Username}}</span></a>
