@@ -6,7 +6,14 @@ import (
 )
 
 // 目标
-type Target JobData
+type Target struct {
+	Id        int64
+	Name      string `qbs:"index,size:32,notnull"`
+	Type      int16  `qbs:"notnull"`
+	ProjectId int64  `qbs:"index,notnull"`
+	Project   *Project
+	Data      string
+}
 
 const (
 	TargetSinaWeibo    = iota // [时间线系]新浪微博

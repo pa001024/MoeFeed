@@ -9,15 +9,12 @@
           <a class="brand" href="/">{{msg . "moefeed"}} <small>Platform</small></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="divider-vertical"></li>
               <li class="">
                 <a href="/">{{msg . "index"}}</a>
               </li>{{if .mUser}}
-              <li class="divider-vertical"></li>
               <li class="">
                 <a href="/logout">{{msg . "logout"}}</a>
               </li>{{else}}
-              <li class="divider-vertical"></li>
               <li class="">
                 <a href="/register">{{msg . "register.action"}}</a>
               </li>
@@ -29,7 +26,6 @@
               </li>
             </ul>{{if .mUser}}
             <ul class="nav pull-right">
-              <li class="divider-vertical"></li>
               <li class="">
                 <a href="/projects/new">{{msg . "project.create"}}</a>
               </li>

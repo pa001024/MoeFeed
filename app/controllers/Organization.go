@@ -4,9 +4,7 @@ import (
 	r "github.com/robfig/revel"
 )
 
-type Organization struct {
-	*r.Controller
-}
+type Organization struct{ App }
 
 // 显示组织独立页
 func (c Organization) Profile() r.Result {

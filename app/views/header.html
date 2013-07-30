@@ -10,5 +10,5 @@
     <link rel="shortcut icon" type="image/png" href="/public/img/favicon.ico">{{range .moreStyles}}
     <link rel="stylesheet" type="text/css" href="/public/{{.}}">{{end}}
   </head>
-  <body>
+  <body data-spy="scroll" data-target=".sidebar">
 {{template "nav.html" .}}

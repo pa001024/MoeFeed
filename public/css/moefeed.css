@@ -1,3 +1,10 @@
+/* 干掉横向滚动条 */
+body{
+  overflow-x: hidden;
+  position: relative;
+  padding-top: 43px;
+}
+
 /* 项目单页 */
 .project .subject h3 {
   font-size: 16pt;
@@ -17,7 +24,8 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-}.dlist input {
+}
+.dlist input {
   margin-bottom: 0;
   width: 100%;
   box-sizing: border-box;
@@ -26,7 +34,7 @@
 .dlist table tr td{
   line-height: 28px;
 }
-.dlist table tr td:last-child {
+.dlist table.editable tr td:last-child {
   width:68px;
 }
 article .dlist .btn-block {
@@ -58,16 +66,6 @@ article .dlist .btn-block {
   padding: 8px 14px;
   border: 1px solid #e5e5e5;
 }
-.sidenav > li:first-child > a {
-  -webkit-border-radius: 6px 6px 0 0;
-     -moz-border-radius: 6px 6px 0 0;
-          border-radius: 6px 6px 0 0;
-}
-.sidenav > li:last-child > a {
-  -webkit-border-radius: 0 0 6px 6px;
-     -moz-border-radius: 0 0 6px 6px;
-          border-radius: 0 0 6px 6px;
-}
 .sidenav > .active > a {
   position: relative;
   z-index: 2;
@@ -77,6 +75,17 @@ article .dlist .btn-block {
   -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
      -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
           box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+.sidenav > .active > a:before{
+  content: " ";
+  height: 22px;
+  width: 5px;
+  float: left;
+  margin-left: -15px;
+  margin-right: 8px;
+  margin-top: -1px;
+  display: block;
+  background: #fff;
 }
 /* Chevrons */
 .sidenav .icon-chevron-right {
@@ -284,11 +293,6 @@ article .dlist .btn-block {
   color: #666;
 }
 
-
-body {
-  position: relative;
-  padding-top: 43px;
-}
 
 .jumbotron {
   position: relative;

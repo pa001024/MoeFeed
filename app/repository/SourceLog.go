@@ -5,11 +5,11 @@ import (
 	"github.com/pa001024/MoeFeed/app/models"
 )
 
-var JobLogRepo *JobLog
+var SourceLogRepo *SourceLog
 
-type JobLog struct{}
+type SourceLog struct{}
 
-func (this *JobLog) Put(model *models.JobLog) {
+func (this *SourceLog) Put(model *models.SourceLog) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
@@ -18,7 +18,7 @@ func (this *JobLog) Put(model *models.JobLog) {
 	q.Save(model)
 }
 
-func (this *JobLog) Delete(model *models.JobLog) {
+func (this *SourceLog) Delete(model *models.SourceLog) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
@@ -28,28 +28,28 @@ func (this *JobLog) Delete(model *models.JobLog) {
 }
 
 // 主键
-func (this *JobLog) GetById(id int64) *models.JobLog {
+func (this *SourceLog) GetById(id int64) *models.SourceLog {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
 	defer q.Close()
 	//////////////////
-	obj := &models.JobLog{Id: id}
+	obj := &models.SourceLog{Id: id}
 	q.Find(obj)
-	if obj.ChannelId == 0 {
+	if obj.Title == "" {
 		return nil
 	}
 	return obj
 }
 
-// 列出项目所有JobLog
-func (this *JobLog) FindByChannel(channelId int64) (obj []*models.JobLog) {
+// 列出项目所有SourceLog
+func (this *SourceLog) FindBySource(sourceId int64) (obj []*models.SourceLog) {
 	//////////////////
 	q, err := qbs.GetQbs()
 	assetsError(err)
 	defer q.Close()
 	//////////////////
-	err = q.WhereEqual("channel_id", channelId).FindAll(&obj)
+	err = q.WhereEqual("source_id", sourceId).FindAll(&obj)
 	if err != nil {
 		return nil
 	}

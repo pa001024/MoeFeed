@@ -10,13 +10,14 @@ type Callback struct {
 	Id        int64
 	Name      string `qbs:"size:32,notnull"`
 	Url       string `qbs:"size:32,index,notnull"`
-	Type      int32  `qbs:"notnull"`
+	Type      int16  `qbs:"notnull"`
 	ProjectId int64  `qbs:"index,notnull"`
 	Project   *Project
 	Created   time.Time
 	Updated   time.Time
 }
 
+// 传递式验证
 func (this *Callback) Validate(v *r.Validation, password string) {
 	v.Check(this.Name, r.Required{}, r.MinSize{2}, r.MaxSize{32})
 	v.Check(this.Url, r.Required{}, r.MinSize{2}, r.MaxSize{32})
@@ -36,6 +37,12 @@ const (
 )
 
 const (
-	CallbackHttp      = 100 + iota // [终结点系]HTTP
-	CallbackWebSocket              // [终结点系]WebSocket
+	CallbackHttp      = 100 + iota // [Ping系]HTTP
+	CallbackWebSocket              // [Ping系]WebSocket
+)
+
+const (
+	CallbackPullReply  = 200 + iota // [响应系]自动回复
+	CallbackPullSearch              // [响应系]Feed搜索
+	CallbackPullStatus              // [响应系]状态
 )

@@ -21,7 +21,7 @@ type User struct {
 	Email       string `qbs:"size:100,unique,notnull"`
 	AvatarEmail string `qbs:"size:100"`
 	Url         string `qbs:"size:100"`
-	Status      int8
+	Status      int16
 	Created     time.Time
 	Updated     time.Time
 }

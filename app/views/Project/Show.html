@@ -71,7 +71,7 @@
               <article>
                 <h2>{{.Name}}</h2>
                 <div class="dlist">
-                  <table class="table table-hover">
+                  <table class="table table-hover{{if $.mEditable}} editable{{end}}">
                     <thead>
                       <tr>
                         <th>{{msg $ "viewdata.key"}}</th>
@@ -117,7 +117,7 @@
               <article>
                 <h2>{{.Name}}</h2>
                 <div class="dlist">
-                  <table class="table table-hover">
+                  <table class="table table-hover{{if $.mEditable}} editable{{end}}">
                     <thead>
                       <tr>
                         <th>{{msg $ "viewdata.key"}}</th>
@@ -163,7 +163,7 @@
               <article>
                 <h2>{{.Name}}</h2>
                 <div class="dlist">
-                  <table class="table table-hover">
+                  <table class="table table-hover{{if $.mEditable}} editable{{end}}">
                     <thead>
                       <tr>
                         <th>{{msg $ "viewdata.key"}}</th>
@@ -209,7 +209,7 @@
               <article>
                 <h2>{{msg . "resource.list"}}</h2>
                 <div class="dlist">
-                  <table class="table table-hover">
+                  <table class="table table-hover{{if $.mEditable}} editable{{end}}">
                     <thead>
                       <tr>
                         <th>{{msg $ "resource.name.short"}}</th>
@@ -246,7 +246,7 @@
               <article>
                 <h2>{{msg . "callback.list"}}</h2>
                 <div class="dlist">
-                  <table class="table table-hover">
+                  <table class="table table-hover{{if $.mEditable}} editable{{end}}">
                     <thead>
                       <tr>
                         <th>{{msg $ "callback.name.short"}}</th>
@@ -274,6 +274,3 @@
       </div>
     </div>
 {{template "footer.html" .}}
-<script>
-  $('#sidenav').scrollspy();
-</script>

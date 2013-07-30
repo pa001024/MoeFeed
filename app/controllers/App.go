@@ -14,7 +14,7 @@ const (
 type App struct{ *r.Controller }
 
 // 用户状态持久化
-func (c App) CheckUser() *models.User {
+func (c *App) CheckUser() *models.User {
 	if vu := c.RenderArgs["mUser"]; vu != nil {
 		return vu.(*models.User)
 	}
@@ -24,12 +24,6 @@ func (c App) CheckUser() *models.User {
 		return u
 	}
 	return nil
-}
-
-// [静] 主页
-func (c App) Index() r.Result {
-	c.CheckUser()
-	return c.Render()
 }
 
 func assetsError(err error) {

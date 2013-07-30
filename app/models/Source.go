@@ -6,7 +6,14 @@ import (
 )
 
 // 来源
-type Source JobData
+type Source struct {
+	Id        int64
+	Name      string `qbs:"index,size:32,notnull"`
+	Type      int16  `qbs:"notnull"`
+	ProjectId int64  `qbs:"index,notnull"`
+	Project   *Project
+	Data      string
+}
 
 const (
 	SourceRSS  = iota // [主动系]RSS订阅

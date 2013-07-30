@@ -12,7 +12,7 @@ import (
 type Project struct{ App }
 
 // 统一参数解析
-func (c Project) CheckProject(user, project string) *models.Project {
+func (c *Project) CheckProject(user, project string) *models.Project {
 	if vp := c.RenderArgs["mProject"]; vp != nil {
 		return vp.(*models.Project)
 	}
@@ -25,7 +25,7 @@ func (c Project) CheckProject(user, project string) *models.Project {
 }
 
 // 检查编辑权限
-func (c Project) CheckOwnerProject(user, project string) (*models.User, *models.Project) {
+func (c *Project) CheckOwnerProject(user, project string) (*models.User, *models.Project) {
 	u := c.CheckUser()
 	p := c.CheckProject(user, project)
 	if u.Id == p.OwnerId {

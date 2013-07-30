@@ -1,5 +1,16 @@
 package models
 
+// 资源
+type Resource struct {
+	Id        int64
+	Name      string `qbs:"size:32,notnull"`
+	Type      int16  `qbs:"notnull"`
+	Size      int64  `qbs:"notnull"`
+	Hash      string `qbs:"size:32,notnull"` // 文件储存方式 /hash[:2]/hash
+	ProjectId int64  `qbs:"index,notnull"`
+	Project   *Project
+}
+
 // enum Resource.Type
 const (
 	ResourceImage  = iota // 图片文件
@@ -7,17 +18,6 @@ const (
 	ResourceScript        // 脚本文件
 	ResourceOther         // 其他文件
 )
-
-// 资源
-type Resource struct {
-	Id        int64
-	Name      string `qbs:"size:32,notnull"`
-	Type      int32  `qbs:"notnull"`
-	Size      int64  `qbs:"notnull"`
-	Hash      string `qbs:"size:32,notnull"` // 文件储存方式 /hash[:2]/hash
-	ProjectId int64  `qbs:"index,notnull"`
-	Project   *Project
-}
 
 func (this *Resource) FileName() string {
 	return "./data/" + this.Hash[:2] + "/" + this.Hash // TODO:可配置化

@@ -6,14 +6,21 @@ import (
 )
 
 // 过滤器
-type Filter JobData
+type Filter struct {
+	Id        int64
+	Name      string `qbs:"index,size:32,notnull"`
+	Type      int16  `qbs:"notnull"`
+	ProjectId int64  `qbs:"index,notnull"`
+	Project   *Project
+	Data      string
+}
 
 const (
 	FilterText   = iota // [检测系]文本过滤
 	FilterRegexp        // [检测系]正则过滤
 )
 const (
-	FilterMediawikiApi = 100 + iota // [抓取系]获取WikiText
+	FilterMediawiki = 100 + iota // [抓取系]获取WikiText
 )
 const (
 	FilterZhconv          = 200 + iota // [转换系]简繁转换

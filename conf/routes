@@ -11,7 +11,7 @@ GET     /public/*filepath                       Static.Serve("public")
 GET     /favicon.ico                            Static.Serve("public/img","favicon.ico")
 
 # 主页
-GET     /                                       App.Index
+GET     /                                       Dashboard.Index
 GET     /help                                   Help.Index
 
 # 验证(前端)
