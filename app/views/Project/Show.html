@@ -27,7 +27,7 @@
               <li><a href="#callback"><i class="icon-chevron-right"></i> {{msg . "callback"}}</a></li>
             </ul>
           </div>
-          <div class="span9">{{$ := .}}{{$mEditable := .mEditable}}
+          <div class="span9">{{$ := .}}
             <section id="overview">
               <div class="page-header">
                 <h1>{{msg . "overview"}}</h1>
@@ -75,18 +75,18 @@
                     <thead>
                       <tr>
                         <th>{{msg $ "viewdata.key"}}</th>
-                        <th>{{msg $ "viewdata.value"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "viewdata.value"}}</th>{{if $.mEditable}}
                         <th>{{msg $ "viewdata.edit"}}</th>{{end}}
                       </tr>
                     </thead>
                     <tbody>{{range .ViewData}}
                       <tr>
                         <td>
-                          {{if $mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
+                          {{if $.mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
                         </td>
                         <td>
-                          {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
-                        </td>{{if $mEditable}}
+                          {{if $.mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
+                        </td>{{if $.mEditable}}
                         <td>
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
@@ -97,7 +97,7 @@
                         </td>
                         <td>
                           <input type="text" placeholder="{{msg $ "viewdata.value.new"}}">
-                        </td>{{if $mEditable}}
+                        </td>{{if $.mEditable}}
                         <td>
                           <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> {{msg $ "viewdata.add"}}</a>
                         </td>{{end}}
@@ -121,18 +121,18 @@
                     <thead>
                       <tr>
                         <th>{{msg $ "viewdata.key"}}</th>
-                        <th>{{msg $ "viewdata.value"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "viewdata.value"}}</th>{{if $.mEditable}}
                         <th>{{msg $ "viewdata.edit"}}</th>{{end}}
                       </tr>
                     </thead>
                     <tbody>{{range .ViewData}}
                       <tr>
                         <td>
-                          {{if $mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
+                          {{if $.mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
                         </td>
                         <td>
-                          {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
-                        </td>{{if $mEditable}}
+                          {{if $.mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
+                        </td>{{if $.mEditable}}
                         <td>
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
@@ -143,7 +143,7 @@
                         </td>
                         <td>
                           <input type="text" placeholder="{{msg $ "viewdata.value.new"}}">
-                        </td>{{if $mEditable}}
+                        </td>{{if $.mEditable}}
                         <td>
                           <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> {{msg $ "viewdata.add"}}</a>
                         </td>{{end}}
@@ -167,18 +167,18 @@
                     <thead>
                       <tr>
                         <th>{{msg $ "viewdata.key"}}</th>
-                        <th>{{msg $ "viewdata.value"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "viewdata.value"}}</th>{{if $.mEditable}}
                         <th>{{msg $ "viewdata.edit"}}</th>{{end}}
                       </tr>
                     </thead>
                     <tbody>{{range .ViewData}}
                       <tr>
                         <td>
-                          {{if $mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
+                          {{if $.mEditable}}<input type="text" value="{{.Key}}">{{else}}{{.Key}}{{end}}
                         </td>
                         <td>
-                          {{if $mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
-                        </td>{{if $mEditable}}
+                          {{if $.mEditable}}<input type="text" value="{{.Value}}">{{else}}{{.Value}}{{end}}
+                        </td>{{if $.mEditable}}
                         <td>
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
@@ -189,7 +189,7 @@
                         </td>
                         <td>
                           <input type="text" placeholder="{{msg $ "viewdata.value.new"}}">
-                        </td>{{if $mEditable}}
+                        </td>{{if $.mEditable}}
                         <td>
                           <a class="btn btn-success btn-block" href="#"><i class="icon-plus-sign icon-white"></i> {{msg $ "viewdata.add"}}</a>
                         </td>{{end}}
@@ -215,7 +215,7 @@
                         <th>{{msg $ "resource.name.short"}}</th>
                         <th>{{msg $ "resource.size.short"}}</th>
                         <th>{{msg $ "resource.md5.short"}}</th>
-                        <th>{{msg $ "resource.file.short"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "resource.file.short"}}</th>{{if $.mEditable}}
                         <th>{{msg $ "resource.edit.short"}}</th>{{end}}
                       </tr>
                     </thead>
@@ -227,7 +227,7 @@
                         <td>
                           <input type="file">
                         </td>
-                        <td>{{if $mEditable}}
+                        <td>{{if $.mEditable}}
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}
                       </tr>{{end}}
@@ -239,7 +239,7 @@
             <section id="callback">
               <div class="page-header">
                 <h1>{{msg . "callback"}}
-                  {{if $mEditable}}<a href="{{.pageurl}}/callback/new" title="{{msg . "callback.create.desc"}}" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
+                  {{if $.mEditable}}<a href="{{.pageurl}}/callback/new" title="{{msg . "callback.create.desc"}}" class="btn"><i class="icon-plus-sign"></i></a>{{end}}
                 </h1>
                 <p class="muted">{{msg . "callback.desc"}}</p>
               </div>
@@ -251,7 +251,7 @@
                       <tr>
                         <th>{{msg $ "callback.name.short"}}</th>
                         <th>{{msg $ "callback.url.short"}}</th>
-                        <th>{{msg $ "callback.type.short"}}</th>{{if $mEditable}}
+                        <th>{{msg $ "callback.type.short"}}</th>{{if $.mEditable}}
                         <th>{{msg $ "callback.edit.short"}}</th>{{end}}
                       </tr>
                     </thead>
@@ -259,7 +259,7 @@
                       <tr>
                         <td>{{.Name}}</td>
                         <td>{{.Url}}</td>
-                        <td>{{.Type}}</td>{{if $mEditable}}
+                        <td>{{.Type}}</td>{{if $.mEditable}}
                         <td>
                           <a class="btn btn-danger btn-block" href="#"><i class="icon-trash icon-white"></i> {{msg $ "viewdata.delete"}}</a>
                         </td>{{end}}

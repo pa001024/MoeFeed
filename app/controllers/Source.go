@@ -11,10 +11,9 @@ type Source struct{ Project }
 
 // [动][写]
 func (c Source) DoCreate(user, project string, source *models.Source) r.Result {
-	u := c.CheckUser()
-	p := c.CheckProject(user, project)
+	u, p := c.CheckOwnerProject(user, project)
 	if u == nil {
-		c.Flash.Error("请先登录")
+		c.Flash.Error("你没有权限编辑该项目")
 		return c.Redirect("/%s/%s", user, project)
 	}
 	if p == nil {

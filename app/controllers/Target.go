@@ -11,10 +11,10 @@ type Target struct{ Project }
 
 // [动][写]
 func (c Target) DoCreate(user, project string, target *models.Target) r.Result {
-	u := c.CheckUser()
-	p := c.CheckProject(user, project)
-	if p == nil {
-		return c.NotFound("找不到该项目")
+	u, p := c.CheckOwnerProject(user, project)
+	if u == nil {
+		c.Flash.Error("你没有权限编辑该项目")
+		return c.Redirect("/%s/%s", user, project)
 	}
 	if u == nil {
 		c.Flash.Error("请先登录")
