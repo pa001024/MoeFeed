@@ -35,7 +35,7 @@ func (c User) Show(user string) r.Result {
 	c.CheckUser()
 	mUser := repo.UserRepo.GetByName(user)
 	if mUser == nil {
-		return c.NotFound("没有此用户")
+		return c.NotFound(c.Message("user.notfound"))
 	}
 	mProjects := repo.ProjectRepo.FindByOwner(mUser.Id)
 	return c.Render(mUser, mProjects)
@@ -43,8 +43,8 @@ func (c User) Show(user string) r.Result {
 
 // [动][边] 登录
 func (c User) DoLogin(username, password, return_to string) r.Result {
-	c.Validation.Required(username).Message("请填写用户名")
-	c.Validation.Required(password).Message("请填写密码")
+	c.Validation.Required(username).Message(c.Message("username.required"))
+	c.Validation.Required(password).Message(c.Message("password.required"))
 
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
@@ -53,7 +53,7 @@ func (c User) DoLogin(username, password, return_to string) r.Result {
 	}
 	user := repo.UserRepo.GetByNameOrEmail(username)
 	if user == nil {
-		c.Flash.Error("用户不存在")
+		c.Flash.Error(c.Message("user.notexists"))
 		return c.Redirect("/login?return_to=%s", return_to)
 	}
 	// 验证密码
@@ -74,9 +74,7 @@ func (c User) DoLogin(username, password, return_to string) r.Result {
 }
 
 // [动][写] 用户注册
-func (c User) DoRegister(user *models.User, return_to, password, password2 string) r.Result {
-	c.Validation.Required(password == password2).
-		Message("两次密码不匹配")
+func (c User) DoRegister(user *models.User, return_to, password string) r.Result {
 	user.Validate(c.Validation, password)
 
 	if c.Validation.HasErrors() {

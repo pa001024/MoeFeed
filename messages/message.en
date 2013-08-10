@@ -12,6 +12,8 @@ index=Index
 logout=Log out
 about=About
 
+required=Required
+
 user=User
 user.desc=Edit User Info
 email=E-mail
@@ -20,10 +22,10 @@ displayname=Display Name
 displayname.desc=The name will display on page.
 username=Username
 username.desc=%(username)s will use by login and be a part of project URL
+username.required=The %(username)s is required.
 password=Password
 password.desc=Recommend the use of high strength password
-password2=Password again
-password2.desc=Need same as password
+password.required=The %(password)s is required.
 usernameoremail=%(username)s/%(email)s
 usernameoremail.desc=%(username)s or %(email)s
 register=User Registration
@@ -33,9 +35,6 @@ register.action=Register
 login=User Login
 login.desc=Login to %(moefeed)s
 login.action=Login
-required.username=Please fill in the %(username)s
-required.password=Please fill in the %(password)s
-notequal.password=Two passwords are not the same
 
 project=Project
 project.create=Create project
