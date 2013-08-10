@@ -86,14 +86,14 @@ func (c User) DoRegister(user *models.User, return_to, password, password2 strin
 	}
 	// 创建用户
 	user.Password = user.GeneratePassword(password)
-	util.Log("[NewUser]", user)
+	r.INFO.Println("[NewUser]", user)
 	repo.UserRepo.Put(user)
 	// 写入code
 	code := &models.UserCode{UserId: user.Id}
 	code.GenerateCode()
 	repo.UserCodeRepo.Put(code)
 	// 发送邮件
-	util.Log("Send mail to", user.Email)
+	r.INFO.Println("Send mail to", user.Email)
 	aurl := "http://feed.qaq.ca/reauth?" + (url.Values{"id": {user.Username}, "code": {code.Code}}).Encode()
 	service.Mail.SendMail(user.Email, "完成你的注册", `
 		<p>如果你需要使用全部功能 请点击下列链接完成验证</p>

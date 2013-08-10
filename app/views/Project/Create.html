@@ -24,6 +24,16 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label" for="project-Type">{{msg . "project.type"}}</label>
+                <div class="controls">
+                  <select name="project.Type" id="project-Type" class="input-xlarge">
+                    <option value="0">{{msg . "project.public"}}</option>
+                    <option value="1">{{msg . "project.private"}}</option>
+                  </select>
+                  <p class="help-block">{{msg . "project.type.desc"}}</p>
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
                   <button class="btn btn-success">{{msg . "project.create.action"}}</button>

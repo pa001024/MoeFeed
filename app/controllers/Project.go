@@ -131,7 +131,7 @@ func (c Project) Create() r.Result {
 func (c Project) Delete(user, project string) r.Result {
 	u, _ := c.CheckAdminableProject(user, project)
 	if u == nil {
-		return c.Forbidden("你没有权限编辑该项目")
+		return c.Forbidden(c.Message("project.edit.nopermission"))
 	}
 	return c.Render()
 }
@@ -146,7 +146,7 @@ func (c Project) Explore() r.Result {
 func (c Project) Setting(user, project string) r.Result {
 	u, _ := c.CheckAdminableProject(user, project)
 	if u == nil {
-		return c.Forbidden("你没有权限编辑该项目")
+		return c.Forbidden(c.Message("project.edit.nopermission"))
 	}
 	return c.Render()
 }
@@ -155,10 +155,10 @@ func (c Project) Setting(user, project string) r.Result {
 func (c Project) Show(user, project string) r.Result {
 	u, p := c.CheckReadableProject(user, project)
 	if p == nil {
-		return c.NotFound("没有此项目")
+		return c.NotFound(c.Message("project.notfound"))
 	}
 	if u == nil && p.Type != models.ProjectPublic {
-		return c.Forbidden("你没有权限查看该项目")
+		return c.Forbidden(c.Message("project.view.nopermission"))
 	}
 	mSources := repo.SourceRepo.FindByProject(p.Id)
 	mFilters := repo.FilterRepo.FindByProject(p.Id)

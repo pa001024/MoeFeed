@@ -75,6 +75,20 @@ func (this *Project) FindByOwner(ownerId int64) (obj []*models.Project) {
 	return
 }
 
+// 列出用户所有项目
+func (this *Project) FindByOwnerPublic(ownerId int64) (obj []*models.Project) {
+	//////////////////
+	q, err := qbs.GetQbs()
+	assetsError(err)
+	defer q.Close()
+	//////////////////
+	err = q.Where("owner_id = ? and type = ?", ownerId, models.ProjectPublic).OrderByDesc("updated").FindAll(&obj)
+	if err != nil {
+		return nil
+	}
+	return
+}
+
 func (this *Project) GetAccess(userId int64, projectId int64) *models.ProjectAccess {
 	//////////////////
 	q, err := qbs.GetQbs()

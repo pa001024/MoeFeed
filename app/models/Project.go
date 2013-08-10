@@ -48,8 +48,8 @@ func (this *Project) UpdateTime() string {
 
 func (this *Project) TypeName() string {
 	if this.Type == ProjectPublic {
-		return "public"
+		return "project.public"
 	} else {
-		return "private"
+		return "project.private"
 	}
 }

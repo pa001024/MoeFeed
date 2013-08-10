@@ -9,7 +9,7 @@ import (
 
 	"github.com/coocood/qbs"
 	"github.com/pa001024/MoeFeed/app/models"
-	"github.com/pa001024/MoeWorker/util"
+	"github.com/robfig/revel"
 )
 
 var ResourceRepo *Resource
@@ -41,7 +41,7 @@ func (this *Resource) PutAndStone(resource *models.Resource, r multipart.File) {
 	os.MkdirAll(fn[:len(fn)-32], 0644)
 	f, err := os.Create(fn)
 	if err != nil {
-		util.Log(err)
+		revel.ERROR.Printf("ResourceRepo.PutAndStone() throws %v", err)
 		return
 	}
 	defer f.Close()
@@ -55,7 +55,7 @@ func (this *Resource) GetFile(resource *models.Resource) io.ReadCloser {
 	// TODO: 缓存?
 	f, err := os.Open(resource.FileName())
 	if err != nil {
-		util.Log(err)
+		revel.ERROR.Printf("ResourceRepo.GetFile() throws %v", err)
 	}
 	return f
 }
