@@ -1,0 +1,165 @@
+# Moefeed Language File- EN(English)
+
+# default en-US
+
+moefeed=MoeFeed
+moefeed.desc=Your Sync Platform
+moefeed.long=%(moefeed)s - %(moefeed.desc)s
+moefeed.keywords=Platform,Sync,Push,Tweet,RSS,Atom,System
+moefeed.title.suffix=
+
+index=Index
+logout=Log out
+about=About
+
+user=User
+user.desc=Edit User Info
+email=E-mail
+email.desc=For verification
+displayname=Display Name
+displayname.desc=The name will display on page.
+username=Username
+username.desc=%(username)s will use by login and be a part of project URL
+password=Password
+password.desc=Recommend the use of high strength password
+password2=Password again
+password2.desc=Need same as password
+usernameoremail=%(username)s/%(email)s
+usernameoremail.desc=%(username)s or %(email)s
+register=User Registration
+register.desc=Register an account
+register.action=Register
+
+login=User Login
+login.desc=Login to %(moefeed)s
+login.action=Login
+required.username=Please fill in the %(username)s
+required.password=Please fill in the %(password)s
+notequal.password=Two passwords are not the same
+
+project=Project
+project.create=Create project
+project.create.desc=Create new project
+project.create.action=Create
+project.name=Project's name
+project.name.desc=%(project.name)s will be a part of project URL.
+project.name.example=myproject
+project.displayname=Project's display name
+project.displayname.desc=%(project.displayname)s will be displayed on the page
+project.displayname.example=My %(project)s
+project.type=Type
+project.type.desc=Set %(project)s 
+
+view=View
+edit=Edit
+permission=Permission
+project.view.nopermission=You doesn't have permission to view the project.
+project.edit.nopermission=You doesn't have permission to edit the project.
+project.notfound=Can not find the project
+project.public=Public
+project.private=Private
+lastupdate=Last update
+
+overview=Overview
+overview.desc=Status of project
+channel=Channel
+channel.desc=The path through from the source to the target.
+run.source=Source fetched
+run.source.desc=Fetch the data from the source number.
+run.filter=Filter run
+run.filter.desc=Filter run times
+run.target=Target sends
+run.target.desc=Send data to the target number.
+run.all=Total
+run.all.desc=All routes run times
+
+viewdata.key=Key
+viewdata.key.desc=Configuration key name
+viewdata.value=Value
+viewdata.value.desc=Configuration value
+viewdata.edit=Edit
+viewdata.edit.desc=On a single key to delete or edit operation
+viewdata.delete=Delete
+viewdata.add=Add
+viewdata.key.new=New key...
+viewdata.value.new=New value...
+
+source=Source
+source.desc=Item Information Source
+source.create=Create source
+source.create.desc=Create a new source
+source.create.action=Create
+source.name=%(source)s's name
+source.name.desc=Name is a unique identifier of the source, Required
+source.type=%(source)s's type
+source.type.desc=Type is the basis of the source work.
+source.data=Initial data
+source.data.desc=The data is a set of key-value pairs using the optional JSON format
+
+filter=Filter
+filter.desc=Project information processing method
+filter.create=Create filter
+filter.create.desc=Create a new filter
+filter.create.action=Create
+filter.name=%(filter)s's name
+filter.name.desc=Name is a unique identifier of the filter, Required
+filter.type=%(filter)s's type
+filter.type.desc=Type is the basis of the filter work.
+filter.data=Initial data
+filter.data.desc=The data is a set of key-value pairs using the optional JSON format
+
+target=Target
+target.desc=The target project final sent to
+target.create=Create target
+target.create.desc=Create  a new target
+target.create.action=Create
+target.name=%(target)s's name
+target.name.desc=Name is a unique identifier of the target, Required
+target.type=%(target)s's type
+target.type.desc=Type is the basis of the target work.
+target.data=Initial data
+target.data.desc=The data is a set of key-value pairs using the optional JSON format
+
+resource=Resource
+resource.desc=Resource files such as filters text and images
+resource.list=%(resource)s list
+resource.create=Create resource
+resource.create.desc=Create resource
+resource.create.action=Create
+resource.name.short=Name
+resource.size.short=Size
+resource.md5.short=MD5
+resource.file.short=File
+resource.edit.short=Edit
+resource.name=%(resource)s's name
+resource.name.desc=Name is a unique identifier of the resource, Required
+resource.type=%(resource)s's type
+resource.type.desc=Type is the basis of the resource work.
+resource.file=File
+resource.file.desc=Upload file
+
+callback=Callback
+callback.desc=Listens on a specific url implement an external hook callback (e.g. OAuth callbacks, etc.)
+callback.create=Create callback
+callback.list=%(callback)s list
+callback.create.desc=Create a new callback
+callback.create.action=Create
+callback.name.short=Name
+callback.url.short=URL
+callback.type.short=Type
+callback.edit.short=Edit
+callback.name=%(callback)s's name
+callback.name.desc=Name is a unique identifier of the callback, Required
+callback.type=%(callback)s's type
+callback.type.desc=Type is the basis of the callback work.
+callback.url=URL
+callback.url.example=twittercb
+callback.url.desc=URL addresses are globally unique, such as/user/project/callback/%(callback.url.example)s
+
+wish=Wish
+wish.desc=Here write the project proposal
+
+
+# 
+[GB]
+
