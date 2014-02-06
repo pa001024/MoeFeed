@@ -56,10 +56,9 @@ func (c *Account) DoLogin(username, password, return_to string) r.Result {
 		return c.Redirect("/login?return_to=%s", return_to)
 	}
 	// 登陆成功写入session
-	c.Session[USER] = util.ToString(user.Id)
+	c.Session[ACCOUNT] = util.ToString(user.Id)
 	// 单点登录
-	token := po.GenerateToken(user.Id)
-	c.Session[TOKEN] = token.Token
+	po.GenerateToken(user.Id)
 
 	if return_to == "" {
 		return_to = "/"
@@ -114,7 +113,7 @@ func (c *Account) DoRegister(user *models.Account, return_to, password string) r
 	<p>如果你需要使用全部功能 请点击下列链接完成验证</p>
 	<p><a href="`+aurl+`">`+aurl+`</a></p>`) // TODO: i18n
 
-	c.Session[USER] = util.ToString(user.Id)
+	c.Session[ACCOUNT] = util.ToString(user.Id)
 	if return_to == "" {
 		return_to = "/"
 	}
@@ -153,7 +152,8 @@ func (c *Account) Login(return_to string) r.Result {
 
 // [静] 用户登出前端
 func (c *Account) Logout() r.Result {
-	delete(c.Session, USER)
+	delete(c.Session, ACCOUNT)
+	delete(c.Session, TOKEN)
 	return c.Redirect("/")
 }
 

@@ -10,7 +10,7 @@ type AdminDomain struct{ CommonDomain }
 
 // 管理员身份验证持久化
 func (c *AdminDomain) CheckAdmin() (u *models.Account, po *repo.Common) {
-	if accountId, ok := c.Session[USER]; ok {
+	if accountId, ok := c.Session[ACCOUNT]; ok {
 		po = repo.CommonRepo()
 		u = po.GetAccount(accountId)
 		// if u.Type == models.AccountAdmin {

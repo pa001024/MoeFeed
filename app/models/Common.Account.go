@@ -50,7 +50,8 @@ func (this *AccountEmailVerify) GenerateCode() {
 
 type AccountToken struct {
 	Id        int64
-	Token     string `qbs:"size:32,index,notnull"`
+	Token     string `qbs:"size:32,index,notnull"`  //
+	App       string `qbs:"size:120,index,notnull"` // 回调网址
 	AccountId int64  `qbs:"notnull"`
 	Account   *Account
 	Updated   time.Time

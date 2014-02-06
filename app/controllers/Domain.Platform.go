@@ -11,7 +11,7 @@ type PlatformDomain struct{ CommonDomain }
 // 用户状态持久化
 func (c *PlatformDomain) CheckUser() (u *models.PlatformUser, po *repo.Platform) {
 	po = repo.PlatformRepo()
-	if id, ok := c.Session[USER]; ok {
+	if id, ok := c.Session[ACCOUNT]; ok {
 		u = po.GetUser(id)
 		c.RenderArgs["mUser"] = u
 	}

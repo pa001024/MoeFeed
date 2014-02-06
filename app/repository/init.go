@@ -32,6 +32,7 @@ func InitDb() {
 	// Common
 	m.CreateTableIfNotExists(new(models.Account))
 	m.CreateTableIfNotExists(new(models.AccountEmailVerify))
+	m.CreateTableIfNotExists(new(models.AccountToken))
 	// Platform
 	m.CreateTableIfNotExists(new(models.UserActivity))
 	m.CreateTableIfNotExists(new(models.PlatformUser))
