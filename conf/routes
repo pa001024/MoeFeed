@@ -5,27 +5,25 @@
 # 测试
 module:testrunner
 
-
 # 静态文件 
 GET     /public/*filepath                       Static.Serve("public")
 GET     /favicon.ico                            Static.Serve("public/img","favicon.ico")
 
 # 主页
 GET     /                                       Dashboard.Index
-GET     /help                                   Help.Index
 
-# 验证(前端)
-GET     /register                               User.Register
-POST    /register                               User.DoRegister
-GET     /reauth                                 User.Reauth
-GET     /login                                  User.Login
-POST    /login                                  User.DoLogin
-GET     /logout                                 User.Logout
+# SSO
+GET     /register                               Account.Register
+POST    /register                               Account.DoRegister
+GET     /reauth                                 Account.Reauth
+GET     /login                                  Account.Login
+POST    /login                                  Account.DoLogin
+GET     /logout                                 Account.Logout
 
 # 用户设置
-GET     /settings                               User.ProfileLink
-GET     /settings/profile                       User.Profile
-GET     /settings/security                      User.Security
+GET     /settings                               PlatformUser.ProfileLink
+GET     /settings/profile                       PlatformUser.Profile
+GET     /settings/security                      PlatformUser.Security
 
 GET     /projects/new                           Project.CreateLink
 GET     /new                                    Project.Create
@@ -35,11 +33,11 @@ GET     /explore                                Project.Explore
 GET     /organizations/profile                  Organization.Profile
 GET     /organizations/:user                    Organization.Show
 
-GET     /sysboard                               Admin.Index
+GET     /sysboard                               PlatformAdmin.Index
 *       /api                                    Api.Index
 *       /api/:controller/:action                :controller.:action
 
-GET     /:user                                  User.Show
+GET     /:user                                  PlatformUser.Show
 GET     /:user/:project                         Project.Show
 GET     /:user/:project/delete                  Project.Delete
 DELETE  /:user/:project                         Project.DoDelete

@@ -8,8 +8,7 @@
     </header>
 {{end}}
     <div class="container">
-{{if .mUser}}
-      <div class="row">
+      {{if .mUser}}<div class="row">
         <ul class="dashboard-tabs span10 offset1 navbar-inner">
           <li><a href="/">更新状态</a></li>
           <li><a href="/dashboard/issues">故障</a></li>

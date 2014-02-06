@@ -159,6 +159,11 @@ wish=Wish
 wish.desc=Here write the project proposal
 
 
+# errors
+user.notfound=Cound not find the user
+user.notexists=%(user)s not exists
+user.exists=%(user)s alreadly exists
+
 # 
 [GB]
 
