@@ -6,7 +6,12 @@ import (
 	"github.com/pa001024/MoeFeed/app/models"
 )
 
-func CommonRepo() *Common { return &Common{QbsRepo()} }
+func CommonRepo(q ...*QbsRepository) *Common {
+	if len(q) > 0 {
+		return &Common{q[0]}
+	}
+	return &Common{QbsRepo()}
+}
 
 type Common struct{ *QbsRepository }
 
@@ -35,14 +40,6 @@ func (this *Common) GetAccountByNameOrEmail(nameOrEmail string) *models.Account 
 	} else {
 		return this.GetAccountByName(nameOrEmail)
 	}
-}
-
-// 获取SSO Token
-func (this *Common) GenerateToken(account_id int64) (m *models.AccountToken) {
-	m = &models.AccountToken{AccountId: account_id}
-	m.GenerateToken()
-	this.Put(m)
-	return
 }
 
 // 获取Email验证

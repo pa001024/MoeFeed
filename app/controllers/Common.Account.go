@@ -1,35 +1,75 @@
 package controllers
 
 import (
+	"encoding/json"
+	"fmt"
+	"net/http"
 	"net/url"
 	"regexp"
+	"strings"
 
 	"github.com/pa001024/MoeFeed/app/models"
 	repo "github.com/pa001024/MoeFeed/app/repository"
 	"github.com/pa001024/MoeFeed/app/service"
-	"github.com/pa001024/MoeWorker/util"
 	r "github.com/robfig/revel"
 )
 
-// 用户账户控制器
+// 总账户接口
+// 姿势:
+// BrowserID(persona) -> Account -> AppUser
 type Account struct{ CommonDomain }
 
-/*
-SSO单点登录 原理与流程
+const _VERIFY_URL = "https://verifier.login.persona.org/verify"
 
-客户方: 需要登录的网站/客户端
-服务方: 本站
+var (
+	_accountRegex = regexp.MustCompile(`^[A-z0-9_\-]*$`)
+	_emailRegex   = regexp.MustCompile(`\w+(?:[-+.]\w+)*@\w+(?:[-.]\w+)*\.\w+(?:[-.]\w+)*`)
+)
 
-1. 客户方通过跳转(302)提交token给服务方
-2. 服务方通过token判断客户身份并记录在session中
-3. 如果该token不存在 服务方跳转到登录界面 用户输入密码进行验证
-4. 如果验证通过或者token已存在则进入下一步 否则让用户再次输入密码
-5. 服务端通过跳转将accesscode交给客户端
-6. 客户方使用secretcode获取data后进行内部登录
+// BrowserID协议登录
+func (c *Account) DoLoginBrowserID(assertion, return_to string) r.Result {
+	res, err := http.Post(_VERIFY_URL, "application/x-www-form-urlencoded;charset=UTF-8",
+		strings.NewReader(fmt.Sprint(`assertion=`, assertion, `&audience=http://localhost:9000`)), // TODO: 需配置
+	)
+	if err != nil {
+		return c.RenderError(err)
+	}
+	var verifyResult struct {
+		Status   string `json:"status"`
+		Email    string `json:"email"`
+		Audience string `json:"audience"`
+		Expires  uint64 `json:"expires"`
+		Issuer   string `json:"issuer"`
+	}
+	err = json.NewDecoder(res.Body).Decode(&verifyResult)
+	res.Body.Close()
+	if err != nil {
+		return c.RenderError(err)
+	}
+	r.INFO.Println(verifyResult)
+	if verifyResult.Status == "okay" {
+		po := repo.CommonRepo()
+		account := po.GetAccountByEmail(verifyResult.Email)
+		po.Close()
+		// 新用户跳转到signup页面
+		if account == nil {
+			c.Session[EMAIL] = verifyResult.Email
+			return c.Redirect("/signup?return_to=%s", return_to)
+		} else {
+			c.SetLogin(account)
+		}
 
-*/
+		// 登录成功跳转到return_to
+		if return_to == "" {
+			return_to = "/"
+		}
+		return c.Redirect("%s", return_to)
+	}
+	c.Response.Status = 400
+	return c.RenderText(c.Message("login.failed"))
+}
 
-// [动][边] SSO登录
+// [动] 用户登入
 func (c *Account) DoLogin(username, password, return_to string) r.Result {
 	// 必填字段
 	c.Validation.Required(username).Message(c.Message("username.required"))
@@ -42,82 +82,88 @@ func (c *Account) DoLogin(username, password, return_to string) r.Result {
 	}
 	po := repo.CommonRepo()
 	defer po.Close()
-	user := po.GetAccountByNameOrEmail(username)
-	if user == nil {
+	account := po.GetAccountByNameOrEmail(username)
+	if account == nil {
 		c.Flash.Error(c.Message("user.notexists"))
 		return c.Redirect("/login?return_to=%s", return_to)
 	}
-	r.INFO.Printf("[DoLogin] %+v", user)
+	r.INFO.Printf("[DoLogin] %+v", account)
 	// 验证密码
-	if !user.ValidatePassword(password) {
-		c.Validation.Error(c.Message("password.error"))
+	if !account.ValidatePassword(password) {
+		c.Validation.Error("password.error")
 		c.Validation.Keep()
 		c.FlashParams()
 		return c.Redirect("/login?return_to=%s", return_to)
 	}
 	// 登陆成功写入session
-	c.Session[ACCOUNT] = util.ToString(user.Id)
-	// 单点登录
-	po.GenerateToken(user.Id)
+	c.SetLogin(account)
 
 	if return_to == "" {
 		return_to = "/"
 	}
-
 	return c.Redirect(return_to)
 }
 
-var (
-	_accountRegex = regexp.MustCompile(`^[A-z0-9_\-]*$`)
-	_emailRegex   = regexp.MustCompile(`\w+(?:[-+.]\w+)*@\w+(?:[-.]\w+)*\.\w+(?:[-.]\w+)*`)
-)
+// [静] 用户登入前端
+func (c *Account) Login(return_to string) r.Result {
+	// 已登录则跳转到首页 TODO: 需要改进
+	if c.CheckAccountAndClose() != nil {
+		return c.Redirect("/")
+	}
+	return c.Render(return_to)
+}
 
-// [动][写] 用户注册
-func (c *Account) DoRegister(user *models.Account, return_to, password string) r.Result {
-	if c.Validation.Required(user.Email).Message(c.Message("email.required")).Ok {
-		c.Validation.Check(user.Email, r.MinSize{6}, r.MaxSize{100}, r.Match{_emailRegex}).
+// [动][写] 注册
+func (c *Account) DoSignup(account *models.Account, password, return_to string) r.Result {
+	// 防改
+	if c.Session[EMAIL] != "" {
+		account.Enable = true
+		account.Email = c.Session[EMAIL]
+	} else {
+		account.Enable = false
+	}
+	// 防乱
+	if c.Validation.Required(account.Email).Message(c.Message("email.required")).Ok {
+		c.Validation.Check(account.Email, r.MinSize{6}, r.MaxSize{100}, r.Match{_emailRegex}).
 			Message(c.Message("email.invalid"))
 	}
-	if c.Validation.Required(user.Username).Message(c.Message("username.required")).Ok {
-		c.Validation.Check(user.Username, r.MinSize{2}, r.MaxSize{32}, r.Match{_accountRegex}).
+	if c.Validation.Required(account.Username).Message(c.Message("username.required")).Ok {
+		c.Validation.Check(account.Username, r.MinSize{2}, r.MaxSize{32}, r.Match{_accountRegex}).
 			Message(c.Message("username.invalid"))
 	}
 	if c.Validation.Required(password).Message(c.Message("password.required")).Ok {
 		c.Validation.Check(password, r.MaxSize{32}, r.MinSize{6}).
 			Message(c.Message("password.invalid"))
 	}
-
-	if c.Validation.HasErrors() {
-		c.Validation.Keep()
-		c.FlashParams()
-		return c.Redirect("/register")
-	}
 	po := repo.CommonRepo()
-	defer po.Close()
-	// 检查用户是否已存在
-	if po.GetAccountByName(user.Username) != nil {
-		c.Flash.Error(c.Message("user.exists"))
-		return c.Redirect("/register?return_to=%s", return_to)
+	// 防撞
+	if po.GetAccountByName(account.Username) != nil {
+		po.Close()
+		return c.RenderError(fmt.Errorf("%s", c.Message("user.exists")))
 	}
-	// 创建用户
-	user.Password = user.GeneratePassword(password)
-	user.Enable = false // 安全
-	po.Put(user)
-	r.INFO.Println("[NewAccount]", user)
-	// 写入code
-	code := po.GenerateEmailVerfiy(user.Id)
-	// 发送邮件
-	r.INFO.Println("[NewAccountEmailVerfiy]", user.Email)
-	aurl := "http://localhost:9000/reauth?" + (url.Values{"id": {user.Username}, "code": {code.Code}}).Encode()
-	service.Mail.SendMail(user.Email, "完成你的注册", `
-	<p>如果你需要使用全部功能 请点击下列链接完成验证</p>
-	<p><a href="`+aurl+`">`+aurl+`</a></p>`) // TODO: i18n
+	// 密码可选
+	if password != "" {
+		account.GeneratePassword(password)
+	}
+	po.Put(account)
+	// 防刷
+	if account.Enable == false {
+		r.INFO.Println("[NewAccount]", account)
+		// 写入code
+		code := po.GenerateEmailVerfiy(account.Id)
+		// 发送邮件
+		r.INFO.Println("[NewAccountEmailVerfiy]", account.Email)
+		aurl := "http://localhost:9000/reauth?" + (url.Values{"id": {account.Username}, "code": {code.Code}}).Encode()
+		service.Mail.SendMail(account.Email, "完成你在MoeFeed的注册", `<p>请点击下列链接完成验证</p><p><a href="`+aurl+`">`+aurl+`</a></p><p>如非本人操作请忽略本邮件</p>`) // TODO: i18n
+	}
+	po.Close()
+	return c.Redirect("%s", return_to)
+}
 
-	c.Session[ACCOUNT] = util.ToString(user.Id)
-	if return_to == "" {
-		return_to = "/"
-	}
-	return c.Redirect(return_to)
+// [静] 注册前端
+func (c *Account) Signup(return_to string) r.Result {
+	mEmail := c.Session[EMAIL]
+	return c.Render(mEmail, return_to)
 }
 
 // [动][写] 验证
@@ -141,26 +187,11 @@ func (c *Account) Reauth(code string, id string) r.Result {
 	return c.Render(msg)
 }
 
-// [静] 用户登入前端
-func (c *Account) Login(return_to string) r.Result {
-	// 已登录则跳转到首页 TODO: 需要改进
-	if c.CheckAccountAndClose() != nil {
-		return c.Redirect("/")
+// [动][边] 用户登出
+func (c *Account) Logout(return_to string) r.Result {
+	c.SetLogout()
+	if return_to == "" {
+		return_to = "/"
 	}
-	return c.Render(return_to)
-}
-
-// [静] 用户登出前端
-func (c *Account) Logout() r.Result {
-	delete(c.Session, ACCOUNT)
-	delete(c.Session, TOKEN)
-	return c.Redirect("/")
-}
-
-// [静] 用户注册前端
-func (c *Account) Register(return_to string) r.Result {
-	if return_to == "" && c.Request.Referer() != "" {
-		return_to = c.Request.Referer()
-	}
-	return c.Render(return_to)
+	return c.Redirect("%s", return_to)
 }

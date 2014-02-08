@@ -8,10 +8,15 @@ type Dashboard struct{ PlatformDomain }
 
 func (c Dashboard) Index() r.Result {
 	u, po := c.CheckUser()
-	defer po.Close()
 	if u == nil {
+		if po != nil {
+			po.Close()
+		}
 		return c.Render()
 	}
 	mProjects := po.FindProjectByOwner(u.Id)
+	if po != nil {
+		po.Close()
+	}
 	return c.Render(mProjects)
 }

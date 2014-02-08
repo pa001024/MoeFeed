@@ -11,7 +11,12 @@ import (
 	"github.com/robfig/revel"
 )
 
-func PlatformRepo() *Platform { return &Platform{QbsRepo()} }
+func PlatformRepo(q ...*QbsRepository) *Platform {
+	if len(q) > 0 {
+		return &Platform{q[0]}
+	}
+	return &Platform{QbsRepo()}
+}
 
 // 多对一关联Account
 type Platform struct{ *QbsRepository }
@@ -22,15 +27,9 @@ func (this *Platform) GetUser(id interface{}) (m *models.PlatformUser) {
 	return
 }
 
-// 索引
-func (this *Platform) FindUser(account_id interface{}) (m []*models.PlatformUser) {
-	this.Find(&m, "account_id", account_id)
-	return
-}
-
-// 索引
-func (this *Platform) FindByName(name string) (m []*models.PlatformUser) {
-	this.Find(&m, "name", name)
+// 聚集索引
+func (this *Platform) GetUserByAccount(account_id interface{}) (m *models.PlatformUser) {
+	this.GetRef(&m, "account_id", account_id)
 	return
 }
 
@@ -42,7 +41,7 @@ func (this *Platform) FindByUsername(username string) (m []*models.PlatformUser)
 
 // url获取
 func (this *Platform) GetProject(userName, projectName string) (m *models.Project) {
-	this.GetNRef(&m, "platform_user.name = ?", userName, "project.name", projectName)
+	this.GetNRef(&m, "account.suername = ?", userName, "project.name", projectName)
 	return
 }
 

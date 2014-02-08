@@ -12,12 +12,11 @@ import (
 // 平台用户信息 多对一关联Account 实现单账号多用户
 type PlatformUser struct {
 	Id          int64
-	AccountId   int64 `qbs:"notnull"` // 关联账户
+	AccountId   int64 `qbs:"unique,notnull"` // 关联账户
 	Account     *Account
-	Name        string `qbs:"size:64"` // 作为显示的URL 不可更改
-	DisplayName string `qbs:"size:64"` // 显示名
-	AvatarEmail string `qbs:"size:100"`
-	Url         string `qbs:"size:100"`
+	DisplayName string `qbs:"size:64"`  // 显示名
+	AvatarEmail string `qbs:"size:100"` // 头像邮箱
+	Url         string `qbs:"size:100"` // 主页
 	Status      int16  // 账户验证信息
 	Created     time.Time
 	Updated     time.Time
@@ -33,7 +32,7 @@ const (
 )
 
 // 获取头像地址
-func (this *PlatformUser) GetAvatarUrl(size string) string {
+func (this *PlatformUser) AvatarUrl(size string) string {
 	return fmt.Sprintf("https://secure.gravatar.com/avatar/%s?%s",
 		util.Md5String(strings.ToLower(this.AvatarEmail)),
 		(url.Values{

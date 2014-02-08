@@ -13,13 +13,13 @@
                 <a href="/">{{msg . "index"}}</a>
               </li>{{if .mUser}}
               <li class="">
-                <a href="/logout">{{msg . "logout"}}</a>
+                <a class="persona-logout" href="/logout">{{msg . "logout"}}</a>
               </li>{{else}}
               <li class="">
-                <a href="/register">{{msg . "register.action"}}</a>
+                <a href="/signup">{{msg . "signup.action"}}</a>
               </li>
               <li class="">
-                <a href="/login">{{msg . "login.action"}}</a>
+                <a class="persona-login" href="/login">{{msg . "login.action"}}</a>
               </li>{{end}}
               <li class="">
                 <a href="/help">{{msg . "about"}}</a>
@@ -31,8 +31,8 @@
               </li>
               <li class="divider-vertical"></li>
               <li class="">{{if .mUser.DisplayName}}
-                <a href="/{{.mUser.Username}}">{{printf "%s(%s)" .mUser.DisplayName .mUser.Username}}</a>{{else}}
-                <a href="/{{.mUser.Username}}">{{.mUser.Username}}</a>{{end}}
+                <a href="/{{.mUser.Account.Username}}">{{printf "%s(%s)" .mUser.DisplayName .mUser.Account.Username}}</a>{{else}}
+                <a href="/{{.mUser.Account.Username}}">{{.mUser.Account.Username}}</a>{{end}}
               </li>
             </ul>{{end}}
           </div>

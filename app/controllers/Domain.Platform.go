@@ -3,25 +3,36 @@ package controllers
 import (
 	"github.com/pa001024/MoeFeed/app/models"
 	repo "github.com/pa001024/MoeFeed/app/repository"
+	"github.com/pa001024/MoeWorker/util"
 )
 
 // 平台
 type PlatformDomain struct{ CommonDomain }
 
-// 用户状态持久化
+// 用户状态
 func (c *PlatformDomain) CheckUser() (u *models.PlatformUser, po *repo.Platform) {
-	po = repo.PlatformRepo()
-	if id, ok := c.Session[ACCOUNT]; ok {
-		u = po.GetUser(id)
+	if id, ok := c.Session[ACCOUNTID]; ok {
+		po = repo.PlatformRepo()
+		u = po.GetUserByAccount(id)
+		// 不存在映射则创建
+		if u == nil {
+			u = &models.PlatformUser{
+				AccountId:   util.ToInt64(id),
+				AvatarEmail: c.Session[EMAIL],
+			}
+			po.Put(u)
+		}
 		c.RenderArgs["mUser"] = u
 	}
 	return
 }
 
-// 用户状态持久化
+// 用户状态
 func (c *PlatformDomain) CheckUserAndClose() *models.PlatformUser {
 	u, po := c.CheckUser()
-	po.Close()
+	if po != nil {
+		po.Close()
+	}
 	return u
 }
 

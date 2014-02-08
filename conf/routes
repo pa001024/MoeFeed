@@ -13,12 +13,13 @@ GET     /favicon.ico                            Static.Serve("public/img","favic
 GET     /                                       Dashboard.Index
 
 # SSO
-GET     /register                               Account.Register
-POST    /register                               Account.DoRegister
+GET     /signup                                 Account.Signup
+POST    /signup                                 Account.DoSignup
 GET     /reauth                                 Account.Reauth
 GET     /login                                  Account.Login
 POST    /login                                  Account.DoLogin
-GET     /logout                                 Account.Logout
+POST    /loginbrowserid                         Account.DoLoginBrowserID
+*       /logout                                 Account.Logout
 
 # 用户设置
 GET     /settings                               PlatformUser.ProfileLink
@@ -34,30 +35,28 @@ GET     /organizations/profile                  Organization.Profile
 GET     /organizations/:user                    Organization.Show
 
 GET     /sysboard                               PlatformAdmin.Index
-*       /api                                    Api.Index
-*       /api/:controller/:action                :controller.:action
 
-GET     /:user                                  PlatformUser.Show
-GET     /:user/:project                         Project.Show
-GET     /:user/:project/delete                  Project.Delete
-DELETE  /:user/:project                         Project.DoDelete
-GET     /:user/:project/settings                Project.Setting
+GET     /u/:user                                PlatformUser.Show
+GET     /u/:user/:project                       Project.Show
+GET     /u/:user/:project/delete                Project.Delete
+DELETE  /u/:user/:project                       Project.DoDelete
+GET     /u/:user/:project/settings              Project.Setting
 
-GET     /:user/:project/source                  Source.Show
-GET     /:user/:project/source/new              Source.Create
-POST    /:user/:project/source/new              Source.DoCreate
-GET     /:user/:project/filter                  Filter.Show
-GET     /:user/:project/filter/new              Filter.Create
-POST    /:user/:project/filter/new              Filter.DoCreate
-GET     /:user/:project/target                  Target.Show
-GET     /:user/:project/target/new              Target.Create
-POST    /:user/:project/target/new              Target.DoCreate
-GET     /:user/:project/resource                Resource.Show
-GET     /:user/:project/resource/new            Resource.Create
-POST    /:user/:project/resource/new            Resource.DoCreate
-GET     /:user/:project/callback                Callback.Show
-GET     /:user/:project/callback/new            Callback.Create
-POST    /:user/:project/callback/new            Callback.DoCreate
-*       /:user/:project/callback/:url           Callback.Call
+GET     /p/:user/:project/source                Source.Show
+GET     /p/:user/:project/source/new            Source.Create
+POST    /p/:user/:project/source/new            Source.DoCreate
+GET     /p/:user/:project/filter                Filter.Show
+GET     /p/:user/:project/filter/new            Filter.Create
+POST    /p/:user/:project/filter/new            Filter.DoCreate
+GET     /p/:user/:project/target                Target.Show
+GET     /p/:user/:project/target/new            Target.Create
+POST    /p/:user/:project/target/new            Target.DoCreate
+GET     /p/:user/:project/resource              Resource.Show
+GET     /p/:user/:project/resource/new          Resource.Create
+POST    /p/:user/:project/resource/new          Resource.DoCreate
+GET     /p/:user/:project/callback              Callback.Show
+GET     /p/:user/:project/callback/new          Callback.Create
+POST    /p/:user/:project/callback/new          Callback.DoCreate
+*       /p/:user/:project/callback/:url         Callback.Call
 
 

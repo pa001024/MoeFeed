@@ -34,12 +34,7 @@ type QbsRepository struct {
 	*qbs.Qbs
 }
 
-// 置入
-func (this *QbsRepository) Put(structPtr Model) Repository { this.Save(structPtr); return this }
-
-// 删除
-func (this *QbsRepository) Delete(structPtr Model) Repository { this.Qbs.Delete(structPtr); return this }
-
+// 自动初始化指针为空值
 func newAuto(structPtrPtr interface{}) interface{} {
 	val := reflect.ValueOf(structPtrPtr).Elem() // **Model ->  *Model
 	if val.IsNil() {
@@ -48,12 +43,20 @@ func newAuto(structPtrPtr interface{}) interface{} {
 	}
 	return val.Interface()
 }
+
+// 自动将空值设为nil
 func nilAuto(structPtrPtr interface{}) {
 	val := reflect.ValueOf(structPtrPtr).Elem() // **Model ->  *Model
 	if !val.IsNil() {
 		val.Set(reflect.Zero(val.Type())) // *Model = *Model(nil)
 	}
 }
+
+// 置入
+func (this *QbsRepository) Put(structPtr Model) Repository { this.Save(structPtr); return this }
+
+// 删除
+func (this *QbsRepository) Delete(structPtr Model) Repository { this.Qbs.Delete(structPtr); return this }
 
 // 获取
 func (this *QbsRepository) Get(structPtr Model, key string, value interface{}) Repository {

@@ -1,6 +1,7 @@
 package controllers
 
 const (
-	TOKEN   = "token"
-	ACCOUNT = "account"
+	USERNAME  = "user"
+	EMAIL     = "email"
+	ACCOUNTID = "aid"
 )

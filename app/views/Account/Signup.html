@@ -10,16 +10,16 @@
               </div>
               {{template "flash.html" .}}
               <div class="control-group">
-                <label class="control-label" for="user-Email">{{msg . "email"}}</label>
+                <label class="control-label" for="account-Email">{{msg . "email"}}</label>
                 <div class="controls">
-                  <input type="email" required name="user.Email" id="user-Email" placeholder="@exmaple.com" class="input-xlarge">
+                  <input type="email" required name="account.Email" id="account-Email" placeholder="i@exmaple.com" class="input-xlarge"{{if .mEmail}} value="{{.mEmail}}" disable{{end}}>
                   <p class="help-block">{{msg . "email.desc"}}</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="user-Username">{{msg . "username"}}</label>
+                <label class="control-label" for="account-Username">{{msg . "username"}}</label>
                 <div class="controls">
-                  <input type="text" required name="user.Username" id="user-Username" class="input-xlarge">
+                  <input type="text" required name="account.Username" id="account-Username" class="input-xlarge">
                   <p class="help-block">{{msg . "username.desc"}}</p>
                 </div>
               </div>
@@ -33,7 +33,7 @@
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button class="btn btn-success">{{msg . "register.action"}}</button>
+                  <button class="btn btn-success">{{msg . "signup.action"}}</button>
                 </div>
               </div>
             </fieldset>

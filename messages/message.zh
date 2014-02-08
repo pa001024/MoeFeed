@@ -8,6 +8,7 @@ moefeed.desc=你的多点同步平台
 moefeed.long=%(moefeed)s - %(moefeed.desc)s
 moefeed.keywords=多平台,同步,推送,微博,RSS,更新,云平台,ACG
 moefeed.title.suffix=
+info.signupnow=马上注册!
 
 index=主页
 logout=登出
@@ -26,7 +27,7 @@ displayname=显示名
 displayname.desc=显示在页面上的名字
 displayname.invalid=%(displayname)s%(invalid)s
 username=用户名
-username.desc=%(username)s被用来登录并作为项目url地址的一部分
+username.desc=%(username)s被用来登入并作为项目url地址的一部分
 username.required=请填写%(username)s
 username.invalid=%(username)s%(invalid)s
 password=密码
@@ -36,19 +37,19 @@ password.required=请填写%(password)s
 password.invalid=%(password)s%(invalid)s
 usernameoremail=%(username)s/%(email)s
 usernameoremail.desc=%(username)s或%(email)s
-register=用户注册
-register.desc=注册一个账号
-register.action=注册
 
 emailverfiy.fail=验证失败
 emailverfiy.success=您的账户已通过验证
 emailverfiy.success2=您的组织账户已通过验证
 emailverfiy.notneed=您无需进行验证
 
-
-login=用户登录
-login.desc=登录%(moefeed)s
-login.action=登录
+signup=用户注册
+signup.desc=注册一个账号
+signup.action=注册
+login=用户登入
+login.desc=登入%(moefeed)s
+login.action=登入
+login.failed=登入失败
 
 project=项目
 project.create=创建%(project)s

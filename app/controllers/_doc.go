@@ -9,7 +9,7 @@
 
 域(Domain)说明
 
-通用域(Common) 提供SSO登录验证(Account)
+通用域(Common) 提供系统基础设施
   ├ 平台域(Platform) 提供平台基础设施
   └ 管理域(Admin) 提供系统管理功能
 

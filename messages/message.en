@@ -7,6 +7,7 @@ moefeed.desc=Your Sync Platform
 moefeed.long=%(moefeed)s - %(moefeed.desc)s
 moefeed.keywords=Platform,Sync,Push,Tweet,RSS,Atom,System
 moefeed.title.suffix=
+info.signupnow=Sign up now!
 
 index=Index
 logout=Log out
@@ -28,10 +29,15 @@ password.desc=Recommend the use of high strength password
 password.required=The %(password)s is required.
 usernameoremail=%(username)s/%(email)s
 usernameoremail.desc=%(username)s or %(email)s
-register=User Registration
-register.desc=Register an account
-register.action=Register
 
+emailverfiy.fail=Verfiy failed
+emailverfiy.success=您的账户已通过验证
+emailverfiy.success2=您的组织账户已通过验证
+emailverfiy.notneed=您无需进行验证
+
+signup=User Registration
+signup.desc=Register an account
+signup.action=Register
 login=User Login
 login.desc=Login to %(moefeed)s
 login.action=Login
