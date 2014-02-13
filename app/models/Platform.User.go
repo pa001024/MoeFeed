@@ -24,11 +24,9 @@ type PlatformUser struct {
 
 // enum User.Status
 const (
-	UnauthedUser = iota // 0: 未验证用户
-	UnauthedTeam        // 1: 未验证组织
-	AuthedUser          // 2: 用户
-	AuthedTeam          // 3: 组织
-	SysAdmin            // 4: 鹳狸猿
+	User     int16 = iota // 0: 未验证用户
+	Team                  // 1: 组织
+	SysAdmin              // 2: 鹳狸猿
 )
 
 // 获取头像地址
@@ -54,4 +52,17 @@ func (this *PlatformUser) Logined() string {
 // 返回加入时间
 func (this *PlatformUser) Joined() string {
 	return this.Created.Format("2006年1月2日") // TODO: i18n
+}
+
+// 返回符号名称
+func (this *PlatformUser) Name() string {
+	return this.Account.Username
+}
+
+// 返回显示名称
+func (this *PlatformUser) DispName() string {
+	if this.DisplayName != "" {
+		return this.DisplayName
+	}
+	return this.Account.Username
 }

@@ -11,6 +11,7 @@ GET     /favicon.ico                            Static.Serve("public/img","favic
 
 # 主页
 GET     /                                       Dashboard.Index
+GET     /help                                   Dashboard.Help
 
 # SSO
 GET     /signup                                 Account.Signup
@@ -37,11 +38,11 @@ GET     /organizations/:user                    Organization.Show
 GET     /sysboard                               PlatformAdmin.Index
 
 GET     /u/:user                                PlatformUser.Show
-GET     /u/:user/:project                       Project.Show
-GET     /u/:user/:project/delete                Project.Delete
-DELETE  /u/:user/:project                       Project.DoDelete
-GET     /u/:user/:project/settings              Project.Setting
 
+GET     /p/:user/:project                       Project.Show
+GET     /p/:user/:project/delete                Project.Delete
+DELETE  /p/:user/:project                       Project.DoDelete
+GET     /p/:user/:project/settings              Project.Setting
 GET     /p/:user/:project/source                Source.Show
 GET     /p/:user/:project/source/new            Source.Create
 POST    /p/:user/:project/source/new            Source.DoCreate

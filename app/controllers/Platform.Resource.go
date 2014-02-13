@@ -17,7 +17,7 @@ func (c Resource) DoCreate(user, project string, resource *models.Resource) r.Re
 	defer po.Close()
 	if u == nil {
 		c.Flash.Error(c.Message("project.edit.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	if p == nil {
 		return c.NotFound(c.Message("project.notfound"))
@@ -32,14 +32,14 @@ func (c Resource) DoCreate(user, project string, resource *models.Resource) r.Re
 		}
 	} else {
 		c.Flash.Error("请上传文件: %v", err)
-		return c.Redirect("/%s/%s/resource/new", user, project)
+		return c.Redirect("/p/%s/%s/resource/new", user, project)
 	}
 	if po.GetResource(resource.Name, resource.ProjectId) != nil {
 		c.Flash.Error("该资源名称已存在")
-		return c.Redirect("/%s/%s/resource/new", user, project)
+		return c.Redirect("/p/%s/%s/resource/new", user, project)
 	}
 	po.PutAndStoneResource(resource, fo)
-	return c.Redirect("/%s/%s", user, project)
+	return c.Redirect("/p/%s/%s", user, project)
 }
 
 // [静]显示单个资源
@@ -47,7 +47,7 @@ func (c Resource) Show(user, project string) r.Result {
 	c.CheckAccessProjectRenderArgsAndClose(user, project)
 	if !c.RenderArgs["mReadable"].(bool) {
 		c.Flash.Error(c.Message("project.view.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	return c.Render()
 }

@@ -1,15 +1,15 @@
-{{if .mUser.DisplayName}}{{printf "%s(%s) - 萌更新" .mUser.Username .mUser.DisplayName | set . "title"}}{{else}}{{printf "%s - 萌更新" .mUser.Username | set . "title"}}{{end}}{{template "header.html" .}}
+{{printf "%s - %s" (.mUser.DispName) (msg . "moefeed") | set . "title"}}{{template "header.html" .}}
     <div class="container main">
       <div class="row">
         <div class="span3 offset1" itemscope="" itemtype="http://schema.org/Organization">
           <div class="user-profile">
             <span class="tooltipped downwards" original-title="在 gravatar.com 更改你的头像">
-              <a href="http://gravatar.com/emails/"><img class="avatar" src="{{.mUser.GetAvatarUrl "420"}}"></a>
+              <a href="http://gravatar.com/emails/"><img class="avatar" src="{{.mUser.AvatarUrl "420"}}"></a>
             </span>
             <h1>{{if .mUser.DisplayName}}
               <span itemprop="name">{{.mUser.DisplayName}}</span>
-              <em itemprop="additionalName">{{.mUser.Username}}</em>{{else}}
-              <span itemprop="additionalName">{{.mUser.Username}}</span>{{end}}
+              <em itemprop="additionalName">{{.mUser.Name}}</em>{{else}}
+              <span itemprop="additionalName">{{.mUser.Name}}</span>{{end}}
             </h1>
             <div class="details">
               <b>注册时间</b>
@@ -34,7 +34,7 @@
           </div>{{$ := .}}
           <section class="m-projects">{{range .mProjects}}
             <article class="m-range-project">
-              <h3><a href="/{{.Owner.Username}}/{{.Name}}">{{if .DisplayName}}{{.DisplayName}}({{.Name}}){{else}}{{.Name}}{{end}}</a></h3>
+              <h3><a href="/p/{{.Owner.Name}}/{{.Name}}">{{if .DisplayName}}{{.DisplayName}}({{.Name}}){{else}}{{.Name}}{{end}}</a></h3>
               <p class="description"></p>
               <p class="updated-at">{{msg $ "lastupdate"}}
                 <time class="js-relative-date" datetime="{{.Updated}}" title="2013-07-20 20:31:37">{{.UpdateTime}}</time>

@@ -30,7 +30,7 @@ func (c Project) DoCreate(project *models.Project) r.Result {
 	po.Put(project)
 	r.INFO.Printf("%+v\n", project)
 
-	return c.Redirect("/%v/%v", u.Account.Username, project.Name)
+	return c.Redirect("/p/%v/%v", u.Account.Username, project.Name)
 }
 
 // [动]重命名项目
@@ -57,7 +57,7 @@ func (c Project) CreateLink() r.Result {
 // [链]列表同义词
 func (c Project) ListLink() r.Result {
 	u := c.CheckUserAndClose()
-	return c.Redirect("/%s", u.Account.Username)
+	return c.Redirect("/u/%s", u.Account.Username)
 }
 
 // [静]创建项目前端

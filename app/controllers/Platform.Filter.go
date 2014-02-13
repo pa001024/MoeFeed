@@ -17,11 +17,11 @@ func (c Filter) DoCreate(user, project string, filter *models.Filter) r.Result {
 	}
 	if u == nil {
 		c.Flash.Error(c.Message("project.edit.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	filter.ProjectId = p.Id
 	po.Put(filter)
-	return c.Redirect("/%s/%s", user, project)
+	return c.Redirect("/p/%s/%s", user, project)
 }
 
 // [静]显示单个过滤器
@@ -29,7 +29,7 @@ func (c Filter) Show(user, project string) r.Result {
 	c.CheckAccessProjectRenderArgsAndClose(user, project)
 	if !c.RenderArgs["mReadable"].(bool) {
 		c.Flash.Error(c.Message("project.view.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	return c.Render()
 }
@@ -39,7 +39,7 @@ func (c Filter) Create(user, project string) r.Result {
 	c.CheckAccessProjectRenderArgsAndClose(user, project)
 	if !c.RenderArgs["mEditable"].(bool) {
 		c.Flash.Error(c.Message("project.edit.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	return c.Render()
 }

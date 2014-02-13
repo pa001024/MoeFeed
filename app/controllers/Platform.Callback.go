@@ -15,15 +15,15 @@ func (c Callback) DoCreate(user, project string, callback *models.Callback) r.Re
 	defer po.Close()
 	if u == nil {
 		c.Flash.Error(c.Message("project.edit.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	if u == nil {
 		c.Flash.Error("请先登录")
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	callback.ProjectId = p.Id
 	po.Put(callback)
-	return c.Redirect("/%s/%s", user, project)
+	return c.Redirect("/p/%s/%s", user, project)
 }
 
 // 错误信息
@@ -38,7 +38,7 @@ func (c Callback) Call(user, project, url string) r.Result {
 	p, po := c.CheckProject(user, project)
 	defer po.Close()
 	b := po.GetCallback(url, p.Id)
-	trueurl := fmt.Sprintf("/%s/%s/callback/%s", user, project, url)
+	trueurl := fmt.Sprintf("/p/%s/%s/callback/%s", user, project, url)
 	if b == nil {
 		return c.RenderJson(CallbackError{trueurl, 404, "找不到此回调"})
 	}
@@ -50,7 +50,7 @@ func (c Callback) Show(user, project string) r.Result {
 	c.CheckAccessProjectRenderArgsAndClose(user, project)
 	if !c.RenderArgs["mReadable"].(bool) {
 		c.Flash.Error(c.Message("project.view.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	return c.Render()
 }
@@ -60,7 +60,7 @@ func (c Callback) Create(user, project string) r.Result {
 	c.CheckAccessProjectRenderArgsAndClose(user, project)
 	if !c.RenderArgs["mEditable"].(bool) {
 		c.Flash.Error(c.Message("project.edit.nopermission"))
-		return c.Redirect("/%s/%s", user, project)
+		return c.Redirect("/p/%s/%s", user, project)
 	}
 	return c.Render()
 }

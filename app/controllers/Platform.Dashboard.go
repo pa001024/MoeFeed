@@ -20,3 +20,8 @@ func (c Dashboard) Index() r.Result {
 	}
 	return c.Render(mProjects)
 }
+
+func (c *Dashboard) Help() r.Result {
+	c.CheckUserAndClose()
+	return c.Render()
+}

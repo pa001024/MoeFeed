@@ -10,7 +10,7 @@ import (
 func init() {
 	RegisterDb()
 	// if r.DevMode {
-	InitDb()
+	// InitDb()
 	// }
 }
 

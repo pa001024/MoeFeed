@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"github.com/pa001024/MoeFeed/app/models"
+	repo "github.com/pa001024/MoeFeed/app/repository"
 	r "github.com/robfig/revel"
 )
 
@@ -9,7 +11,7 @@ type PlatformUser struct{ PlatformDomain }
 
 // 跳转
 func (c *PlatformUser) ProfileLink(user string) r.Result {
-	return c.Redirect("/%s", user)
+	return c.Redirect("/u/%s", user)
 }
 
 // 用户基本信息
@@ -27,12 +29,19 @@ func (c *PlatformUser) Security(user string) r.Result {
 // [静]用户展示页
 func (c *PlatformUser) Show(user string) r.Result {
 	_, po := c.CheckUser()
+	if po == nil {
+		po = repo.PlatformRepo()
+	}
+	mUser := po.GetUserByUsername(user)
 	defer po.Close()
-	mUser := po.GetUser(user)
 	if mUser == nil {
 		return c.NotFound(c.Message("user.notfound"))
 	}
 	mProjects := po.FindProjectByOwner(mUser.Id)
+	if mProjects == nil {
+		mProjects = make([]*models.Project, 0)
+	}
+	r.INFO.Println(mProjects)
 	return c.Render(mUser, mProjects)
 }
 

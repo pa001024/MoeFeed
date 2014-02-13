@@ -6,10 +6,10 @@
             <span class="repo-label hidden-phone">{{msg . (.mProject.TypeName)}}</span>
             <span class="mega-octicon octicon-repo"></span>
             <span class="author">
-              <a href="/{{urlquery .mProject.Owner.Username}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Username}}</span></a>
+              <a href="/u/{{urlquery .mProject.Owner.Name}}" class="url fn" itemprop="url" rel="author"><span itemprop="title">{{or .mProject.Owner.DisplayName .mProject.Owner.Name}}</span></a>
             </span>
             <span class="repohead-name-divider">/</span>
-            <strong>{{printf "/%s/%s" .mProject.Owner.Username .mProject.Name | set . "pageurl"}}
+            <strong>{{printf "/p/%s/%s" .mProject.Owner.Name .mProject.Name | set . "pageurl"}}
               <a href="{{.pageurl}}">{{or .mProject.DisplayName .mProject.Name}}</a>
             </strong>
           </h1>

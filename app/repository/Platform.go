@@ -34,28 +34,38 @@ func (this *Platform) GetUserByAccount(account_id interface{}) (m *models.Platfo
 }
 
 // 二级索引 左连接
-func (this *Platform) FindByUsername(username string) (m []*models.PlatformUser) {
-	this.Find(&m, "account.username", username)
+func (this *Platform) GetUserByUsername(username string) (m *models.PlatformUser) {
+	this.GetRef(&m, "account.username", username)
 	return
 }
 
 // url获取
-func (this *Platform) GetProject(userName, projectName string) (m *models.Project) {
-	this.GetNRef(&m, "account.suername = ?", userName, "project.name", projectName)
+func (this *Platform) GetProject(username, projectName string) (m *models.Project) {
+	u := this.GetUserByUsername(username)
+	this.GetNRef(&m, "owner_id = ?", u.Id, "project.name = ?", projectName)
+	m.Owner = u
 	return
 }
 
 // 列出用户所有项目
 func (this *Platform) FindProjectByOwner(owner_id int64) (m []*models.Project) {
+	u := this.GetUser(owner_id)
 	this.OrderByDesc("updated")
 	this.Find(&m, "owner_id", owner_id)
+	for _, v := range m {
+		v.Owner = u
+	}
 	return
 }
 
 // 列出用户所有项目
 func (this *Platform) FindByOwnerPublic(owner_id int64) (m []*models.Project) {
+	u := this.GetUser(owner_id)
 	this.OrderByDesc("updated")
 	this.FindN(&m, 0, "owner_id = ?", owner_id, "type = ?", models.ProjectPublic)
+	for _, v := range m {
+		v.Owner = u
+	}
 	return
 }
 
